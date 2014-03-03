@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.netcetera.eclipse.quickrex</groupId>
 		<artifactId>quickrex-parent</artifactId>
-		<version>4.0.0</version>
+		<version>4.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>com.netcetera.eclipse.quickrex.updatesite</artifactId>
 	<name>QuickREx Path Update Site</name>
