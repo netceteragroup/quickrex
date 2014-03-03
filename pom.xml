@@ -4,7 +4,7 @@
   <groupId>com.netcetera.eclipse.quickrex</groupId>
   <artifactId>quickrex-parent</artifactId>
   <version>4.0.3-SNAPSHOT</version>
-  <name>QuickREx Plugin</name>
+  <name>QuickREx Parent</name>
   <description>A fork of the QuickREx Plugin</description>
   <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
