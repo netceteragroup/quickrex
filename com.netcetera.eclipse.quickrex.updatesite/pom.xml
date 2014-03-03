@@ -6,6 +6,6 @@
 		<version>4.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>com.netcetera.eclipse.quickrex.updatesite</artifactId>
-	<name>QuickREx Path Update Site</name>
+	<name>QuickREx Update Site</name>
 	<packaging>eclipse-repository</packaging>
 </project>

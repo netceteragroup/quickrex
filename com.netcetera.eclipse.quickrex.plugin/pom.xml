@@ -8,4 +8,5 @@
   </parent>
   <artifactId>com.netcetera.eclipse.quickrex.plugin</artifactId>
   <packaging>eclipse-plugin</packaging>
+  <name>QuickREx Plugin</name>
 </project>
