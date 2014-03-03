@@ -2,7 +2,7 @@
 <feature
       id="com.netcetera.eclipse.quickrex.feature"
       label="Copy As Path Feature"
-      version="4.0.0.qualifier"
+      version="4.0.0"
       provider-name="Netcetera"
       plugin="com.netcetera.eclipse.quickrex.plugin">
 

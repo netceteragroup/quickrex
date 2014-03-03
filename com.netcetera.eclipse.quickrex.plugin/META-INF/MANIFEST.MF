@@ -2,22 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: QuickREx Plug-in
 Bundle-SymbolicName: com.netcetera.eclipse.quickrex.plugin;singleton:=true
-Bundle-Version: 4.0.0.qualifier
+Bundle-Version: 4.0.0
 Bundle-Activator: de.babe.eclipse.plugins.quickREx.QuickRExPlugin
 Bundle-Vendor: Bastian Bergerhoff (info@bastian-bergerhoff.com)
 Bundle-Localization: plugin
-Export-Package: de.babe.eclipse.plugins.quickREx,
- de.babe.eclipse.plugins.quickREx.actions,
- de.babe.eclipse.plugins.quickREx.dialogs,
- de.babe.eclipse.plugins.quickREx.editors,
- de.babe.eclipse.plugins.quickREx.factories,
- de.babe.eclipse.plugins.quickREx.objects,
- de.babe.eclipse.plugins.quickREx.preferences,
- de.babe.eclipse.plugins.quickREx.regexp,
- de.babe.eclipse.plugins.quickREx.regexp.jdk,
- de.babe.eclipse.plugins.quickREx.search,
- de.babe.eclipse.plugins.quickREx.views,
- de.babe.eclipse.plugins.quickREx.wizards
+Export-Package: de.babe.eclipse.plugins.quickREx,de.babe.eclipse.plugi
+ ns.quickREx.actions,de.babe.eclipse.plugins.quickREx.dialogs,de.babe.
+ eclipse.plugins.quickREx.editors,de.babe.eclipse.plugins.quickREx.fac
+ tories,de.babe.eclipse.plugins.quickREx.objects,de.babe.eclipse.plugi
+ ns.quickREx.preferences,de.babe.eclipse.plugins.quickREx.regexp,de.ba
+ be.eclipse.plugins.quickREx.regexp.jdk,de.babe.eclipse.plugins.quickR
+ Ex.search,de.babe.eclipse.plugins.quickREx.views,de.babe.eclipse.plug
+ ins.quickREx.wizards
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.jface.text,
