@@ -60,7 +60,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private ResourceBundle resourceBundle;
 
-  private ArrayList regularExpressions;
+  private List<RegularExpression> regularExpressions;
 
   private List<NamedText> testTexts;
 
@@ -216,7 +216,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   public String[] getRegularExpressions() {
     String[] retArray = new String[regularExpressions.size()];
     for (int i = 0; i < retArray.length; i++) {
-      retArray[i] = ((RegularExpression)regularExpressions.get(i)).getString();
+      retArray[i] = regularExpressions.get(i).getString();
     }
     return retArray;
   }
@@ -359,11 +359,11 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     return (REBook[])reBooks.toArray(new REBook[reBooks.size()]);
   }
 
-  private ArrayList initREsFromFile() {
+  private List<RegularExpression > initREsFromFile() {
     IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
     File reFile = reFilePath.toFile();
     if (reFile.exists() && reFile.canRead()) {
-      ArrayList res = new ArrayList();
+      List<RegularExpression> res = new ArrayList<>();
       try {
         SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
         parser.parse(reFile, new RegularExpressionsXMLHandler(res));
@@ -380,7 +380,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
         IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message2"), null); //$NON-NLS-1$
         getLog().log(status);
       }
-      return new ArrayList();
+      return new ArrayList<>();
     }
   }
 
@@ -473,19 +473,18 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     } else {
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 6, Messages.getString("QuickRExPlugin.error.message14", new Object[] {p_path}), null); //$NON-NLS-1$ //$NON-NLS-2$
       getLog().log(status);
-      return new ArrayList();
+      return new ArrayList<>();
     }
   }
 
-  private void writeREsToFile(ArrayList p_regularExpressions) {
+  private void writeREsToFile(List<RegularExpression> p_regularExpressions) {
     IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
     File reFile = reFilePath.toFile();
     try {
       FileOutputStream fos = new FileOutputStream(reFile);
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<regularExpressions>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      Iterator it = p_regularExpressions.iterator();
-      while (it.hasNext()) {
-        fos.write(((RegularExpression)it.next()).toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
+      for (RegularExpression each : regularExpressions) {
+        fos.write(each.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       fos.write("</regularExpressions>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       fos.close();
@@ -571,8 +570,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private int getRegularExpressionIndexByString(String p_string) {
     int i = 0;
-    for (Iterator iter = regularExpressions.iterator(); iter.hasNext();) {
-      RegularExpression element = (RegularExpression)iter.next();
+    for (RegularExpression element : regularExpressions) {
       if (p_string.equals(element.getString())) {
         return i;
       }

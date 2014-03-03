@@ -46,7 +46,7 @@ public class EditorCategoryMappingXMLHandler extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String qName) {
     if (REEditorCategoryMapping.INSTANCE_QNAME.equals(qName)) {
-      ArrayList currentContents = (ArrayList)mappings.get(currentMapping.getCategory());
+      ArrayList currentContents = (ArrayList) mappings.get(currentMapping.getCategory());
       if (currentContents == null) {
         currentContents = new ArrayList();
         categories.add(currentMapping.getCategory());
