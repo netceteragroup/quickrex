@@ -1,13 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: QuickREx Plug-in
-Bundle-SymbolicName: de.babe.eclipse.plugins.QuickREx; singleton:=true
-Bundle-Version: 3.5.0
+Bundle-SymbolicName: com.netcetera.eclipse.quickrex.plugin;singleton:=true
+Bundle-Version: 4.0.0.qualifier
 Bundle-Activator: de.babe.eclipse.plugins.quickREx.QuickRExPlugin
 Bundle-Vendor: Bastian Bergerhoff (info@bastian-bergerhoff.com)
 Bundle-Localization: plugin
-Export-Package: .,
- de.babe.eclipse.plugins.quickREx,
+Export-Package: de.babe.eclipse.plugins.quickREx,
  de.babe.eclipse.plugins.quickREx.actions,
  de.babe.eclipse.plugins.quickREx.dialogs,
  de.babe.eclipse.plugins.quickREx.editors,
