@@ -2,7 +2,7 @@
 <feature
       id="com.netcetera.eclipse.quickrex.feature"
       label="QuickREx Feature"
-      version="4.0.2.qualifier"
+      version="4.0.2"
       provider-name="Netcetera"
       plugin="com.netcetera.eclipse.quickrex.plugin">
 
