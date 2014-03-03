@@ -16,6 +16,13 @@
     <module>com.netcetera.eclipse.quickrex.feature</module>
     <module>com.netcetera.eclipse.quickrex.updatesite</module>
   </modules>
+  
+  <scm>
+    <connection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex</connection>
+    <developerConnection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex</developerConnection>
+    <url>https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex</url>
+  </scm>
+  
   <developers>
     <developer>
       <id>pmarscha</id>
