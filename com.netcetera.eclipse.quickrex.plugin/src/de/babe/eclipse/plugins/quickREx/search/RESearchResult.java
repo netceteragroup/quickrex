@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -42,7 +42,7 @@ public class RESearchResult extends AbstractTextSearchResult {
 
   /**
    * The constructor
-   * 
+   *
    * @param query
    */
   public RESearchResult(RESearchQuery query) {
@@ -99,7 +99,7 @@ public class RESearchResult extends AbstractTextSearchResult {
 
   /**
    * Add the passed entry to the ones matching this objects' query
-   * 
+   *
    * @param entry the entry to be added
    */
   public void addMatchingEntry(RELibraryEntry entry) {
@@ -131,7 +131,7 @@ public class RESearchResult extends AbstractTextSearchResult {
 
   /**
    * Removes the passed entry from the matches
-   * 
+   *
    * @param entry the entry to remove
    */
   public void removeEntry(RELibraryEntry entry) {
@@ -140,7 +140,7 @@ public class RESearchResult extends AbstractTextSearchResult {
 
   /**
    * Returns an array of REBooks containing matches.
-   * 
+   *
    * @return an array of REBooks containing matches
    */
   public REBook[] getBooksWithMatches() {
@@ -148,35 +148,33 @@ public class RESearchResult extends AbstractTextSearchResult {
   }
 
   /**
-   * Returns an array of categories which are in the passed book and have matches
-   * 
+   * Returns an array of categories which are in the passed book and have matches.
+   *
    * @param book the book that the categories should be in
    * @return an array of RECategories
    */
   public RECategory[] getMatchingCategoriesInBook(REBook book) {
-    ArrayList retList = new ArrayList();
-    List catsInBook = book.getContents();
-    for (Iterator iter = catsInBook.iterator(); iter.hasNext();) {
-      RECategory cat = (RECategory)iter.next();
+    List<RECategory> retList = new ArrayList<RECategory>();
+    for (RECategory cat : book.getContents()) {
       if (categoriesWithMatches.contains(cat)) {
         retList.add(cat);
       }
     }
-    return (RECategory[])retList.toArray(new RECategory[retList.size()]);
+    return retList.toArray(new RECategory[retList.size()]);
   }
 
   /**
-   * Returns an array of entries which match and are in the passed category
-   * 
+   * Returns an array of entries which match and are in the passed category.
+   *
    * @param category the category that the entries should be in
    * @return an array or RELibraryEntries
    */
   public RELibraryEntry[] getMatchesInCategory(RECategory category) {
     ArrayList retList = new ArrayList();
     RELibraryEntry[] entriesInCat = category.getCategoryContents();
-    for (int i = 0; i < entriesInCat.length; i++) {
-      if (matches.contains(entriesInCat[i])) {
-        retList.add(entriesInCat[i]);
+    for (RELibraryEntry element : entriesInCat) {
+      if (matches.contains(element)) {
+        retList.add(element);
       }
     }
     return (RELibraryEntry[])retList.toArray(new RELibraryEntry[retList.size()]);
@@ -199,8 +197,8 @@ public class RESearchResult extends AbstractTextSearchResult {
   @Override
   public void removeMatches(Match[] matches) {
     super.removeMatches(matches);
-    for (int i = 0; i < matches.length; i++) {
-      RELibraryEntry entry = (RELibraryEntry)matches[i].getElement();
+    for (Match matche : matches) {
+      RELibraryEntry entry = (RELibraryEntry)matche.getElement();
       removeEntry(entry);
     }
     rebuildBooksAndCategories();

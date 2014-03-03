@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -36,7 +36,7 @@ public class NewREBookWizardPage extends WizardPage {
   private Text fileText;
 
   /**
-   * The constructor
+   * The constructor.
    */
   public NewREBookWizardPage() {
     super("wizardPage"); //$NON-NLS-1$
@@ -125,8 +125,8 @@ public class NewREBookWizardPage extends WizardPage {
   }
 
   /**
-   * Returns the path
-   * 
+   * Returns the path.
+   *
    * @return the path
    */
   public String getFilePath() {
@@ -134,8 +134,8 @@ public class NewREBookWizardPage extends WizardPage {
   }
 
   /**
-   * Returns the book-name
-   * 
+   * Returns the book-name.
+   *
    * @return the book-name
    */
   public String getBookName() {

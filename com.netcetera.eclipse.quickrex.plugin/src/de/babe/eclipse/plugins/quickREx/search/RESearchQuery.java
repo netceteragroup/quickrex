@@ -3,14 +3,11 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.search;
-
-import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -48,8 +45,8 @@ public class RESearchQuery implements ISearchQuery {
   public static final int SCOPE_SOURCE = 16;
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param text the text to search
    * @param searchScope a combination of the scope-constants indicating where to look
    */
@@ -65,45 +62,43 @@ public class RESearchQuery implements ISearchQuery {
   @Override
   public IStatus run(IProgressMonitor monitor) throws OperationCanceledException {
     REBook[] allBooks = QuickRExPlugin.getDefault().getREBooks();
-    for (int i = 0; i < allBooks.length; i++) {
-      List catList = allBooks[i].getContents();
-      for (Iterator iter = catList.iterator(); iter.hasNext();) {
-        RECategory currentCat = (RECategory)iter.next();
+    for (REBook allBook : allBooks) {
+      for (RECategory currentCat : allBook.getContents()) {
         RELibraryEntry[] entries = currentCat.getCategoryContents();
-        for (int j = 0; j < entries.length; j++) {
+        for (RELibraryEntry entrie : entries) {
           boolean added = false;
           if (include(SCOPE_TITLE)) {
-            if (entries[j].getTitle().indexOf(this.text) >= 0) {
-              searchResult.addMatchingEntry(entries[j]);
-              searchResult.addMatch(new Match(entries[j], 0, 0));
+            if (entrie.getTitle().indexOf(this.text) >= 0) {
+              searchResult.addMatchingEntry(entrie);
+              searchResult.addMatch(new Match(entrie, 0, 0));
               added = true;
             }
           }
           if (!added && include(SCOPE_RE)) {
-            if (entries[j].getRe().indexOf(this.text) >= 0) {
-              searchResult.addMatchingEntry(entries[j]);
-              searchResult.addMatch(new Match(entries[j], 0, 0));
+            if (entrie.getRe().indexOf(this.text) >= 0) {
+              searchResult.addMatchingEntry(entrie);
+              searchResult.addMatch(new Match(entrie, 0, 0));
               added = true;
             }
           }
           if (!added && include(SCOPE_TESTTEXT)) {
-            if (entries[j].getTesttext().indexOf(this.text) >= 0) {
-              searchResult.addMatchingEntry(entries[j]);
-              searchResult.addMatch(new Match(entries[j], 0, 0));
+            if (entrie.getTesttext().indexOf(this.text) >= 0) {
+              searchResult.addMatchingEntry(entrie);
+              searchResult.addMatch(new Match(entrie, 0, 0));
               added = true;
             }
           }
           if (!added && include(SCOPE_DESC)) {
-            if (entries[j].getDescription().indexOf(this.text) >= 0) {
-              searchResult.addMatchingEntry(entries[j]);
-              searchResult.addMatch(new Match(entries[j], 0, 0));
+            if (entrie.getDescription().indexOf(this.text) >= 0) {
+              searchResult.addMatchingEntry(entrie);
+              searchResult.addMatch(new Match(entrie, 0, 0));
               added = true;
             }
           }
           if (!added && include(SCOPE_SOURCE)) {
-            if (entries[j].getSource().indexOf(this.text) >= 0) {
-              searchResult.addMatchingEntry(entries[j]);
-              searchResult.addMatch(new Match(entries[j], 0, 0));
+            if (entrie.getSource().indexOf(this.text) >= 0) {
+              searchResult.addMatchingEntry(entrie);
+              searchResult.addMatch(new Match(entrie, 0, 0));
               added = true;
             }
           }
@@ -152,7 +147,7 @@ public class RESearchQuery implements ISearchQuery {
 
   /**
    * Returns the text that was searched for
-   * 
+   *
    * @return the text
    */
   public String getText() {

@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -12,7 +12,7 @@ package de.babe.eclipse.plugins.quickREx.objects;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -38,11 +38,11 @@ public class REBook {
 
   private String path;
 
-  private ArrayList contents;
+  private List<RECategory> contents;
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param p_name
    * @param p_path
    */
@@ -53,7 +53,7 @@ public class REBook {
 
   /**
    * Sets the name
-   * 
+   *
    * @param p_name the name to set
    */
   public void setName(String p_name) {
@@ -70,7 +70,7 @@ public class REBook {
 
   /**
    * Sets the path
-   * 
+   *
    * @param p_path the path to set
    */
   public void setPath(String p_path) {
@@ -79,7 +79,7 @@ public class REBook {
 
   /**
    * Returns the path
-   * 
+   *
    * @return the path
    */
   public String getPath() {
@@ -89,28 +89,28 @@ public class REBook {
   /**
    * Sets the contents (i.e. the categories in this book), updating the
    * book in all the passed RECategories to <code>this</code>
-   * 
+   *
    * @param contents an ArrayList holding RECategory-entries with the contents of this book
    */
-  public void setContents(ArrayList contents) {
-    for (int i = 0; i < contents.size(); i++) {
-      ((RECategory)contents.get(i)).setBook(this);
+  public void setContents(List<RECategory> contents) {
+    for (RECategory category : contents) {
+      category.setBook(this);
     }
     this.contents = contents;
   }
 
   /**
-   * Returns the contents of this book
-   * 
+   * Returns the contents of this book.
+   *
    * @return an ArrayList holding RECategory-entries with the contents of this book
    */
-  public ArrayList getContents() {
+  public List<RECategory> getContents() {
     return this.contents;
   }
 
   /**
-   * Returns an XML-representation of this object, using the passed String as a prefix for each line
-   * 
+   * Returns an XML-representation of this object, using the passed String as a prefix for each line.
+   *
    * @param p_prefix
    *          the prefix for the line
    * @param p_depth the indentation-depth
@@ -137,7 +137,7 @@ public class REBook {
 
   /**
    * Writes the xml-file with the serialized representation of this book
-   * 
+   *
    * @param monitor the progress-monitor
    */
   public void writeFile(IProgressMonitor monitor) {
@@ -146,7 +146,7 @@ public class REBook {
       FileOutputStream fos = new FileOutputStream(reFile);
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<regularExpressionLibrary>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       for (int i = 0; i < getContents().size(); i++) {
-        fos.write(((RECategory)getContents().get(i)).toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
+        fos.write(getContents().get(i).toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       fos.write("</regularExpressionLibrary>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       fos.close();
@@ -157,16 +157,17 @@ public class REBook {
   }
 
   /**
-   * Adds the passed RECategory to the contents of this book at the passed position
-   * 
+   * Adds the passed RECategory to the contents of this book at the passed position.
+   *
    * @param newCat the new RECategory
    * @param newPosition the position for the new category
    */
   public void addCategory(RECategory newCat, int newPosition) {
     if (contents == null) {
-      if (newPosition != 0)
+      if (newPosition != 0) {
         throw new IllegalArgumentException(Messages.getString("objects.REBook.error.message2")); //$NON-NLS-1$
-      contents = new ArrayList();
+      }
+      contents = new ArrayList<>();
       contents.add(newCat);
     } else {
       if (newPosition >= 0 && newPosition <= contents.size() - 1) {
@@ -180,8 +181,8 @@ public class REBook {
   }
 
   /**
-   * Removes the passed RECategory from this book
-   * 
+   * Removes the passed RECategory from this book.
+   *
    * @param p_cat the category to remove
    */
   public void removeCategory(RECategory p_cat) {
@@ -191,14 +192,13 @@ public class REBook {
   /**
    * Returns the category with the passed name if it is among the
    * categories of this book. If not, <code>null</code> is returned
-   * 
+   *
    * @param p_catName the name for the category to return
    * @return the category or <code>null</code>
    */
   public RECategory getCategoryWithName(String p_catName) {
     try {
-      for (Iterator iter = contents.iterator(); iter.hasNext();) {
-        RECategory cat = (RECategory)iter.next();
+      for (RECategory cat : contents) {
         if (cat.getName().equals(p_catName)) {
           return cat;
         }
@@ -210,8 +210,8 @@ public class REBook {
   }
 
   /**
-   * Returns <code>true</code> if and only if a category with the passed name exists in this book
-   * 
+   * Returns <code>true</code> if and only if a category with the passed name exists in this book.
+   *
    * @param catName the name to look for
    * @return <code>true</code> if and only if a category with the passed name exists in this book
    */
@@ -221,8 +221,8 @@ public class REBook {
 
   /**
    * Returns <code>true</code> if and only if this is the default-book (identified
-   * by the name!)
-   * 
+   * by the name!).
+   *
    * @return <code>true</code> if and only if this is the default-book
    */
   public boolean isQuickRExBook() {

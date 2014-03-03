@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -11,7 +11,6 @@ package de.babe.eclipse.plugins.quickREx.views;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
@@ -77,7 +76,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -138,7 +137,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
 
   /**
    * Sets the state of linking the tree with the editors
-   * 
+   *
    * @param flag <code>true</code> or <code>false</code> depending if you want the tree linked or not
    */
   protected void setLinkWithEditor(boolean flag) {
@@ -191,10 +190,10 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
       @Override
       public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof REBook) {
-          REBook book = (REBook)parentElement;
+          REBook book = (REBook) parentElement;
           return book.getContents().toArray(new RECategory[book.getContents().size()]);
         } else if (parentElement instanceof RECategory) {
-          RECategory cat = (RECategory)parentElement;
+          RECategory cat = (RECategory) parentElement;
           return cat.getCategoryContents();
         } else {
           return null;
@@ -204,10 +203,10 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
       @Override
       public Object getParent(Object element) {
         if (element instanceof RECategory) {
-          RECategory cat = (RECategory)element;
+          RECategory cat = (RECategory) element;
           return cat.getBook();
         } else if (element instanceof RELibraryEntry) {
-          RELibraryEntry entry = (RELibraryEntry)element;
+          RELibraryEntry entry = (RELibraryEntry) element;
           return entry.getCategory();
         } else {
           return null;
@@ -217,11 +216,11 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
       @Override
       public boolean hasChildren(Object element) {
         if (element instanceof REBook) {
-          REBook book = (REBook)element;
-          return (book.getContents() != null && book.getContents().size() > 0);
+          REBook book = (REBook) element;
+          return book.getContents() != null && book.getContents().size() > 0;
         } else if (element instanceof RECategory) {
-          RECategory cat = (RECategory)element;
-          return (cat.getCategoryContents() != null && cat.getCategoryContents().length > 0);
+          RECategory cat = (RECategory) element;
+          return cat.getCategoryContents() != null && cat.getCategoryContents().length > 0;
         } else {
           return false;
         }
@@ -301,7 +300,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fNewREAction = new Action(Messages.getString("views.RELibraryView.context.category.actions.addRE.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -345,7 +344,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fNewCategoryAction = new Action(Messages.getString("views.RELibraryView.context.category.actions.addCat.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -382,7 +381,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fRenameAction = new Action(Messages.getString("views.RELibraryView.context.category.actions.renameCat.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -418,7 +417,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fDeleteAction = new Action(Messages.getString("views.RELibraryView.context.category.actions.deleteCat.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -426,11 +425,11 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
             boolean proceed = MessageDialog.openQuestion(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.category.actions.deleteCat.dlg.title"), //$NON-NLS-1$
                 Messages.getString("views.RELibraryView.context.category.actions.deleteCat.dlg.text")); //$NON-NLS-1$
             if (proceed) {
-              REBook selectedBook = (REBook)treeView.getTree().getSelection()[0].getParentItem().getData();
-              RECategory selected = (RECategory)treeView.getTree().getSelection()[0].getData();
+              REBook selectedBook = (REBook) treeView.getTree().getSelection()[0].getParentItem().getData();
+              RECategory selected = (RECategory) treeView.getTree().getSelection()[0].getData();
               RELibraryEntry[] contents = selected.getCategoryContents();
-              for (int i = 0; i < contents.length; i++) {
-                RELibraryEntryEditorInput inp = new RELibraryEntryEditorInput(contents[i], false);
+              for (RELibraryEntry content : contents) {
+                RELibraryEntryEditorInput inp = new RELibraryEntryEditorInput(content, false);
                 IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findEditor(inp);
                 if (editor != null) {
                   PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeEditor(editor, false);
@@ -450,7 +449,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fNewREAction = new Action(Messages.getString("views.RELibraryView.context.re.actions.addRE.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -497,7 +496,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
           Action fViewAction = new Action(Messages.getString("views.RELibraryView.context.re.actions.viewRE.name")) { //$NON-NLS-1$
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -517,7 +516,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
           Action fEditAction = new Action(Messages.getString("views.RELibraryView.context.re.actions.editRE.name")) { //$NON-NLS-1$
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see org.eclipse.jface.action.Action#run()
              */
             @Override
@@ -539,7 +538,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fDeleteAction = new Action(Messages.getString("views.RELibraryView.context.re.actions.deleteRE.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -565,7 +564,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fUseREAction = new Action(Messages.getString("views.RELibraryView.context.re.actions.useRE.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -588,7 +587,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fNewCategoryAction = new Action(Messages.getString("views.RELibraryView.context.book.actions.addCat.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -625,7 +624,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fRenameAction = new Action(Messages.getString("views.RELibraryView.context.book.actions.renameBook.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -659,7 +658,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fChangeLocAction = new Action(Messages.getString("views.RELibraryView.context.book.actions.moveBook.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -698,7 +697,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         Action fDeleteAction = new Action(Messages.getString("views.RELibraryView.context.book.actions.deleteBook.name")) { //$NON-NLS-1$
           /*
            * (non-Javadoc)
-           * 
+           *
            * @see org.eclipse.jface.action.Action#run()
            */
           @Override
@@ -706,15 +705,14 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
             boolean proceed = MessageDialog.openQuestion(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.book.actions.deleteBook.dlg.title"), //$NON-NLS-1$
                 Messages.getString("views.RELibraryView.context.book.actions.deleteBook.dlg.text")); //$NON-NLS-1$
             if (proceed) {
-              REBook selected = (REBook)treeView.getTree().getSelection()[0].getData();
-              List categories = selected.getContents();
+              REBook selected = (REBook) treeView.getTree().getSelection()[0].getData();
+              List<RECategory> categories = selected.getContents();
               if (categories != null) {
-                for (Iterator iter = categories.iterator(); iter.hasNext();) {
-                  RECategory selectedCat = (RECategory)iter.next();
+                for (RECategory selectedCat : categories) {
                   RELibraryEntry[] contents = selectedCat.getCategoryContents();
                   if (contents != null) {
-                    for (int i = 0; i < contents.length; i++) {
-                      RELibraryEntryEditorInput inp = new RELibraryEntryEditorInput(contents[i], false);
+                    for (RELibraryEntry content : contents) {
+                      RELibraryEntryEditorInput inp = new RELibraryEntryEditorInput(content, false);
                       IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findEditor(inp);
                       if (editor != null) {
                         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeEditor(editor, false);
@@ -740,7 +738,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
    */
   @Override
@@ -770,7 +768,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
 
   /**
    * Expands the tree to the passed entry
-   * 
+   *
    * @param entry the entry to expand to
    */
   public void expandToEntry(RELibraryEntry entry) {
@@ -782,7 +780,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
    * Returns the index of the passed item as a child of the passed
    * parent-item. Returns -1 if the passed item is not found among
    * the children of the passed parent-item
-   * 
+   *
    * @param parentItem the parent item
    * @param item the child to get the index for
    * @return the index for the child or -1
