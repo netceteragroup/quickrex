@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ public class RELibraryEntryEditor extends FormEditor {
   private RELibraryEntryFormPage entryPage;
 
   /**
-   * The constructor
+   * The constructor.
    */
   public RELibraryEntryEditor() {
     super();
@@ -57,12 +57,12 @@ public class RELibraryEntryEditor extends FormEditor {
     }
     setSite(site);
     setInput(input);
-    setPartName(((RELibraryEntryEditorInput)input).getRELibraryEntry().getTitle());
+    setPartName(((RELibraryEntryEditorInput) input).getRELibraryEntry().getTitle());
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
    */
   @Override
@@ -77,7 +77,7 @@ public class RELibraryEntryEditor extends FormEditor {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
    */
   @Override
@@ -90,13 +90,13 @@ public class RELibraryEntryEditor extends FormEditor {
       return;
     }
     entryPage.doSave(monitor);
-    setPartName(((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry().getTitle());
+    setPartName(((RELibraryEntryEditorInput) getEditorInput()).getRELibraryEntry().getTitle());
     setIsDirty(false);
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.part.EditorPart#doSaveAs()
    */
   @Override
@@ -106,7 +106,7 @@ public class RELibraryEntryEditor extends FormEditor {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
    */
   @Override
@@ -115,12 +115,12 @@ public class RELibraryEntryEditor extends FormEditor {
   }
 
   /**
-   * Returns the EditorInput, already of the correct class
-   * 
+   * Returns the EditorInput, already of the correct class.
+   *
    * @return the EditorInput of this editor
    */
   protected RELibraryEntryEditorInput getMyEditorInput() {
-    return (RELibraryEntryEditorInput)super.getEditorInput();
+    return (RELibraryEntryEditorInput) super.getEditorInput();
   }
 
   /* (non-Javadoc)
@@ -134,7 +134,7 @@ public class RELibraryEntryEditor extends FormEditor {
   /**
    * Sets the dirty-state of the editor to the passed value, firing a
    * PropertyChangeEvent.
-   * 
+   *
    * @param flag the new value for the dirty-state
    */
   public void setIsDirty(boolean flag) {
@@ -149,7 +149,7 @@ public class RELibraryEntryEditor extends FormEditor {
   public void setFocus() {
     if (QuickRExPlugin.getDefault().isLinkRELibViewWithEditor()) {
       try {
-        RELibraryView view = (RELibraryView)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(RELibraryView.ID);
+        RELibraryView view = (RELibraryView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(RELibraryView.ID);
         if (view != null) {
           view.expandToEntry(getMyEditorInput().getRELibraryEntry());
         }

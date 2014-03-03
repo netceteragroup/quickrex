@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -62,8 +62,8 @@ public class RELibraryEntryFormPage extends FormPage {
   private SubjectControlContentAssistant regExpContentAssistant;
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param editor
    * @param title
    */
@@ -89,15 +89,15 @@ public class RELibraryEntryFormPage extends FormPage {
     gd.grabExcessHorizontalSpace = false;
     titleLabel.setLayoutData(gd);
     titleText = new Text(form.getBody(), SWT.BORDER | SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL);
-    titleText.setEditable(!((RELibraryEntryEditorInput)getEditorInput()).isReadOnly());
-    titleText.setText(((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry().getTitle());
+    titleText.setEditable(!((RELibraryEntryEditorInput) getEditorInput()).isReadOnly());
+    titleText.setText(((RELibraryEntryEditorInput) getEditorInput()).getRELibraryEntry().getTitle());
     titleText.addModifyListener(new ModifyListener() {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
       @Override
       public void modifyText(ModifyEvent e) {
-        ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
+        ((RELibraryEntryEditor) getEditor()).setIsDirty(true);
       }
     });
     titleText.setFont(JFaceResources.getFont(QuickRExView.EDITOR_FONT_KEY));
@@ -113,15 +113,15 @@ public class RELibraryEntryFormPage extends FormPage {
     gd.grabExcessHorizontalSpace = false;
     regExpLabel.setLayoutData(gd);
     regExpText = new Text(form.getBody(), SWT.BORDER | SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL);
-    regExpText.setEditable(!((RELibraryEntryEditorInput)getEditorInput()).isReadOnly());
-    regExpText.setText(((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry().getRe());
+    regExpText.setEditable(!((RELibraryEntryEditorInput) getEditorInput()).isReadOnly());
+    regExpText.setText(((RELibraryEntryEditorInput) getEditorInput()).getRELibraryEntry().getRe());
     regExpText.addModifyListener(new ModifyListener() {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
       @Override
       public void modifyText(ModifyEvent e) {
-        ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
+        ((RELibraryEntryEditor) getEditor()).setIsDirty(true);
       }
     });
     regExpText.setFont(JFaceResources.getFont(QuickRExView.EDITOR_FONT_KEY));
@@ -130,7 +130,7 @@ public class RELibraryEntryFormPage extends FormPage {
     gd.grabExcessHorizontalSpace = true;
     regExpText.setLayoutData(gd);
     tk.adapt(regExpText, true, true);
-    if (!((RELibraryEntryEditorInput)getEditorInput()).isReadOnly()) {
+    if (!((RELibraryEntryEditorInput) getEditorInput()).isReadOnly()) {
       createRegExpContentAssist();
     }
 
@@ -140,15 +140,15 @@ public class RELibraryEntryFormPage extends FormPage {
     gd.grabExcessHorizontalSpace = false;
     testTextLabel.setLayoutData(gd);
     testTextText = new Text(form.getBody(), SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-    testTextText.setEditable(!((RELibraryEntryEditorInput)getEditorInput()).isReadOnly());
-    testTextText.setText(((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry().getTesttext());
+    testTextText.setEditable(!((RELibraryEntryEditorInput) getEditorInput()).isReadOnly());
+    testTextText.setText(((RELibraryEntryEditorInput) getEditorInput()).getRELibraryEntry().getTesttext());
     testTextText.addModifyListener(new ModifyListener() {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
       @Override
       public void modifyText(ModifyEvent e) {
-        ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
+        ((RELibraryEntryEditor) getEditor()).setIsDirty(true);
       }
     });
     testTextText.setFont(JFaceResources.getFont(QuickRExView.EDITOR_FONT_KEY));
@@ -164,15 +164,15 @@ public class RELibraryEntryFormPage extends FormPage {
     gd.grabExcessHorizontalSpace = false;
     descriptionLabel.setLayoutData(gd);
     descriptionText = new Text(form.getBody(), SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-    descriptionText.setEditable(!((RELibraryEntryEditorInput)getEditorInput()).isReadOnly());
-    descriptionText.setText(((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry().getDescription());
+    descriptionText.setEditable(!((RELibraryEntryEditorInput) getEditorInput()).isReadOnly());
+    descriptionText.setText(((RELibraryEntryEditorInput) getEditorInput()).getRELibraryEntry().getDescription());
     descriptionText.addModifyListener(new ModifyListener() {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
       @Override
       public void modifyText(ModifyEvent e) {
-        ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
+        ((RELibraryEntryEditor) getEditor()).setIsDirty(true);
       }
     });
     descriptionText.setFont(JFaceResources.getFont(QuickRExView.EDITOR_FONT_KEY));
@@ -188,15 +188,15 @@ public class RELibraryEntryFormPage extends FormPage {
     gd.grabExcessHorizontalSpace = false;
     sourceLabel.setLayoutData(gd);
     sourceText = new Text(form.getBody(), SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-    sourceText.setEditable(!((RELibraryEntryEditorInput)getEditorInput()).isReadOnly());
-    sourceText.setText(((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry().getSource());
+    sourceText.setEditable(!((RELibraryEntryEditorInput) getEditorInput()).isReadOnly());
+    sourceText.setText(((RELibraryEntryEditorInput) getEditorInput()).getRELibraryEntry().getSource());
     sourceText.addModifyListener(new ModifyListener() {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
       @Override
       public void modifyText(ModifyEvent e) {
-        ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
+        ((RELibraryEntryEditor) getEditor()).setIsDirty(true);
       }
     });
     sourceText.setFont(JFaceResources.getFont(QuickRExView.EDITOR_FONT_KEY));
@@ -208,8 +208,8 @@ public class RELibraryEntryFormPage extends FormPage {
   }
 
   /**
-   * Returns the Text holding the title of the entry
-   * 
+   * Returns the Text holding the title of the entry.
+   *
    * @return the Text holding the title
    */
   protected Text getTitleText() {
@@ -241,7 +241,7 @@ public class RELibraryEntryFormPage extends FormPage {
    */
   @Override
   public void doSave(IProgressMonitor monitor) {
-    RELibraryEntry myEntry = ((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry();
+    RELibraryEntry myEntry = ((RELibraryEntryEditorInput) getEditorInput()).getRELibraryEntry();
     myEntry.setTitle(titleText.getText());
     myEntry.setRe(regExpText.getText());
     myEntry.setTesttext(testTextText.getText());
@@ -252,7 +252,7 @@ public class RELibraryEntryFormPage extends FormPage {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IWorkbenchPart#dispose()
    */
   @Override

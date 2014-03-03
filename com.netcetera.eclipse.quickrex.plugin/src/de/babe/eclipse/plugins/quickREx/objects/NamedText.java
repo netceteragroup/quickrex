@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -21,8 +21,8 @@ public class NamedText {
   public static final String TEXT_QNAME = "text"; //$NON-NLS-1$
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param p_name
    * @param p_text
    */
@@ -32,8 +32,8 @@ public class NamedText {
   }
 
   /**
-   * Returns the name of this text
-   * 
+   * Returns the name of this text.
+   *
    * @return the name
    */
   public String getName() {
@@ -41,8 +41,8 @@ public class NamedText {
   }
 
   /**
-   * Returns the text in this text
-   * 
+   * Returns the text in this text.
+   *
    * @return the text
    */
   public String getText() {
@@ -50,9 +50,9 @@ public class NamedText {
   }
 
   /**
-   * Returns an XML-representation of this object, using the passed String
+   * Returns an XML-representation of this object, using the passed String.
    * as a prefix for each line
-   * 
+   *
    * @param p_prefix the prefix for the line
    * @return an XML-String-representation of this object
    */

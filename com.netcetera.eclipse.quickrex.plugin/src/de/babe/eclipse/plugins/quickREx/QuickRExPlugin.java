@@ -62,7 +62,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private ArrayList regularExpressions;
 
-  private ArrayList testTexts;
+  private List<NamedText> testTexts;
 
   private ArrayList reBooks;
 
@@ -238,7 +238,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * @return the currently kept test-texts (as NamedTexts-array) or an empty array
    */
   public NamedText[] getTestTexts() {
-    return (NamedText[])testTexts.toArray(new NamedText[testTexts.size()]);
+    return testTexts.toArray(new NamedText[testTexts.size()]);
   }
 
   /**
@@ -295,8 +295,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * @return the NamedText or null
    */
   public NamedText getTestTextByName(String p_name) {
-    for (Iterator iter = testTexts.iterator(); iter.hasNext();) {
-      NamedText element = (NamedText)iter.next();
+    for (Object element2 : testTexts) {
+      NamedText element = (NamedText)element2;
       if (p_name.equals(element.getName())) {
         return element;
       }
@@ -323,7 +323,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   public String[] getTestTextNames() {
     String[] retArray = new String[testTexts.size()];
     for (int i = 0; i < retArray.length; i++) {
-      retArray[i] = ((NamedText)testTexts.get(i)).getName();
+      retArray[i] = testTexts.get(i).getName();
     }
     return retArray;
   }
@@ -384,11 +384,11 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  private ArrayList initTestTextsFromFile() {
+  private List<NamedText> initTestTextsFromFile() {
     IPath ttFilePath = getStateLocation().append(TEST_TEXT_FILE_NAME);
     File ttFile = ttFilePath.toFile();
     if (ttFile.exists() && ttFile.canRead()) {
-      ArrayList res = new ArrayList();
+      List<NamedText> res = new ArrayList<>();
       try {
         SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
         parser.parse(ttFile, new NamedTextXMLHandler(res));
@@ -405,7 +405,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
         IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message4"), null); //$NON-NLS-1$
         getLog().log(status);
       }
-      return new ArrayList();
+      return new ArrayList<>();
     }
   }
 
@@ -495,15 +495,14 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  private void writeTestTextsToFile(ArrayList p_testTexts) {
+  private void writeTestTextsToFile(List<NamedText> p_testTexts) {
     IPath ttFilePath = getStateLocation().append(TEST_TEXT_FILE_NAME);
     File reFile = ttFilePath.toFile();
     try {
       FileOutputStream fos = new FileOutputStream(reFile);
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<testTexts>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      Iterator it = p_testTexts.iterator();
-      while (it.hasNext()) {
-        fos.write(((NamedText)it.next()).toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
+      for (NamedText each : p_testTexts) {
+        fos.write(each.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       fos.write("</testTexts>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       fos.close();
@@ -555,8 +554,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private int getTestTextIndexByName(String p_name) {
     int i = 0;
-    for (Iterator iter = testTexts.iterator(); iter.hasNext();) {
-      NamedText element = (NamedText)iter.next();
+    for (Object element2 : testTexts) {
+      NamedText element = (NamedText)element2;
       if (p_name.equals(element.getName())) {
         return i;
       }

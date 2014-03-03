@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -45,8 +45,8 @@ public class RESearchInputDialog extends Dialog {
   private Button buttonSource;
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param parentShell
    */
   public RESearchInputDialog(Shell parentShell) {
@@ -127,7 +127,7 @@ public class RESearchInputDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
    */
   @Override
@@ -141,7 +141,7 @@ public class RESearchInputDialog extends Dialog {
 
   /**
    * Returns the RESearchQuery initialized by this dialog.
-   * 
+   *
    * @return the query
    */
   public RESearchQuery getQuery() {
