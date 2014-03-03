@@ -18,9 +18,9 @@
   </modules>
   
   <scm>
-    <connection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex</connection>
-    <developerConnection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex</developerConnection>
-    <url>https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex</url>
+    <connection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</connection>
+    <developerConnection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</developerConnection>
+    <url>https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</url>
   </scm>
   
   <developers>

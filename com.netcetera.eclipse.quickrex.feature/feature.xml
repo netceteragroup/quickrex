@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.netcetera.eclipse.quickrex.feature"
-      label="Copy As Path Feature"
-      version="4.0.0"
+      label="QuickREx Feature"
+      version="4.0.1"
       provider-name="Netcetera"
       plugin="com.netcetera.eclipse.quickrex.plugin">
 
