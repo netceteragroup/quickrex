@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+    <meta http-equiv="Content-Type" content=
+    "text/html; charset=iso-8859-1">
+		<LINK REL="STYLESHEET" HREF="book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+    <title>Using the Reg. Exp. Library View for keeping and organizing regular expressions</title>
+  </head>
+
+  <body>
+<!--
+<h2>Table of Contents</h2>
+
+<A href="using.html">Using the QuickREx Plugin</A>
+<ul>
+	<li><A href="quickRExView.html">Using the QuickREx View for testing and evaluating regular expressions</A></li>
+	<ul>
+	  <li><A href="persistence.html">Saving, Loading and Organizing Regular Expressions and Test-Texts</A></li>
+		<li><A href="regExpressions.html">How QuickREx evaluates the Regular Expressions</A></li>
+	</ul>		
+	<li><b>Using the Reg. Exp. Library View for keeping and organizing regular expressions</b></li>
+	<li><A href="settings.html">Changing Color- and Font-settings</A></li>
+	<li><A href="completions.html">Customizing TAB-completion</A></li>
+</ul>
+-->
+    <h1>Using the Reg. Exp. Library View for keeping and organizing regular expressions</h1>
+
+		<a href="#reLibViewDetails">The Reg. Exp. Library View</a></br>
+		<ul>
+			<li><a href="#structure">Structure of the library</a>
+			<li><a href="#defaultContent">The initial library-contents</a>
+			<li><a href="#workingRE">Working with Reg. Exp. entries</a>
+			<li><a href="#searching">Searching the Library</a>
+			<li><a href="#addingBook">Adding a new Book to the library</a>
+			<li><a href="#workingBook">Working with Books</a>
+			<li><a href="#workingCategory">Working with Categories</a>
+		</ul>
+
+		<a name="reLibViewDetails"><h2>The Reg. Exp. Library View</h2></a>
+
+		<p>If the Plugin is installed, you should find a view named <strong>Reg. Exp. Library</strong> offered under <strong>Window > Show View > Other...</strong> 
+		in the category <strong>QuickREx</strong>.</p>
+		
+		<p>The view looks as displayed in the screenshot below.</p>
+		
+		<img alt="The Reg. Exp. Library View" src="images/RELibView.png"></img>
+		
+		<a name="structure"><h3>Structure of the library</h3></a>
+
+		<p>The Regular Expression Library contains <strong>'Books'</strong> which in turn contain <strong>'Categories'</strong> 
+		which hold <strong>'Regular Expression Entries'</strong>. Initially, the library only contains one book named 'QuickREx'. 
+		This book is read-only, you can not delete it or change its name/path nor can you add or change categories or entries.</p>
+		
+		<a name="defaultContent"><h3>The initial library-contents</h3></a>
+			    
+		<p>The contents of the default book are displayed in the screenshot below:</p>
+		
+		<img alt="The default book" src="images/reLibDefaultBook.png"/></img>
+			    
+		<p>The entries can be used as a starting point fo your own expressions, or as they are. They are partly collected from
+		public sources, partly changed or written for the plug-in.</p>
+		
+		<p>The default book contents can not be changed through the standard processes (i.e. from within the plug-in). However,
+		since they are held in an .xml-file, you could adapt them to your needs. However, as you will shortly see, there is a 
+		better way to keep track of your own useful expressions.</p>
+		
+		<a name="workingRE"><h3>Working with Reg. Exp. entries</h3></a>
+		
+		<p>If you select an entry in one of the default books' categories and right-click, the context-menu displayed
+		below opens.</p>
+
+		<img alt="The Reg. Exp. Library RE-Entry-Context menu" src="images/reLibEntryContextMenuRO.png"/></img>
+
+		<p>You from here you can either bring up an editor to display the entries details by selecting <strong>'View'</strong> (you could also do this
+		by double-clicking the entry), or you can use the entries expression and test-text directly in the QuickREx-view
+		(see <a href="quickRExView.html">here</a>) by selecting <strong>'Use in QuickREx-View...'</strong>. Note that any contents
+		in the QuickREx-View are overwritten by this. Global flags and the RE-implementation as selected are unchanged.</p>
+
+		<p>Since the default book is read-only, the other menu-entries are disabled in that book.</p>
+		
+		<p>The editor for the library-entries is shown in the following screen-shot.</p>
+		
+		<img alt="The RE-Entry Editor" src="images/reLibEntryEditor.png"/></img>
+		
+		<p>The editor and the library-tree in the view can be linked as usually with Eclipse-views and editors (use
+		the menu or the cool-bar of the library-view).</p>
+		
+		<p>For all books other than the default book (see <a href="#addingBook">below</a> for how to add your own books),
+		the entries can be edited. In this case, the context-menu looks as follows:</p>
+
+		<img alt="The Reg. Exp. Library RE-Entry-Context menu" src="images/reLibEntryContextMenu.png"/></img>
+
+		<p>'View' is replaced by <strong>'Edit...'</strong>, which again opens an editor with the currently selected entry, 
+		the entry can be deleted using <strong>'Delete...'</strong>, and you can add an entry following the currently selected one
+		by using <strong>'Add Reg. Exp. entry'</strong>. This last option will open a dialog asking you for a title for the entry
+		and then open a new editor with the title already entered. Note that titles must be unique within  category.</p>
+
+		<p>In the QuickREx-editor, the field for entering the regular expression also offers TAB-completion (just as the QuickREx-view
+		does). The TAB-completion is realized with the same mechanism as for the QuickREx-view, so the remarks made <a href="completions.html">here</a>
+		about how TAB-completion is customizable apply.</p>
+
+		<a name="searching"><h3>Searching the Library</h3></a>
+		
+		<p>You can search the library using the cool-bar or the menu-action of the library-view (see screenshot on top of page).
+		Clicking on the search-action  brings up the following dialog:</p>
+		
+		<img alt="The Reg. Exp. Library Search-Input Dialog" src="images/reLibSearchInputDlg.png"/></img>
+
+		<p>In this dialog, you can enter the search-phrase and decide which parts of the library-entries
+		should be searched. Search-results are displayed in the usual Eclipse search-result view as shown below.</p>
+		
+		<img alt="The Reg. Exp. Library Search-Result View" src="images/reLibSearchResult.png"/></img>
+
+		<a name="addingBook"><h3>Adding a new Book to the library</h3></a>
+		
+		<p>For keeping your own collection of useful regular expressions, you can add books to the regular 
+		expression library. To do so, use the wizard contributed under <strong>'File &gt; New &gt; Other...'</strong> in
+		the category <strong>'QuickREx'</strong> as shown in the screenshot below.</p>
+		
+		<img alt="The Wizard contributed by the Reg. Exp. Library" src="images/createRELibBookWizard.png"/></img>
+
+		<p>The wizard has a single page asking you to enter a path to the xml-file to keep the contents
+		of the book and a name for the book. The book is added at the end of the list of books on
+		finishing the wizard.</p>
+		
+		<p><em>Note that when an existing file is selected, the file will be overwritten (a warning will be given).
+		Note also that the contents of the regular expression library are only persisted on saving a regular expressino entry 
+		or on regular shut-down of the workbench. The file holding the contents of the new book will thus not be immediatly visible 
+		after creatino of the book.</em></p>
+					    
+		<a name="workingBook"><h3>Working with Books</h3></a>
+		
+		<p>Apart from the default book in the library, which is read-only, all books have the context-menu shown
+		below.</p>
+		
+		<img alt="The Reg. Exp. Library Book-context menu" src="images/reLibBookContextMenu.png"/></img>
+
+		<p>From this menu you can:
+		<ul>
+			<li>add a new category at the top of the list of current categories in the book</li>
+			<li>rename the book</li>
+			<li>change the path of the xml-file holding the books contents</li>
+			<li>delete the book</li>
+		</ul>		
+		</p>
+		
+		<a name="workingCategory"><h3>Working with Categories</h3></a>
+		
+		<p>Apart from the categories in the default book in the library, which are read-only, all categories have the context-menu shown
+		below.</p>
+		
+		<img alt="The Reg. Exp. Library Category-Context menu" src="images/reLibCategoryContextMenu.png"/></img>
+
+		<p>From this menu you can:
+		<ul>
+			<li>add a new regular expressino entry at the top of the list of current entries in the category</li>
+			<li>add a category directly after the current category</li>
+			<li>rename the category</li>
+			<li>delete the category</li>
+		</ul>		
+		</p>
+
+    <p>&nbsp;</p>
+  </body>
+</html>

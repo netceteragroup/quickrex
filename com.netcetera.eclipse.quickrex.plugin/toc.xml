@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Table of Contents">
+  <topic label="Using the QuickREx Plugin"  href="html/using.html"> 
+	  <topic label="Using the QuickREx View for testing and evaluating regular expressions"  href="html/quickRExView.html"> 
+		  <topic label="Simple Saving, Loading and Organization of Regular Expressions and Test-Texts"  href="html/persistence.html"> 
+		  </topic>
+		  <topic label="How QuickREx evaluates the Regular Expressions"  href="html/regExpressions.html"> 
+		  </topic>
+	  </topic>
+	  <topic label="Using the Reg. Exp. Library View for keeping and organizing regular expressions"  href="html/reLibView.html"> 
+	  </topic>
+	  <topic label="Changing Color- and Font-settings"  href="html/settings.html"> 
+	  </topic>
+	  <topic label="Customizing TAB-completion and the Edit-dialog"  href="html/completions.html"> 
+	  </topic>
+	</topic>
+</toc>

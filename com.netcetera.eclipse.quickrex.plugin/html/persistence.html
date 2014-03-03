@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+    <meta http-equiv="Content-Type" content=
+    "text/html; charset=iso-8859-1">
+		<LINK REL="STYLESHEET" HREF="book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+    <title>Saving, Loading and Organizing Regular Expressions and Test-Texts</title>
+  </head>
+
+  <body>
+<!--
+<h2>Table of Contents</h2>
+
+<A href="using.html">Using the QuickREx Plugin</A>
+<ul>
+	<li><A href="quickRExView.html">Using the QuickREx View for testing and evaluating regular expressions</A></li>
+	<ul>
+	  <li><b>Saving, Loading and Organizing Regular Expressions and Test-Texts</b></li>
+		<li><A href="regExpressions.html">How QuickREx evaluates the Regular Expressions</A></li>
+	</ul>		
+	<li><A href="reLibView.html">Using the Reg. Exp. Library View for keeping and organizing regular expressions</A></li>
+	<li><A href="settings.html">Changing Color- and Font-settings</A></li>
+	<li><A href="completions.html">Customizing TAB-completion</A></li>
+</ul>
+-->
+    <h1>Saving, Loading and Organizing Regular Expressions and Test-Texts</h1>
+
+		<img alt="The QuickREx Coolbar" src="images/QuickRExCoolBar.png"/></img>
+		<img alt="The menu of the QuickREx-View" src="images/dropDownMenu.png"/></img>
+
+		<p>You can <strong>save</strong> useful <strong>regular expressions and test-texts for later referenc</strong>e. All persisted data
+		is held in the so-called plugin-content-area in Eclipse which is found as a folder with the
+		plugin-id as name under the path <strong>(Workspace)/.metadata/.plugins</strong>. The QuickREx-plugin
+		generates two .xml-files, regularExpressions.xml and testTexts.xml, which hold the persisted 
+		regular expressions and test-texts.</p>
+		
+		<p><strong>To keep the current regular expression for later reference</strong>, simply press the button '<strong>Keep Regular Expression</strong>'
+		in the cool-bar or select the entry from the drop-down menu (see above)
+		with the regular expression entered into the reg.-exp.-field. This will add the current String
+		to the list of regular expressions available in the regular-expression combo. Once the plugin
+		is deactivated by the workbench, this list is persisted into the file mentioned above.</p>
+		
+		<p><strong>To load a previous regular expression</strong>, simply select it in the regular-expression combo list.</p>
+				
+		<p><strong>To delete saved regular expressions from the list</strong>, use the drop-down menu of the view (see above). This
+		offers an action 'Organize Reg. Exp.s...'.</p>
+		
+		<p>A dialog will open, displaying the list of currently saved regular expressions. Select the expression(s) to delete
+		and press the 'Delete'-button in the dialog. When you are done, press 'Close'.</p> 
+
+		<p><strong>To keep the current test-text for later reference</strong>, press the button '<strong>Save Test-Text</strong>'
+		in the cool-bar or select the entry from the drop-down menu (see above). A dialog opens, displaying the current text and asking for a name.
+		Enter a name and press 'OK'. If the name is already in use, a message will inform you about this
+		fact when the name is entered. If you still press 'OK', the old text is overwritten with 
+		the current text.</p>
+		
+		<p><strong>To load a previous test-text or the contents of a file</strong>, press the button '<strong>Load Test-Text</strong>'
+		in the cool-bar or select the entry from the drop-down menu (see above). A dialog lets you select the name of the test-text to load or read the contents
+		of a file on the file-system.</p>	
+		
+		<p>To load a previously saved text, select the name of the text to load from the list.
+		The saved text is displayed in the dialog for reference (see below). Pressing 'OK' loads the
+		selected text into the test-text field.</p>
+		
+		<p>To load the contents of a file on the file-system, press 'Browse...' and find the file
+		in the file-selection dialog. When closing the dialog with a file selected, the contents
+		of the file are displayed in the field 'Text'. Pressing 'OK' closes the organize-dialog and 
+		loads the file-contents in to the test-text field. Note that the test-text-contents are
+		no longer linked with the file-contents, i.e. changing any one will not change the other.</p>
+		
+		<img alt="Load test-text dialog" src="images/loadTestTextDlg.png"/></img>
+		
+		<p><strong>To delete saved test-texts</strong>, use the drop-down menu of the view (see above). This
+		offers an action 'Organize Test-Texts...'.</p>
+		
+		<p>A dialog similar to the one above will open, where the 'OK' button is replaced by a 'Delete' button
+		and the 'Cancel' button is replaced by a 'Close' button. Select the name of the test-text to be deleted
+		and click 'Delete'. A message informs you that the text has been deleted and the list is refreshed. To close
+		the dialog, use the corresponding button.</p> 
+
+  </body>
+</html>

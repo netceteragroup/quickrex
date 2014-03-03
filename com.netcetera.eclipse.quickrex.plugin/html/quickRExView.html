@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+    <meta http-equiv="Content-Type" content=
+    "text/html; charset=iso-8859-1">
+    <link rel="STYLESHEET" href="book.css" charset="ISO-8859-1" type=
+    "text/css">
+
+    <title>Using the QuickREx View for testing and evaluating regular
+    expressions</title>
+  </head>
+
+  <body>
+<!--
+    <h2>Table of Contents</h2>
+    <a href="using.html">Using the QuickREx Plugin</a>
+    <ul>
+      <li><b>Using the QuickREx View for testing and evaluating regular expressions</b></li>
+        <ul>
+          <li><a href="persistence.html">Saving, Loading and Organizing Regular Expressions and Test-Texts</a></li>
+          <li><a href="regExpressions.html">How QuickREx evaluates the Regular Expressions</a></li>
+        </ul>
+      </li>
+      <li><a href="reLibView.html">Using the Reg. Exp. Library View for keeping and organizing regular expressions</a></li>
+      <li><a href="settings.html">Changing Color- and Font-settings</a></li>
+      <li><a href="completions.html">Customizing TAB-completion and the Edit-dialog</a></li>
+    </ul>
+-->
+    <h1>Using the QuickREx View for testing and evaluating regular
+    expressions</h1>
+
+    <ul type="square">
+      <li><a href="#QuickRExViewDetails">The QuickREx View</a></li>
+      <li><a href="#testing">Testing Regular Expressions</a></li>
+      <li><a href="#timeOutAndOfflineEvaluation">Time-out and offline evaluation</a></li>
+      <li><a href="#selectingImpl">Selecting the Reg-Exp implementation</a></li>
+      <li><a href="#settingFlags">Setting global compiler-flags</a></li>
+      <li><a href="#tabCompletion">Using TAB-completion</a></li>
+      <li><a href="#reEditDialog">Using the Reg-Exp-Edit dialog</a></li>
+      <li><a href="#copyToJava">Copying Regular Expressions to Java-code</a></li>
+      <li><a href="#grepping">Extracting all matches from text</a></li>
+    </ul>
+
+    <h2 name="QuickRExViewDetails">The QuickREx View</h2>
+
+    <p>If the Plugin is installed, you should find a view named <strong>QuickREx</strong> offered under
+    <strong>Window &gt; Show View &gt; Other...</strong> in the
+    category <strong>QuickREx</strong>.</p>
+
+    <p>The view looks as displayed in the screenshot below.</p>
+    <img alt="The QuickREx View" src="images/QuickRExView.png"> 
+
+    <p>The cool-bar icons are detailed in the following screenshot.</p>
+    <img alt="The QuickREx Coolbar" src="images/QuickRExCoolBar.png"/> 
+
+		<a name="testing"><h3>Testing Regular Expressions</h3></a>
+
+    <p>As you type text into the test-text area or a regular expression
+    into the area for the regular expressions, the expression is
+    constantly evaluated. The information on matches and groups is
+    updated on the fly and matches are highlighted in the
+    test-text.</p>
+
+    <p>Below is a screenshot of a situation where there are no groups
+    but several matches. The match highlighted in green is the current
+    one. All information on groups pertains to the current match.</p>
+    <img alt="The QuickREx View with matches" src="images/QuickRExView2.png"/>
+
+    <p>The information next to the buttons used to navigate between the
+    matches is to be interpreted as "There are 7 matches altogether,
+    the current match (highlighted in green) has a start-index of 2 and
+    an end-index of 4". As you can see there are no groups in the
+    current match. You can navigate between the matches using the
+    'Previous' and 'Next' buttons near the label 'Matches'. If there
+    were groups in the current match, you could navigate through the
+    groups using the 'Previous' and 'Next' buttons near the label
+    'Groups'.</p>
+    <img alt="The QuickREx View with matches which have groups" src="images/QuickRExView3.png"/></img>
+
+    <p>The above screenshot displays a case where there are groups in
+    the current match. The current group is indicated by a bold font
+    and the contents of the group are printed in the information-are
+    next to the group-navigation buttons. The information there is to
+    be interpreted as "There are 2 groups in the current match, the
+    current group is the first one, containing 'the plugin evaluates
+    '".</p>
+
+		<a name="timeOutAndOfflineEvaluation"><h3>Time-out and offline evaluation</h3></a>
+
+    <p>As of Version 3, evaluation of the regular expression can be done
+    offline by unsetting the mark at <strong>'Live-evaluation'</strong> and using
+    the <strong>'Evaluate'</strong>-button if evaluation is in order.</p>
+
+    <p>Also from Version 3 on, evaluation of the regular expression takes
+    place in a separate thread and may be cancelled by the user or is automatically
+    cancelled if it takes too long. The dialog for cancelling the evaluation appears
+    with a small delay so that you will not notice it during fast live-evaluation.</p>
+
+    <p>The time-out behaviour is configurable from the preference page available
+    under <strong>'Window &gt; Preferences...'</strong> in the category 
+    <strong>'QuickREx'</strong>. The preference page is displayed with the default settings
+    in the screenshot below.</p>
+
+		<img alt="The QuickREx preference-page" src="images/QuickRExPreferencePage.png"/></img>
+		
+		<a name="selectingImpl"><h3>Selecting the Reg-Exp implementation</h3></a>
+
+    <p>QuickREx offers the most widely used implementations of
+    Regular Expressions in the Java-world:</p>
+
+    <ul>
+      <li>JDK Regular Expressions (available since 1.4)</li>
+
+      <li>Jakarta ORO Perl-style Regular Expressions (ORO-Version
+      2.0.8, supports Perl 5.003 Regular Expressions)</li>
+
+      <li>Jakarta ORO Awk-style Regular Expressions (ORO-Version
+      2.0.8)</li>
+
+			<li>JRegex Regular Expressions (Version 1.2_01, supports 
+			Perl 5.6 Regular Expressions)</li>
+
+			<li>Jakarta Regexp Regular Expressions (Version 1.4)</li>
+    </ul>
+
+    <p>The default implementation is the JDK-one. To change the
+    implementation, use the leftmost buttons in the view's coolbar (see
+    screenshot above). The expression will immediatly be re-evaluated.
+    Also, the TAB-completion will adjust to offer the completions
+    defined for the selected implementation.</p>
+    Alternatively, you may use the view's drop-down menu and select the
+    implementation of your choice (see figure). <img alt=
+    "The drop-down menu of QuickREx" src="images/dropDownMenu.png"> 
+
+    <a name="settingFlags"><h3>Setting global compiler-flags</h3></a>
+
+    <p>You can set global compiler flags with any of the
+    implementations QuickREx offers. This is done at the bottom of the
+    view (see screenshot at the top of the page). To keep the view
+    small, the "Global Flags"-section is folded away when the view is
+    opened. To access it, click on the section-header.</p>
+
+    <p>The state of the flags is saved when you close the view or leave
+    the Workbench. Note that there are different flags depending on the
+    chosen implementation. Also note that the flags do behave slightly
+    differently, depending on the implementation chosen. Check the
+    tool-tip texts for the check-boxes to find details about the
+    individual flags (see screenshot).</p>
+    <img alt="The QuickREx View with an example tool-tip for a flag"
+    src="images/QuickRExView4.png"> 
+
+    <a name="tabCompletion"><h3>Using TAB-completion</h3></a>
+
+    <p>As in several specialized editors within Eclipse, you can use
+    TAB-completion for regular expressions in QuickREx. To get a list
+    of proposals for completion of the current expression, hit
+    'Ctrl+Space' while editing in the area for regular expressions. An
+    assistant will open as displayed in the below screenshot. Scrolling
+    through the suggestions also updates the hint on the right side of
+    the proposal. When you select a proposal, QuickREx will try to work
+    out whether the already typed in characters should be part of an
+    expression or not.</p>
+    <img alt="The code-completion assistant" src=
+    "images/TABCompletion.png"> 
+
+    <p>Note that due to the complexity of regular expressions,
+    TAB-completion is not as accurate as it is e.g. in the Java-editor.
+    Sometimes the proposed possibilities may result in illegal
+    patterns. Generally, QuickREx tries to do a good job in guessing
+    what you may want. To this end, the rules are roughly as
+    follows:</p>
+
+    <ul>
+      <li>Offer all completions which are not definitely illegal. Thus
+      for example, you will not be offered '+' ("Greedy match 1 or more
+      times") at the beginning of the regular expression - but almost
+      anything else.</li>
+
+      <li>Try to guess the intentions of the user in cases where things
+      are pretty clear. Offer things starting with the most likely
+      ones. They are the exceptions, but there are cases where it is
+      clear what the user is after. Thus, the input '\p{Lo' is very
+      likely part of '\p{Lower}'. This will be the first offer.</li>
+
+      <li>In case there are several potential completions even within
+      the rules, offer the shortest ones first. Thus, if you start with
+      '\' and ask for completion, you will be offered '\\', '\0', ...
+      before \p{Lower}. If you keep typing and the next character typed
+      is a 'p', you will notice how the order of proposals
+      changes.</li>
+    </ul>
+
+    <a name="#reEditDialog"><h3>Using the Reg-Exp-Edit dialog</h3></a>
+
+    <p>If you prefer a dialog with selection-lists and some bracket-highlighting
+    over the combo to edit the regular expression, click the 'Edit...'-button
+    to the right of the combo for the regular expression. The dialog displayed in the
+    following figure will open:</p>
+    
+    <img alt="The edit-dialog for regular expressions" src="images/reEditDialog.png"/></img>
+
+	<p>The dialog differs for the different flavours, since they offer different
+	options for multiplicities, wildcards, etc.</p> 
+	
+	<p>The text-field at the top of the dialog is used to type the regular expression. As
+	you change the expression, the plug-in-view updates and the expression is evaluated
+	against the current test-text (assuming you use live-evaluation). The text-field also
+	offers some bracket-highlighting.</p>
+	
+	<p>For expressions like wildcards etc, you will find the most commonly used options
+	in the drop-down-lists. Whenever a list-entry is selected, the field at the bottom
+	of the dialog displays a short explanation. If you want to use an expression, press
+	'Insert' next to the drop-down. The expression will be inserted at the current edit-position
+	of the regular expression.</p>
+
+    <a name="copyToJava"><h3>Copying Regular Expressions to Java-code</h3></a>
+
+    <p>Typically, regular expressions are full with backslashes and the
+    like. To use them in code, you need to escape special characters.
+    When the number of backslashes increases, this gets annoying. To
+    simplify the task and to reduce the potential sources of errors,
+    QuickREx offers the possibility of properly escaping the current
+    regular expression and inserting them at the current curser
+    position of (or replacing the current selection in) the last active
+    editor window. To this end, simply place the cursor where you want
+    the regular expression to go in the editor and press '<strong>Copy
+    to Java</strong>' in the coolbar or select it in the drop-down (see
+    above).</p>
+
+    <a name="grepping"><h3>Grep - extracting all matches from text</h3></a>
+
+    <p>If you want to extract only the matches for a particular regular
+    expression from the current test-text, simply press the button
+    '<strong>Grep</strong>' in the coolbar or select it in the
+    drop-down (see above). A dialog as displayed below will open,
+    holding all matches separated by line-feeds. You can copy the
+    result from the dialog to the clipboard to use it anywhere else as
+    usually.</p>
+    <img alt="The dialog holding matches after grepping" src=
+    "images/GrepResult.png"> 
+
+    <p>&nbsp;</p>
+  </body>
+</html>

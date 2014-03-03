@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--/*******************************************************************************
+ * Copyright (c) 2005 Bastian Bergerhoff and others
+ * All rights reserved. This program and the accompanying materials 
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution.
+ * 
+ * Contributors:
+ *    Georg Sendt - initial contents
+ *******************************************************************************/-->
+<completions>
+  <proposal key="\\" value="\\" allowPlain="true" displayString="Backslash" additionalInfo="\\">
+    <retrigger re=".*[^\\]\\$" completion="\"/>
+    <retrigger re=".*\A\\$" completion="\"/>
+  </proposal>
+  <proposal key="\x" value="\x" allowPlain="true" displayString="Hex character code" additionalInfo="\x - \xhh is equivalent to 0xhh">
+    <retrigger re=".*[^\\]\\$" completion="x"/>
+    <retrigger re=".*\A\\$" completion="x"/>
+  </proposal>
+  <proposal key="\u" value="\u" allowPlain="true" displayString="Hex code of double-byte character" additionalInfo="\u - \uhhhh is equivalent to 0xhhhh">
+    <retrigger re=".*[^\\]\\$" completion="u"/>
+    <retrigger re=".*\A\\$" completion="u"/>
+  </proposal>
+  <proposal key="\t" value="\t" allowPlain="true" displayString="Tab" additionalInfo="\t - \u0009">
+    <retrigger re=".*[^\\]\\$" completion="t"/>
+    <retrigger re=".*\A\\$" completion="t"/>
+  </proposal>
+  <proposal key="\n" value="\n" allowPlain="true" displayString="Newline (line-feed)" additionalInfo="\n - \u000A">
+    <retrigger re=".*[^\\]\\$" completion="n"/>
+    <retrigger re=".*\A\\$" completion="n"/>
+  </proposal>
+  <proposal key="\r" value="\r" allowPlain="true" displayString="Carriage Return (CR)" additionalInfo="\r - \u000D">
+    <retrigger re=".*[^\\]\\$" completion="r"/>
+    <retrigger re=".*\A\\$" completion="r"/>
+  </proposal>
+  <proposal key="\f" value="\f" allowPlain="true" displayString="Form Feed (FF)" additionalInfo="\f - \u000C">
+    <retrigger re=".*[^\\]\\$" completion="f"/>
+    <retrigger re=".*\A\\$" completion="f"/>
+  </proposal>
+  <proposal key="\a" value="\a" allowPlain="true" displayString="Beep" additionalInfo="\a - \u0007">
+    <retrigger re=".*[^\\]\\$" completion="a"/>
+    <retrigger re=".*\A\\$" completion="a"/>
+  </proposal>
+  <proposal key="\e" value="\e" allowPlain="true" displayString="Escape" additionalInfo="\e - \u001B">
+    <retrigger re=".*[^\\]\\$" completion="e"/>
+    <retrigger re=".*\A\\$" completion="e"/>
+  </proposal>
+  <proposal key="\c" value="\c" allowPlain="true" displayString="Control character" additionalInfo="\c">
+    <retrigger re=".*[^\\]\\$" completion="c"/>
+    <retrigger re=".*\A\\$" completion="c"/>
+  </proposal>
+  <proposal key="." value="." allowPlain="true" displayString="Any character" additionalInfo=". - may or may not match line terminators depending &#x000A;on flags (you can set DOTALL mode using ?s)">
+  </proposal>
+  <proposal key="\d" value="\d" allowPlain="true" displayString="A digit" additionalInfo="\d - [0-9], i.e. any of 0,1,2,3,4,5,6,7,8 or 9">
+    <retrigger re=".*[^\\]\\$" completion="d"/>
+    <retrigger re=".*\A\\$" completion="d"/>
+  </proposal>
+  <proposal key="\D" value="\D" allowPlain="true" displayString="Not a digit" additionalInfo="\D - [^0-9], i.e. none of 0,1,2,3,4,5,6,7,8 or 9">
+    <retrigger re=".*[^\\]\\$" completion="D"/>
+    <retrigger re=".*\A\\$" completion="D"/>
+  </proposal>
+  <proposal key="\s" value="\s" allowPlain="true" displayString="A whitespace" additionalInfo="\s - [ \t\n\x0B\f\r]">
+    <retrigger re=".*[^\\]\\$" completion="s"/>
+    <retrigger re=".*\A\\$" completion="s"/>
+  </proposal>
+  <proposal key="\S" value="\S" allowPlain="true" displayString="Not a whitespace" additionalInfo="\S - [^\s]">
+    <retrigger re=".*[^\\]\\$" completion="S"/>
+    <retrigger re=".*\A\\$" completion="S"/>
+  </proposal>
+  <proposal key="\w" value="\w" allowPlain="true" displayString="Alphanumeric" additionalInfo="\w - [a-zA-Z_0-9], i.e. a standard character, an underscore &#x000A;or a digit">
+    <retrigger re=".*[^\\]\\$" completion="w"/>
+    <retrigger re=".*\A\\$" completion="w"/>
+  </proposal>
+  <proposal key="\W" value="\W" allowPlain="true" displayString="Not an alphanumeric" additionalInfo="\W - [^a-zA-Z_0-9]">
+    <retrigger re=".*[^\\]\\$" completion="W"/>
+    <retrigger re=".*\A\\$" completion="W"/>
+  </proposal>
+  <proposal key="^" value="^" allowPlain="true" displayString="Line start" additionalInfo="^ - The beginning of a line">
+  </proposal> 
+  <proposal key="$" value="$" allowPlain="true" displayString="Line end" additionalInfo="$ - The end of a line">
+  </proposal>
+  <proposal key="\b" value="\b" allowPlain="true" displayString="Word beginning or end" additionalInfo="\b - The beginning of a Word (a region consisting of &#x000A;Word-characters, [a-zA-Z_0-9])">
+    <retrigger re=".*[^\\]\\$" completion="b"/>
+    <retrigger re=".*\A\\$" completion="b"/> 
+  </proposal>
+  <proposal key="\B" value="\B" allowPlain="true" displayString="Not a word beginning or end" additionalInfo="\B - Neither the beginning nor the end of a Word (a region &#x000A;consisting of Word-characters, [a-zA-Z_0-9])">
+    <retrigger re=".*[^\\]\\$" completion="B"/>
+    <retrigger re=".*\A\\$" completion="B"/> 
+  </proposal>
+  <proposal key="\A" value="\A" allowPlain="true" displayString="Start of input" additionalInfo="\A - Start of input">
+    <retrigger re=".*[^\\]\\$" completion="A"/>
+    <retrigger re=".*\A\\$" completion="A"/> 
+  </proposal>
+  <proposal key="\Z" value="\Z" allowPlain="true" displayString="\Z" additionalInfo="\Z - The end of the input (apart from a possible terminator)">
+    <retrigger re=".*[^\\]\\$" completion="Z"/>
+    <retrigger re=".*\A\\$" completion="Z"/> 
+  </proposal>
+  <proposal key="\z" value="\z" allowPlain="true" displayString="End of input" additionalInfo="\z - The end of the input">
+    <retrigger re=".*[^\\]\\$" completion="z"/>
+    <retrigger re=".*\A\\$" completion="z"/> 
+  </proposal> 
+  <proposal key="?" value="?" allowPlain="false" displayString="Greedy match 0 or 1 times" additionalInfo="? - match the preceeding expression 0 or 1 times. &#x000A;&#x000A;Greedy: reads the whole input, tries to match &#x000A;and then (repeatedly) backs off by one character &#x000A;and tries again.">
+    <retrigger re=".*[^\\]$" completion="?"/>
+    <retrigger re=".*\\\\$" completion="?"/>
+  </proposal> 
+  <proposal key="*" value="*" allowPlain="false" displayString="Greedy match 0 or more times" additionalInfo="* - match the preceeding expression 0 or more times. &#x000A;&#x000A;Greedy: reads the whole input, tries to match &#x000A;and then (repeatedly) backs off by one character &#x000A;and tries again.">
+    <retrigger re=".*[^\\]$" completion="*"/>
+    <retrigger re=".*\\\\$" completion="*"/>
+  </proposal> 
+  <proposal key="+" value="+" allowPlain="false" displayString="Greedy match 1 or more times" additionalInfo="+ - match the preceeding expression 1 or more times. &#x000A;&#x000A;Greedy: reads the whole input, tries to match &#x000A;and then (repeatedly) backs off by one character &#x000A;and tries again.">
+    <retrigger re=".*[^\\]$" completion="+"/> 
+    <retrigger re=".*\\\\$" completion="+"/>
+  </proposal> 
+  <proposal key="{n}" value="{}" allowPlain="false" displayString="Greedy match exactly n times" additionalInfo="{n} - match the preceeding expression exactly n times. &#x000A;&#x000A;Greedy: reads the whole input, tries to match &#x000A;and then (repeatedly) backs off by one character &#x000A;and tries again.">
+    <retrigger re=".*[^\\]$" completion="{}"/> 
+    <retrigger re=".*\\\\$" completion="{}"/> 
+    <retrigger re=".*\{\d*$" completion="}"/> 
+  </proposal> 
+  <proposal key="{n,}" value="{,}" allowPlain="false" displayString="Greedy match >= n times" additionalInfo="{n,} - match the preceeding expression at least n times. &#x000A;&#x000A;Greedy: reads the whole input, tries to match &#x000A;and then (repeatedly) backs off by one character &#x000A;and tries again.">
+    <retrigger re=".*[^\\]$" completion="{,}"/> 
+    <retrigger re=".*\\\\$" completion="{,}"/> 
+    <retrigger re=".*\{\d*$" completion=",}"/>  
+    <retrigger re=".*\{\d*,$" completion="}"/>  
+  </proposal> 
+  <proposal key="{n,m}" value="{,}" allowPlain="false" displayString="Greedy match >= n times but &lt;= m times" additionalInfo="{n,m} - match the preceeding expression at least n and at most m times. &#x000A;&#x000A;Greedy: reads the whole input, tries to match &#x000A;and then (repeatedly) backs off by one character &#x000A;and tries again.">
+    <retrigger re=".*[^\\]$" completion="{,}"/> 
+    <retrigger re=".*\\\\$" completion="{,}"/> 
+    <retrigger re=".*\{\d*$" completion=",}"/> 
+    <retrigger re=".*\{\d*,\d*$" completion="}"/>  
+  </proposal> 
+  <proposal key="??" value="??" allowPlain="false" displayString="Match 0 or 1 times (left to right)" additionalInfo="?? - match the preceeding expression 0 or 1 times. &#x000A;&#x000A;Reluctant: reads the first character of the input, &#x000A;tries to match and then (repeatedly) reads one &#x000A;additional character and tries again.">
+    <retrigger re=".*[^\?\\]$" completion="??"/>
+    <retrigger re=".*\\\\$" completion="??"/>
+    <retrigger re=".*[^\?]\?$" completion="?"/>
+  </proposal> 
+  <proposal key="*?" value="*?" allowPlain="false" displayString="Match 0 or more times (left to right)" additionalInfo="*? - match the preceeding expression 0 or more times. &#x000A;&#x000A;Reluctant: reads the first character of the input, &#x000A;tries to match and then (repeatedly) reads one &#x000A;additional character and tries again.">
+    <retrigger re=".*[^\*\\]$" completion="*?"/>
+    <retrigger re=".*\\\\$" completion="*?"/>
+    <retrigger re=".+\*$" completion="?"/>
+  </proposal> 
+  <proposal key="+?" value="+?" allowPlain="false" displayString="Match 1 or more times (left to right)" additionalInfo="+? - match the preceeding expression 1 or more times. &#x000A;&#x000A;Reluctant: reads the first character of the input, &#x000A;tries to match and then (repeatedly) reads one &#x000A;additional character and tries again.">
+    <retrigger re=".*[^\+\\]$" completion="+?"/>
+    <retrigger re=".*\\\\$" completion="+?"/>
+    <retrigger re=".+\+$" completion="?"/> 
+  </proposal> 
+  <proposal key="{n}?" value="{}?" allowPlain="false" displayString="Match exactly n times (left to right)" additionalInfo="{n}? - match the preceeding expression exactly n times. &#x000A;&#x000A;Reluctant: reads the first character of the input, &#x000A;tries to match and then (repeatedly) reads one &#x000A;additional character and tries again.">
+    <retrigger re=".*[^\\]$" completion="{}?"/> 
+    <retrigger re=".*\\\\$" completion="{}?"/> 
+    <retrigger re=".+\{\d*$" completion="}?"/> 
+    <retrigger re=".+\{\d*\}$" completion="?"/> 
+  </proposal> 
+  <proposal key="{n,}?" value="{,}?" allowPlain="false" displayString="Match >= n times (left to right)" additionalInfo="{n,}? - match the preceeding expression at least n times. &#x000A;&#x000A;Reluctant: reads the first character of the input, &#x000A;tries to match and then (repeatedly) reads one &#x000A;additional character and tries again.">
+    <retrigger re=".*[^\\]$" completion="{,}?"/> 
+    <retrigger re=".*\\\\$" completion="{,}?"/> 
+    <retrigger re=".+\{\d*$" completion=",}?"/> 
+    <retrigger re=".+\{\d*,$" completion="}?"/> 
+    <retrigger re=".+\{\d*,\}$" completion="?"/> 
+  </proposal> 
+  <proposal key="{n,m}?" value="{,}?" allowPlain="false" displayString="Match >= n times but &lt;= m times (left to right)" additionalInfo="{n,m}? - match the preceeding expression at least n and at most m times. &#x000A;&#x000A;Reluctant: reads the first character of the input, &#x000A;tries to match and then (repeatedly) reads one &#x000A;additional character and tries again.">
+    <retrigger re=".*[^\\]$" completion="{,}?"/> 
+    <retrigger re=".*\\\\$" completion="{,}?"/> 
+    <retrigger re=".+\{\d*$" completion=",}?"/> 
+    <retrigger re=".+\{\d*,\d*$" completion="}?"/> 
+    <retrigger re=".+\{\d*,\d*\}$" completion="?"/> 
+  </proposal> 
+  <proposal key="U|V" value="|" allowPlain="true" displayString="U or V" additionalInfo="U|V - either the expresion to the left or the expression to the right of the bar.">
+  </proposal>
+  <proposal key="(U)" value="()" allowPlain="true" displayString="Mark U as capturing group" additionalInfo="(U)">
+    <retrigger re=".*\(.*$" completion=")"/> 
+  </proposal> 
+  <proposal key="({Groupname}U)" value="({})" allowPlain="true" displayString="Mark U as a named capturing group" additionalInfo="({Groupname}U)">
+    <retrigger re=".*\($" completion="{})"/> 
+    <retrigger re=".*\(\{$" completion="})"/> 
+    <retrigger re=".*\(\{\w+\}[^)]*$" completion=")"/> 
+    <retrigger re=".*\(\{\w+$" completion="})"/> 
+  </proposal> 
+  <proposal key="{\Groupname}" value="{\}" allowPlain="true" displayString="Match of the named capturing group" additionalInfo="{\Groupname} - Matches the capturing-group defined with the name 'Groupname'">
+    <retrigger re=".*\{$" completion="\}"/> 
+    <retrigger re=".*\{\\\w*$" completion="}"/> 
+  </proposal> 
+  <proposal key="\i" value="\" allowPlain="true" displayString="Match of the capturing group i" additionalInfo="\i - matches the capturing group # i">
+  </proposal> 
+  <proposal key="\" value="\" allowPlain="true" displayString="Quote next character" additionalInfo="\ - Escape for special characters (e.g. \\ matches a Backslash)">
+  </proposal> 
+  <proposal key="[ecq]" value="[]" allowPlain="true" displayString="Character set" additionalInfo="Example: [ecq] - e, c or q">
+    <retrigger re=".*\[(.*)$" completion="]"/>
+  </proposal>
+  <proposal key="[^ecq]" value="[^]" allowPlain="true" displayString="Excluded character set" additionalInfo="Example: [^ecq] - neither e nor c nor q">
+    <retrigger re=".*\[(.*)$" completion="^]"/>
+    <retrigger re=".*\[\^(.*)$" completion="]"/>
+  </proposal>
+  <proposal key="[e-q]" value="[-]" allowPlain="true" displayString="Character range" additionalInfo="Example: [e-q] - either character in the ASCII-range between e and q (inclusive)">
+    <retrigger re=".*\[(.+)$" completion="-]"/>
+    <retrigger re=".*\[(.*-.*)$" completion="]"/>
+  </proposal>
+  <proposal key="\p{InGreek}" value="\p{InGreek}" allowPlain="true" displayString="In Greek Unicode-block" additionalInfo="\p{InGreek} - a character in the Greek block [\x0370-\x03FF]">
+    <wordtrigger word="\p{InGreek" completion="}"/>
+  </proposal> 
+  <proposal key="\P{InGreek}" value="\P{InGreek}" allowPlain="true" displayString="Not in Greek Unicode-block" additionalInfo="\P{InGreek} - a character not in the Greek block [^\x0370-\x03FF]">
+    <wordtrigger word="\P{InGreek" completion="}"/>
+  </proposal> 
+  <proposal key="\p{InU}" value="\p{In}" allowPlain="true" displayString="In Unicode-block U" additionalInfo="\p{InU} - a character in the block U &#x000A;(block names are defined in &#x000A;http://www.unicode.org/Public/3.0-Update/Blocks-3.txt, &#x000A;Spaces removed such that 'Basic Latin' is to be &#x000A;used as \p{InBasicLatin} etc.)">
+    <wordtrigger word="\p{In" completion="}"/>
+    <retrigger re=".*(\\p\{In\p{Lu}\p{Alnum}*)$" completion="}"/>
+  </proposal> 
+  <proposal key="\P{InU}" value="\P{In}" allowPlain="true" displayString="Not in Unicode-block U" additionalInfo="\P{InU} - a character not in the block U &#x000A;(block names are defined in &#x000A;http://www.unicode.org/Public/3.0-Update/Blocks-3.txt, &#x000A;Spaces removed such that 'Basic Latin' is to be &#x000A;used as \p{InBasicLatin} etc.)">
+    <wordtrigger word="\P{In" completion="}"/>
+    <retrigger re=".*(\\P\{In\p{Lu}\p{Alnum}*)$" completion="}"/>
+  </proposal> 
+  <proposal key="\p{Lu}" value="\p{Lu}" allowPlain="true" displayString="Uppercase Letter (Unicode)" additionalInfo="\p{Lu} - Example for a Unicode category: Uppercase letter">
+    <wordtrigger word="\p{Lu" completion="}"/>
+  </proposal> 
+  <proposal key="\p{Sc}" value="\p{Sc}" allowPlain="true" displayString="Currency symbol (Unicode)" additionalInfo="\p{Sc} - Example for a Unicode category: Currency symbol">
+    <wordtrigger word="\p{Sc" completion="}"/>
+  </proposal> 
+  <proposal key="(?_U)" value="(?:)" allowPlain="true" displayString="Non-capturing group" additionalInfo="(?:U) - Define U as a non-capturing group">
+    <retrigger re=".*\($" completion="?:)"/>
+    <retrigger re=".*\(\?$" completion=":)"/>
+    <retrigger re=".*\(\?:.*$" completion=")"/>
+  </proposal> 
+  <proposal key="(?imsxuX)" value="(?)" allowPlain="true" displayString="Turn on flag (i, m, s, x, u, or X)" additionalInfo="(?imsxuX) - Turn on a flag (i: Case-insensitive matching, &#x000A;m: Multiline mode, s: Dot matches all, &#x000A;x: ignore whitespace, &#x000A; u:treat \w, \d, \s, etc. as relating to Unicode, &#x000A; X: Enables compatibility with XML schema regular expressions.)">
+    <retrigger re=".*\($" completion="?)"/>
+    <retrigger re=".*\(\?([imsxuX]+)$" completion=")"/>
+  </proposal> 
+  <proposal key="(?-imsxuX)" value="(?-)" allowPlain="true" displayString="Turn off flag (i, m, s, x, u, or X)" additionalInfo="(?-imsxuX) - Turn off a flag (i: Case-insensitive matching, &#x000A;m: Multiline mode, s: Dot matches all, &#x000A;x: ignore whitespace, &#x000A; u:treat \w, \d, \s, etc. as relating to Unicode, &#x000A; X: Enables compatibility with XML schema regular expressions.)">
+    <retrigger re=".*\($" completion="?-)"/>
+    <retrigger re=".*\(\?$" completion="-)"/>
+    <retrigger re=".*\(\?-([imsxuX]+)$" completion=")"/>
+  </proposal> 
+  <proposal key="(?imsxuX_U)" value="(?:)" allowPlain="true" displayString="Turn on flag in group (i, m, s, x, u, or X)" additionalInfo="(?imsxuX:U) - Turn on a flag in the group enclosed by brackets &#x000A;(not a capturing group!) (i: Case-insensitive matching, &#x000A;m: Multiline mode, s: Dot matches all, &#x000A;x: ignore whitespace, &#x000A; u:treat \w, \d, \s, etc. as relating to Unicode, &#x000A; X: Enables compatibility with XML schema regular expressions.)">
+    <retrigger re=".*\($" completion="?:)"/>
+    <retrigger re=".*\(\?([imsxuX]+)$" completion=":)"/>
+    <retrigger re=".*\(\?([imsxuX]+:.*)$" completion=")"/>
+  </proposal> 
+  <proposal key="(?-imsxuX_U)" value="(?-:)" allowPlain="true" displayString="Turn off flag in group (i, m, s, x, u, or X)" additionalInfo="(?-imsxuX:U) - Turn off a flag in the group enclosed by brackets &#x000A;(not a capturing group!) (i: Case-insensitive matching, &#x000A;m: Multiline mode, s: Dot matches all, &#x000A;x: ignore whitespace, &#x000A; u:treat \w, \d, \s, etc. as relating to Unicode, &#x000A; X: Enables compatibility with XML schema regular expressions.)">
+    <retrigger re=".*\($" completion="?-:)"/>
+    <retrigger re=".*\(\?$" completion="-:)"/>
+    <retrigger re=".*\(\?-([imsxuX]+)$" completion=":)"/>
+    <retrigger re=".*\(\?-([imsxuX]+:.*)$" completion=")"/>
+  </proposal>
+</completions>

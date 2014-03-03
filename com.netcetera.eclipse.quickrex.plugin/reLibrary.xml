@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<regularExpressionLibrary>
+  <category>
+    <name>Miscellaneous</name>
+    <reLibraryEntry>
+      <title>ISBN-Numbers</title>
+      <re>ISBN\x20(?=.{13}$)\d{1,5}([- ])\d{1,7}\1\d{1,6}\1(\d|X)$</re>
+      <description>This RE validates the format of an ISBN number as detailed here 
+http://www.isbn.org/standards/home/isbn/international/html/usm4.htm 
+An ISBN always consists of ten digits preceded by the letters ISBN The ten-digit number is divided into four parts of 
+variable length, which must be separated clearly by hyphens or spaces 
+
+NOTES: 
+Works with the JDK-implementation, switch on 'MULTILINE' to test
+This does not check the validity of the check digit only the format 
+This is a mod of Steven Smith's expression http://www.regexlib.com/REDetails.aspx?regexp_id=79</description>
+      <testText>ISBN 0 93028 923 4
+ISBN 1-56389-668-0
+ISBN 1-56389-016-X
+123456789X
+ISBN 9-87654321-2
+ISBN 123 456-789X
+</testText>
+      <source>Michael Ash www.regexlib.com, see http://www.regexlib.com/REDetails.aspx?regexp_id=463</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Mastercard-numbers</title>
+      <re>^(?:(?:51)|(?:52)|(?:53)|(?:54)|(?:55))[0-9]{14}$</re>
+      <description>Validate against any mastercard number. All MC's start with a number between 51 and 55 
+and are followed by 14 other numbers.
+
+NOTE: Works with the JDK-implementation, switch on 'MULTILINE' to test</description>
+      <testText>5125632154125412
+5225632154125412
+5525632154125412
+1599999999999999
+5625632154125412
+4825632154125412
+6011632154125412</testText>
+      <source>Jeff Johns for www.regexplib.com, see http://www.regexlib.com/REDetails.aspx?regexp_id=948, slightly modified</source>
+    </reLibraryEntry>
+  </category>
+  <category>
+    <name>XML, HTML, etc</name>
+    <reLibraryEntry>
+      <title>Tags (1)</title>
+      <re>&lt;TAG[^&gt;/]*&gt;(.*?)&lt;/TAG&gt;</re>
+      <description>This is a simple RE for matching (HTML-)tags (Replace "TAG" with the tag to look out for).
+
+Turn on "DOTALL" for the Java-implementation and "SINGLELINE" for ORO-Perl for this to 
+also work for tags spanning multiple lines.
+Also be careful: Empty tags (such as &lt;xml attribute="value"/&gt;) are not matched.</description>
+      <testText>&lt;b&gt;This is bold&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;Some list entry&lt;/li&gt;
+&lt;/ul&gt;
+&lt;xml attribute="value"/&gt;
+&lt;xml attribute="value"&gt;contents&lt;/xml&gt;</testText>
+      <source>http://www.regular-expressions.info/examples.html, slightly adapted</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Tags (2)</title>
+      <re>&lt;([A-Za-z][A-Za-z0-9]*)[^&gt;/]*&gt;(.*?)&lt;/\1&gt;</re>
+      <description>This is a simple RE for matching tags.
+
+Turn on "DOTALL" for the Java-implementation and "SINGLELINE" for ORO-Perl for this to 
+also work for tags spanning multiple lines.
+Also be careful: Empty tags (such as &lt;xml attribute="value"/&gt;) are not matched.</description>
+      <testText>&lt;b&gt;This is bold&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;Some list entry&lt;/li&gt;
+&lt;/ul&gt;
+&lt;xml attribute="value"/&gt;
+&lt;xml attribute="value"&gt;contents&lt;/xml&gt;</testText>
+      <source>http://www.regular-expressions.info/examples.html, slightly adapted</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Tags (3)</title>
+      <re>(?:&lt;([A-Za-z][A-Za-z0-9]*)[^&gt;/]*&gt;(.*?)&lt;/\1&gt;)|(?:&lt;([A-Za-z][A-Za-z0-9]*)[^&gt;/]*/&gt;)</re>
+      <description>Matches any pair of opening- and closing tags or empty tags.
+
+Turn on "DOTALL" for the Java-implementation and "SINGLELINE" for ORO-Perl for this to 
+also work for tags spanning multiple lines. Note that nested tags are not matched separately.
+</description>
+      <testText>&lt;b&gt;This is bold&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;Some list entry&lt;/li&gt;
+&lt;/ul&gt;
+&lt;xml attribute="value"/&gt;
+&lt;xml attribute="value"&gt;contents&lt;/xml&gt;</testText>
+      <source>QuickREx</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Empty tags</title>
+      <re>&lt;([A-Za-z][A-Za-z0-9]*)[^&gt;/]*/&gt;</re>
+      <description>Matches any empty tags.
+
+Turn on "DOTALL" for the Java-implementation and "SINGLELINE" for ORO-Perl for this to 
+also work for tags spanning multiple lines.</description>
+      <testText>&lt;b&gt;This is bold&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;Some list entry&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br/&gt;
+&lt;xml attribute="value"&gt;contents&lt;/xml&gt;
+&lt;xml attribute="value"/&gt;
+</testText>
+      <source>QuickREx</source>
+    </reLibraryEntry>
+  </category>
+  <category>
+    <name>IP-Addresses etc</name>
+    <reLibraryEntry>
+      <title>IP-Address w/o capturing groups</title>
+      <re>\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b</re>
+      <description>Matches IP-Addresses (IPv4, actually). </description>
+      <testText>255.255.255.255
+255.0.1.2
+255...
+256.1.1.1
+</testText>
+      <source>http://www.regular-expressions.info/examples.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>IP-Address with capturing groups</title>
+      <re>\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b</re>
+      <description>Matches IP-Addresses (IPv4, actually) and holds the individual parts in groups.</description>
+      <testText>255.255.255.255
+255.1.245.0
+255...
+256.1.1.1</testText>
+      <source>http://www.regular-expressions.info/examples.html</source>
+    </reLibraryEntry>
+  </category>
+  <category>
+    <name>Text</name>
+    <reLibraryEntry>
+      <title>Leading whitespace</title>
+      <re>^[ \t]+</re>
+      <description>Finds leading space or tabs (also multiple space and mixtures of space and tab).
+
+Turn on 'MULTILINE' in the JDK and ORO-Perl implementations to use the Test-text</description>
+      <testText>A line with trailing space 
+ A line with leading space
+A line with trailing tab  
+  A line with leading tab
+A line without leading or trimming space
+ A line with leading space and trailing tab  
+    A line with 2 spaces and a tab in front
+And a line with a tab and two spaces trailing...    </testText>
+      <source>http://www.regular-expressions.info/examples.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Trailing whitespace</title>
+      <re>[ \t]+$</re>
+      <description>Finds trailing space or tabs (also multiple space and mixtures of space and tab).
+
+Turn on 'MULTILINE' in the JDK and ORO-Perl implementations to use the Test-text</description>
+      <testText>A line with trailing space 
+ A line with leading space
+A line with trailing tab  
+  A line with leading tab
+A line without leading or trimming space
+ A line with leading space and trailing tab  
+    A line with 2 spaces and a tab in front
+And a line with a tab and two spaces trailing...    </testText>
+      <source>http://www.regular-expressions.info/examples.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Leading or trailing whitespace</title>
+      <re>^[ \t]+|[ \t]+$</re>
+      <description>Finds leading and trailing space or tabs (also multiple space and mixtures of space and tab).
+
+Turn on 'MULTILINE' in the JDK and ORO-Perl implementations to use the Test-text</description>
+      <testText>A line with trailing space 
+ A line with leading space
+A line with trailing tab  
+  A line with leading tab
+A line without leading or trimming space
+ A line with leading space and trailing tab  
+    A line with 2 spaces and a tab in front
+And a line with a tab and two spaces trailing...    </testText>
+      <source>http://www.regular-expressions.info/examples.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Lines containing 'FOO'</title>
+      <re>^.*FOO.*$</re>
+      <description>Matches the whole line containing a given word ('FOO' in this case).
+
+Turn on 'MULTILINE' in the JDK and ORO-Perl implementations for this to work - can't use the ORO 
+AWK-implementation (it will match the whole text)</description>
+      <testText>This line conains FOO
+This one does not
+The next line is only FOO
+FOO
+This and the next line does not contain
+the word you are looking for</testText>
+      <source>http://www.regular-expressions.info/completelines.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Lines containing 'FOO' and 'BAR'</title>
+      <re>^(?=.*?\bFOO\b)(?=.*?\bBAR\b).*$</re>
+      <description>Matches the whole line containing all the given words ('FOO' and 'BAR' in this case).
+
+Turn on 'MULTILINE' in the JDK and ORO-Perl implementations for this to work - can't use the ORO 
+AWK-implementation (it does not know lookaheads)</description>
+      <testText>This line conains FOO and BAR
+This one contains neither
+The next line is only FOO
+FOO
+This line containes FOO but not the other word you are looking for
+whereas this one does not contain one but BAR (i.e. the other)
+FOOBAR?
+FOO BAR!</testText>
+      <source>http://www.regular-expressions.info/completelines.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>'FOO' and 'BAR' 'close to each other'</title>
+      <re>\b(?:FOO\W+(?:\w+\W+){1,6}BAR|BAR\W+(?:\w+\W+){1,6}FOO)\b</re>
+      <description>Matches two words and the text between them if the text in between is no more than (in this case) 6 words.</description>
+      <testText>FOO BAR are direct neighbors here, 'B..' is far away from the 'F..' on the next line
+FOO and BAR are separated by one word, 'B..' is far away from the 'F..' on the next line
+FOO is here and there a a whole lot of words between it and BAR, 'B..' is far away from the 'F..' on the next line
+FOO is here but not the other word, 'F..' is far away from the 'B..' on the next line
+BAR first, then FOO, 'F..' is far away from the 'B..' on the next line
+BAR is
+here then FOO (note: line-breaks don't count)</testText>
+      <source>http://www.regular-expressions.info/near.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Complex containement</title>
+      <re>^(?=.*?\bFOO\b)(?=.*?\bfoo\b)(?:(?!BAR|bar).)*$</re>
+      <description>Matches any line that containes both 'FOO' and 'foo', but neither 'BAR' nor 'bar'
+
+Turn on 'MULTILINE' in the JDK and ORO-Perl implementations for this to work - can't use the ORO 
+AWK-implementation (it does not know lookaheads)</description>
+      <testText>This line conains FOO and BAR
+This one contains neither
+The next line is only FOO, large and small
+FOO foo
+This line containes FOO but not the other word you are looking for
+this one containes FOO and foo but also BAR
+this one containes FOO and foo but also bar
+FOO foo BAR?
+FOO foo!
+</testText>
+      <source>http://www.regular-expressions.info/completelines.html, slightly adapted</source>
+    </reLibraryEntry>
+  </category>
+  <category>
+    <name>Dates</name>
+    <reLibraryEntry>
+      <title>Valid dates, yyyy-mm-dd</title>
+      <re>(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])</re>
+      <description>This matches a date in yyyy-mm-dd format from between 1900-01-01 and 2099-12-31, with a choice of four separators 
+(' ', '-', '/', or '.') where the separator has to be consistent. 
+
+The expression ignores the length of the months.</description>
+      <testText>1900-01-01 1900/01/01 1900.01.01 1900 01 01 1900-01.01 1900 13 01 1900 02 31</testText>
+      <source>http://www.regular-expressions.info/dates.html</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Valid dates, dd-mm-yyyy</title>
+      <re>(0[1-9]|[12][0-9]|3[01])([- /.])(0[1-9]|1[012])\2(19|20)\d\d</re>
+      <description>This matches a date in dd-mm-yyyy format from between 01 01 1900 and 31 12 2099, with a choice of four separators 
+(' ', '-', '/', or '.') where the separator has to be consistent. 
+
+The expression ignores the length of the months.</description>
+      <testText>01-01-1900 01/01/1900  01.01.1900 01 01 1900 01.01 1900 01 13 1900 31 02 1900</testText>
+      <source>http://www.regular-expressions.info/dates.html</source>
+    </reLibraryEntry>
+  </category>
+  <category>
+    <name>Numbers</name>
+    <reLibraryEntry>
+      <title>Number with 1.000-delimiter(s)</title>
+      <re>[-+]?(?:(?:[1-9]\d{0,2}(?:\.\d\d\d)*)|0),\d{2}(?!\d)</re>
+      <description>Matches decimal numbers that:
+- use ',' as decimal point and '.' as a 1.000-delimiter
+- have exactly 2 decimal digits
+- do not have a leading 0 except if they are of the form 0,xy (i.e. 01,00 is excluded)
+- may have a '+' or '-'-sign in front
+
+Does not work in ORO-AWK as lookahead is not supported there.</description>
+      <testText>1.000.000,00 is not the same as a 1.000.000,01
+123.123.123.123,12
+0,00
+00,00
+1,005
+,00</testText>
+      <source>QuickREx</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Positive decimal number</title>
+      <re>(^\d*\.?\d*[0-9]+\d*$)|(^[0-9]+\d*\.\d*$)</re>
+      <description>This matches all positive decimal values.
+
+Be sure to switch on 'MULTILINE' to test. Does not work with the ORO-implementations.</description>
+      <testText>0.00
+1.23
+4.56
+-1.03
+-0.00
+1
+1.2.3
+</testText>
+      <source>Derek Noonan for www.regexlib.com, see http://www.regexlib.com/REDetails.aspx?regexp_id=1036</source>
+    </reLibraryEntry>
+    <reLibraryEntry>
+      <title>Floating point number</title>
+      <re>[-+]?[0-9]*\.?[0-9]+</re>
+      <description>Matches any floating-point number with an (optional) sign. 
+
+Note that the expression does not exclude numbers which are parts of words (like in 'a19'). This is why
+it also may behave slightly unexpectedly for expressions such as '1.2.3' (where it matches '1.2' and
+then '.3').</description>
+      <testText>19 
+19a 
+a19 
+,123 
+.123 
+0.123 
+12345.6789 
+0 
+0.0 
+-1.2345 
++1.2345
+1.2.3</testText>
+      <source>http://www.regular-expressions.info/floatingpoint.html</source>
+    </reLibraryEntry>
+  </category>
+</regularExpressionLibrary>

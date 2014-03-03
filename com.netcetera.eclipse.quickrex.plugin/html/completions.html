@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<LINK REL="STYLESHEET" HREF="book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+	<title>Customizing TAB-completion</title>
+</head>
+
+<body>
+<!--
+<h2>Table of Contents</h2>
+
+<A href="using.html">Using the QuickREx Plugin</A>
+<ul>
+	<li><A href="quickRExView.html">Using the QuickREx View for testing and evaluating regular expressions</A></li>
+	<ul>
+	  <li><A href="persistence.html">Saving, Loading and Organizing Regular Expressions and Test-Texts</A></li>
+		<li><A href="regExpressions.html">How QuickREx evaluates the Regular Expressions</A></li>
+	</ul>		
+	<li><A href="reLibView.html">Using the Reg. Exp. Library View for keeping and organizing regular expressions</A></li>
+	<li><A href="settings.html">Changing Color- and Font-settings</A></li>
+	<li><b>Customizing TAB-completion and the Edit-dialog</b></li>
+</ul>
+-->
+<h1>Customizing TAB-completion and the Edit-dialog</h1>
+
+	<p>All TAB-completions are defined in staticly read .xml-files. This means you can change most of
+	the behaviour of the code-completion feature. After a restart of Eclipse, your changes will be
+	immediately active.</p>
+	
+	<p>Similarly, which building-blocks are displayed under which category in the Regular-Expression-Edit dialog
+	is defined in .xml-files which can be changed.</p>
+	
+	<p>There are ten .xml-files in the plugin-directory of QuickREx (to be found at the site of your
+	Eclipse-installation under 'plugins/de.babe.eclipse.plugins.QuickREx_x.y.z' with x.y.z being the 
+	version installed on your machine:</p>
+	
+	<ul>
+	<li>jdkCompletion.xml</li>
+	<li>oroAwkCompletion.xml</li>
+	<li>oroPerlCompletion.xml</li>
+	<li>jregexCompletion.xml</li>
+	<li>jakartaRegexpCompletion.xml</li>
+	</ul>
+
+	<p>and</p>
+
+	<ul>
+	<li>jdkCategories.xml</li>
+	<li>oroAwkCategories.xml</li>
+	<li>oroPerlCategories.xml</li>
+	<li>jregexCategories.xml</li>
+	<li>jakartaRegexpCategories.xml</li>
+	</ul>
+	
+	<h2>The TAB-completion-configuration files</h2>
+	
+	<p>The files with the names "fooCompletion.xml" contain the definitions for the code-completion feature applicable to the corresponding
+	regular-expression implementation (names should be obvious).</p>
+	
+	<p>The following is an excerpt from the file jdkCompletion.xml which serves as an example for 
+	the explanation on what can be customized and how:</p>
+	
+	<pre>
+	&lt;completions&gt;
+	  &lt;proposal key="\\" value="\\" allowPlain="true" displayString="Backslash" additionalInfo="\\"&gt;
+	    &lt;retrigger re=".*[^\\]\\$" completion="\"/&gt;
+	    &lt;retrigger re=".*\A\\$" completion="\"/&gt;
+	  &lt;/proposal&gt;
+          ...
+	  &lt;proposal key="?" value="?" allowPlain="false" displayString="Greedy match 0 or 1 times" additionalInfo="? - match the preceeding expression 0 or 1 times. &amp;#x000A;&amp;#x000A;Greedy: reads the whole input, tries to match &amp;#x000A;and then (repeatedly) backs off by one character &amp;#x000A;and tries again."&gt;
+	    &lt;retrigger re=".*[^\\]$" completion="?"/&gt;
+	    &lt;retrigger re=".*\\\\$" completion="?"/&gt;
+	  &lt;/proposal&gt; 
+          ...
+	  &lt;proposal key="\P{Lower}" value="\P{Lower}" allowPlain="true" displayString="Not Lower-case alphabetic (US-ASCII)" additionalInfo="\P{Lower} - (US-ASCII) not lower-case alphabetic, [^a-z]"&gt;
+	    &lt;wordtrigger word="\P{Lower" completion="}"/&gt;
+	  &lt;/proposal&gt;
+          ...	
+	&lt;/completions&gt;
+	</pre>
+
+	<p>For any completion that is to be offered, there is an element <em>&lt;proposal&gt;</em> in the file. The 
+	following attributes are applicable and are all mandatory:</p>
+	
+	<ol>
+	<li><u>key:</u> a unique key for the proposal (usually the proposal itself)</li>
+	<li><u>value:</u> the full value of the proposal, i.e. the value that should be inserted if the completion is choosen 
+		and no part of the completion is typed yet (the "plain proposal")</li>
+	<li><u>allowPlain:</u> can be 'true' or 'false' - flag to indicate whether the proposal should be offered
+		if non of the triggers (see below) fires. This is 'false' e.g. for the multiplication-indicator <strong>?</strong>
+		in the above example, since we do not want to offer it if the expression currently is the empty String
+		or ends with an excaped backslash (the situations where the triggers match for the proposal, see below for trigger-details</li>
+	<li><u>displayString:</u> The String to display for the proposal in the TAB-completion pop-up</li>
+	<li><u>additionalInfo:</u> The explanation to display in the hover if the proposal is selected in the pop-up</li>
+	</ol>
+	
+	<p>The proposal-element allows two kind of child-elements which define different types of triggers.
+	These and their attributes are as follows:</p>
+
+	<ul>
+	<li><em>&lt;retrigger&gt;</em> a Trigger/Mask based on regular expressions. Attributes are
+		<ol><li><u>re:</u> a regular expression (JDK-style) to be matched by the current contents of the regular expression field
+							for the proposal to be applicable</li>
+			  <li><u>completion:</u> the completion to be used if the regular expression matches</li>
+		</ol>
+	</li>
+	<li><em>&lt;wordtrigger&gt;</em> a Trigger/Mask based on a String. Attributes are
+		<ol><li><u>word:</u> a String. If this String or a non-zero leading part of it is the last part of
+					the current contents of the regular expression field, the proposal is applicable</li>
+			  <li><u>completion:</u> the completion to be used if the full String in 'word' is at the end
+			  	of the current contents of the regular expression field. If only parts of the 'word' are at
+			  	the end of the field, the remainder of the word plus the completion is inserted</li>
+		</ol>
+	</li>
+	</ul>
+	
+	<p>Now consider the examples in the above xml-snippet:</p>
+	
+	<pre>
+  &lt;proposal key="\\" value="\\" allowPlain="true" displayString="Backslash" additionalInfo="\\"&gt;
+    &lt;retrigger re=".*[^\\]\\$" completion="\"/&gt;
+    &lt;retrigger re=".*\A\\$" completion="\"/&gt;
+  &lt;/proposal&gt;
+	</pre>
+	
+	<p>This defines a proposal with the <strong>value "\\"</strong>. This is the expression for matching a
+	backslash in all implementations (the first \ escapes the second one). We want this proposal
+	to be shown even if the input currently is empty - in fact we want it to be shown always. Thus, 
+	<strong>allowPlain="true"</strong> - the proposal is offered even if none of the triggers
+	matches.</p>
+	
+	<p>There are two kinds of trigger-expressions which would both result in only one "\" to be inserted
+	(both have <strong>completion="\"</strong>) if they are matched by the current contents and the 
+	proposal is selected. These are <strong>re=".*[^\\]\\$"</strong> and <strong>re=".*\A\\$"</strong>, 
+	i.e. the current contents	is anything ending with one but not two backslashes or is simply one
+	backslash at the beginning of the input.</p>
+	
+	<p>The next example is</p>
+	
+	<pre>
+  &lt;proposal key="?" value="?" allowPlain="false" displayString="Greedy match 0 or 1 times" additionalInfo="? - match the preceeding expression 0 or 1 times. &amp;#x000A;&amp;#x000A;Greedy: reads the whole input, tries to match &amp;#x000A;and then (repeatedly) backs off by one character &amp;#x000A;and tries again."&gt;
+    &lt;retrigger re=".*[^\\]$" completion="?"/&gt;
+    &lt;retrigger re=".*\\\\$" completion="?"/&gt;
+  &lt;/proposal&gt; 
+	</pre>
+	
+	<p>This defines a proposal with the <strong>value "?"</strong>. This is the expression for matching 
+	the previous atom 0 or 1 times. We want this proposal
+	to be shown only if there is an atom at the end of the input - at least one of the triggers should
+	match. Thus, here <strong>allowPlain="false"</strong>.</p>
+	
+	<p>The triggers are <strong>re=".*[^\\]$"</strong> matching any non-empty input not ending with
+	a single "\" (which should be followed by an escaped character) and <strong>re=".*\\\\$"</strong>
+	matching anything ending with (at least two) backslashes. In both cases, <strong>completion="?"</strong>
+	will be inserted.</p>
+	
+	<p>In fact, the last example gives a hint on the complexity of regular expressions: of course, the 
+	current input could end with three backslashes - thus the first would escape the second one and the
+	third would be an escaping backslash again. The second <em>retrigger</em> matches this, even though
+	this is not what you would really want ("\\\?" would match "\?", the "?" would not be a multiplicity-operator).</p>
+	
+	<p>There is a trade-off between simplicity and correctness in this case - I have decided for simplicity as
+	QuickREx will tell you or show you whether the expression does what you expect it to do.</p>
+	
+	<p>Finally, the last example is</p>
+	
+	<pre>
+  &lt;proposal key="\P{Lower}" value="\P{Lower}" allowPlain="true" displayString="Not Lower-case alphabetic (US-ASCII)" additionalInfo="\P{Lower} - (US-ASCII) not lower-case alphabetic, [^a-z]"&gt;
+    &lt;wordtrigger word="\P{Lower" completion="}"/&gt;
+  &lt;/proposal&gt;
+	</pre>
+	
+	<p>This defines a proposal with the value <strong>value="\P{Lower}"</strong> - a JDK-variant expression 
+	matching any character other than lower-case characters in the standard US-ASCII alphabet (a-z).
+	Again, this proposal is to be shown at any time, thus <strong>allowPlain="true"</strong>.</p>
+	
+	<p>The trigger in this case is an example of a <strong>wordtrigger</strong>. This is because for
+	this proposal we want the trigger to fire for content ending with '\', '\P', '\P{', ... Since we
+	would need to construct a lot of <strong>retrigger</strong>s in this case, the wordtrigger is used.
+	A wordtrigger matches if the content ends with some 0-based substring of the word-attribute. It
+	adds the remainder of the word-attribute plus the contents of the 'completion'-attribute if selected.</p>
+	
+	<h2>The category-configuration files</h2>
+
+	<p>The files with the names "fooCategories.xml" contain the definitions for the 
+	categories and the mapping used for the Reg-Exp-Edit-dialog.</p>
+	
+	<p>The information is structured as follows (example from jdkCategories.xml):</p>
+	
+	<pre>
+    &lt;categoryMappings&gt;
+      &lt;categoryMapping proposalKey="?" category="Multiplicities"&gt;
+      &lt;/categoryMapping&gt;
+      ...
+      &lt;categoryMapping proposalKey="." category="Wildcards"&gt;
+      &lt;/categoryMapping&gt;
+      ...
+    &lt;/categoryMappings&gt;
+	</pre>
+
+	<p>For all proposals as defined in the proposal-configuration-file for the 
+	corresponding flavour, this file defines whether they should be used in the
+	edit-dialog at all and if so, under what list they should appear. It also defines,
+	what categories are to be displayed at all for the flavour.</p>
+	
+	<p>When the dialog is constructed, first all different "category"-attributes 
+	from the file are collected. For each category, a drop down is displayed. The order
+	on the dialog (from top to bottom) is identical to the order of appearance in the
+	.xml-file.</p>
+	
+	<p>Then, the proposals are mapped to the categories as defined by the categoryMapping-elements.
+	The proposals are displayed in the order of their appearance in the category-config file. 
+	For the drop-down, the value of the "displayString"-attribute from the proposal-config
+	file (for the entry with proposal.key == categoryMapping.proposalKey) is used.
+	The additional information-field in the dialog displays the value of the "additionalInfo"-attribute
+	for the proposal. When "Insert" is pressed, the value of the attribute "value" from the proposal-file
+	is inserted at the caret-position of the expression.</p>
+	
+	<p>Thus, to change the category of some entry, change the "category"-attribute.
+	To change the order of appearance, change the order in the file. (To change the
+	order of the categories, change the orders of the first entries for the respective 
+	categories.) To remove something from the lists all together, remove the mapping
+	from the file. And to have something new on the dialog, add the entry to the proposals- and 
+	the category-config-file.</p>
+	
+	<h2>Roll your own, share it with others</h2>
+	
+	<p>Should you find improvements to the default completion-definitions which you feel might be interesting
+	to others - or should you have a collection of ready-made regular expressions you want to share - 
+	please <A href="mailto:info@bastian-bergerhoff.com?subject=QuickREx Plug-In TAB-Completion">let me know</a>.
+	I would be happy to TAB-completion definitions on my web-space.</p>
+	
+</body>
+</html>

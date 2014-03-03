@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<LINK REL="STYLESHEET" HREF="book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+	<title>Table of Contents</title>
+</head>
+
+<body>
+<!--
+<h2>Table of Contents</h2>
+
+<A href="using.html">Using the QuickREx Plugin</A>
+<ul>
+	<li><A href="quickRExView.html">Using the QuickREx View for testing and evaluating regular expressions</A></li>
+	<ul>
+	  <li><A href="persistence.html">Saving, Loading and Organizing Regular Expressions and Test-Texts</A></li>
+		<li><A href="regExpressions.html">How QuickREx evaluates the Regular Expressions</A></li>
+	</ul>		
+	<li><A href="reLibView.html">Using the Reg. Exp. Library View for keeping and organizing regular expressions</A></li>
+	<li><A href="settings.html">Changing Color- and Font-settings</A></li>
+	<li><A href="completions.html">Customizing TAB-completion and the Edit-dialog</A></li>
+</ul>
+-->
+<p>&nbsp;</p>
+
+<img alt="The QuickREx contributions" src="images/quickREx_small.png"/></img>
+
+<h2>Why QuickREx?</h2>
+
+<h3>For Testing Regular Expressions</h3>
+
+<p>Regular Expressions are powerful but
+can be confusing at times. I regularly found myself working with scrapbook-pages to test my regular
+expressions (or working late-night shifts to fix problems in production :-( ). QuickREx was written
+to get around using scrapbook pages or working on the high-wire and to be able to play with regular expressions
+more easily.</p>
+
+<p>QuickREx gives you a view in which you can enter test-texts and try regular expressions. The expressions are
+evaluated against the test-text on the fly, matches are highlighted and you can navigate between the matches.
+You can also navigate through groups within each match (if groups are defined in your regular expression).</p>
+
+<p>Regular Expressions are edited either within the view or within a composition-dialog which offers the most
+useful building-blocks grouped in categories and accompanied by short explanations.</p>
+
+<p>QuickREx also offers TAB-completion for regular expressions and conversion of regular expressions to Java-Strings
+(including e.g. proper escaping of the ubiquitous backslash). All TAB-completion suggestions as well as
+the corresponding help-text popups are customizable. They are defined in .xml-files distributed with the
+plug-in. These files can be changed to add additional hints, remove rarely used hints or change the descriptions.</p>
+
+<p>See <A href="completions.html">here</A> for details on how to customize TAB-completion and the contents of the categories in the reg-exp-edit-dialog.</p>
+
+<p>QuickREx offers the most widely used implementations of Regular Expressions in the Java-world:</p>
+<ul>
+<li>JDK Regular Expressions (available since 1.4) - see <A href="http://java.sun.com" target="_blank">java.sun.com</A></li>
+<li>Jakarta ORO Perl-style Regular Expressions (ORO-Version 2.0.8, supports Perl 5.003 Regular Expressions) - see <A href="http://jakarta.apache.org/oro/index.html" target="_blank">jakarta.apache.org/oro/index.html</A></li>
+<li>Jakarta ORO Awk-style Regular Expressions (ORO-Version 2.0.8) - see <A href="http://jakarta.apache.org/oro/index.html" target="_blank">jakarta.apache.org/oro/index.html</A></li>
+<li>JRegex Regular Expressions (Version 1.2_01, supports Perl 5.6 Regular Expressions) - see <A href="http://jregex.sourceforge.net/" target="_blank">jregex.sourceforge.net/</A></li>
+<li>Jakarta-Regexp Regular Expressions (Version 1.4) - see <A href="http://jakarta.apache.org/regexp/index.html" target="_blank">jakarta.apache.org/regexp/index.html</A></li>
+</ul>
+<p>For each of the implementations, you can set the available compiler-flags through QuickREx or use
+inline flag-switches with the regular expression (where supported).</p>
+
+<p>See <A href="quickRExView.html#selectingImpl">here</A> for how to select an implementation.</p>
+
+<p>Regular Expressions and Test-Texts can be persisted for later reference. Also, any file-contents can be loaded 
+as test-text.</p>
+
+<p>See <A href="quickRExView.html">here</A> for screen-shots and details on using the QuickREx-view.</p>
+
+<h3>For Keeping and Organizing Regular Expressions</h3>
+
+<p>Version 3 adds another feature to the plugin: The Regular Expression Library. 
+The Library it thought to be a tool to keep, organize, and search for regular expressions
+which you may want to use again. There are a few selected expressions for things such as
+checking date-formats, finding tags or searching for and matching lines in text containing 'FOO' and 'BAR'
+(and maybe neither 'FAR' nor 'BOO'). You can add your own books with chapters holding regular expressions
+useful to you.</p>
+
+<p>The Regular Expression Library comes with an editor where you can enter the expression (with 
+TAB-completion as you are used from QuickREx), enter a test-text and a description and also enter
+a source (you may have found the expression in a book or on a web-page). Also, you can use the QuickREx-view
+to test the expression against the saved test-text.</p>
+
+<p>The Regular Expression Library is fully searchable, the entries are kept in XML-files (one for each book)
+where the path's are at your choice (apart from the standard book wich is delivered with the plugin).</p>
+
+<p>See <A href="reLibView.html">here</A> for screen-shots and details on using the library.</p>
+
+<h3>For using Regular Expressions</h3>
+
+<p>Another feature I am missing from time to time when working on Wintel-boxes is the good old 'grep' command.</p>
+
+<p>QuickREx also offers this feature: Load your test-text, enter or load the 
+regular expression you want and press the 'Grep'-button. QuickREx opens a dialog containing only the
+matches separated by line-breaks.</p>
+
+<p>This can be useful e.g. when you need to look at large log-files where you are only interested
+in lines starting like 'ERROR'. (Of course, you could have used Log4j and adjusted the log-level in the
+first place ;) )</p>
+
+<p>See <A href="quickRExView.html#grepping">here</A> for details.</p>
+
+<h2>I'd like the plugin in my own language, please...</h2>
+
+<p>As of Version 3.0.0, QuickREx supports internationalization (I18N). There is a fragment (QuickREx_I18N) with a 
+Japanese Version - translated by Takahiro Shida - which you can install from the 
+standard QuickREx update-site.</p>
+
+<p>If you are interested in other language translations you are very welcome to provide contributions to 
+the fragment, which is also under EPL, v 1.0. You can get the source of Version 1.0.0
+<A href="http://www.bastian-bergerhoff.com/eclipse/features/download/QuickREx_I18N/QuickREx_I18Nsrc_1_0_0.zip">here</A>
+as a zip-file for download.</p>
+
+<h2>What are the license terms?</h2>
+
+<p>QuickREx is distributed under the Eclipse Public License, v 1.0. You can find the license details
+online at <A href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>.</p>
+
+<p>The license is an Open Source license. The source can be found 
+<A href="http://www.bastian-bergerhoff.com/eclipse/features/download/QuickREx/QuickRExsrc_3_5_0.zip">here</A>
+as a zip-file for download.</p>
+
+<p>I hope the plug-in serves you well. In case you find any problems with using it, have ideas for additional useful features
+or any other comments, <A href="mailto:info@bastian-bergerhoff.com?subject=QuickREx Plug-In">contact me</a>.</p>
+
+<h2>Contributors - Thanks!</h2>
+
+<ul>
+<li><strong>Bastian Bergerhoff</strong> - initial implementation, everything through versions 1.0.0 - 2.0.0, library-view and editor (Version 3.0.0), Support for Jakarta Regexp (Version 3.2.0), RE-edit-dialog (Version 3.5.0)</li>
+<li><strong>Andreas Studer</strong> - contributions to global flags (Version 2.1.0)</li>
+<li><strong>Georg Sendt</strong> - threaded, cancellable evaluation (Version 3.0.0), added JRegex-implementation (Version 3.1.0)</li>
+<li><strong>Takahiro Shida</strong> - I18N-support (Version 3.0.0), Japanese translation (QuickREx_I18N, Version 1.0.0)</li>
+</ul>
+
+<p>&nbsp;</p>
+
+</body>
+</html>
