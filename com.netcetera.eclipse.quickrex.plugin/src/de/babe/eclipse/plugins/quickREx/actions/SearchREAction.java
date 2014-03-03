@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -28,7 +28,7 @@ public class SearchREAction extends Action {
     super("", IAction.AS_PUSH_BUTTON); //$NON-NLS-1$
     this.setText(Messages.getString("views.RELibraryView.actions.search.name")); //$NON-NLS-1$
     this.setToolTipText(Messages.getString("views.RELibraryView.actions.search.tooltip")); //$NON-NLS-1$
-    this.setImageDescriptor(((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry())
+    this.setImageDescriptor(((PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry())
         .getImageDescriptor(PluginImageRegistry.IMG_SEARCH_RE));
     this.setId("de.babe.eclipse.plugins.quickREx.actions.SearchREAction"); //$NON-NLS-1$
   }

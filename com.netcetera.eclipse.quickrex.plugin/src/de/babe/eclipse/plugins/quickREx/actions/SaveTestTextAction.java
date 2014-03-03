@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -27,7 +27,7 @@ public class SaveTestTextAction extends Action {
     super(""); //$NON-NLS-1$
     this.setText(Messages.getString("views.QuickRExView.saveTextAction.text")); //$NON-NLS-1$
     this.setToolTipText(Messages.getString("views.QuickRExView.saveTextAction.tooltip")); //$NON-NLS-1$
-    this.setImageDescriptor(((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry())
+    this.setImageDescriptor(((PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry())
         .getImageDescriptor(PluginImageRegistry.IMG_SAVE_TT));
     this.setId("de.babe.eclipse.plugins.quickREx.actions.SaveTestTextAction"); //$NON-NLS-1$
   }

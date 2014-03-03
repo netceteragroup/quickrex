@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation, all but:
  *     Georg Sendt - added JRegexp-related implementations
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -69,7 +70,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private HashMap jdkCatMappings;
 
-  private ArrayList jdkCategories;
+  private List<String> jdkCategories;
 
   private CompletionProposals proposals;
 
@@ -127,7 +128,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.plugin.AbstractUIPlugin#createImageRegistry()
    */
   @Override
@@ -150,17 +151,16 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private void prepareRegexpCategories() {
 
-    jdkCategories = new ArrayList();
+    jdkCategories = new ArrayList<>();
     jdkCatMappings = new HashMap();
     initCategoriesFromFile(jdkCatMappings, jdkCategories, MatchSetFactory.JAVA_FLAVOUR);
     addProposalsToMappings(jdkCategories, jdkCatMappings, MatchSetFactory.JAVA_FLAVOUR);
 
   }
 
-  private void addProposalsToMappings(ArrayList p_categories, HashMap p_catMappings, int p_flavour) {
-    for (Iterator iter = p_categories.iterator(); iter.hasNext();) {
-      String category = (String) iter.next();
-      ArrayList proposalKeys = (ArrayList)p_catMappings.get(category);
+  private void addProposalsToMappings(List<String> p_categories, HashMap p_catMappings, int p_flavour) {
+    for (String category : p_categories) {
+      ArrayList proposalKeys = (ArrayList) p_catMappings.get(category);
       ArrayList proposalsForCat = new ArrayList();
       for (Iterator iterator = proposalKeys.iterator(); iterator.hasNext();) {
         String currentKey = ((REEditorCategoryMapping) iterator.next()).getProposalKey();
@@ -171,7 +171,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * This method is called when the plug-in is stopped
+   * This method is called when the plug-in is stopped.
    */
   @Override
   public void stop(BundleContext p_context) throws Exception {
@@ -210,7 +210,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Returns the currently kept regular expressions (as Strings-array) or an empty array. Regular Expressions are persisted to a file and loaded from
    * there on plug-in activation.
-   * 
+   *
    * @return the currently kept regular expressions (as Strings-array) or an empty array
    */
   public String[] getRegularExpressions() {
@@ -223,7 +223,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Adds the passed Regular Expression to the list of Reg. Exp.s kept with the plugin and persisted to a file on plugin-dectivation.
-   * 
+   *
    * @param p_expression
    *          The RegularExpression to be saved
    */
@@ -234,7 +234,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Returns the currently kept test-texts (as NamedTexts-array) or an empty array. Test Texts are persisted to a file and loaded from there on
    * plug-in activation.
-   * 
+   *
    * @return the currently kept test-texts (as NamedTexts-array) or an empty array
    */
   public NamedText[] getTestTexts() {
@@ -243,7 +243,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Adds the passed NamedText to the list of Test-Texts kept with the plugin and persisted to a file on plugin-dectivation.
-   * 
+   *
    * @param p_expression
    *          The NamedText to be saved
    */
@@ -257,7 +257,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Adds the passed REBook to the list of books currently kept in the Reg. Exp. Library.
-   * 
+   *
    * @param p_book The REBook to add
    */
   public void addREBook(REBook p_book) {
@@ -273,7 +273,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Removes the passed REBook from the list of books currently kept in the Reg. Exp. Library.
-   * 
+   *
    * @param p_book The REBook to remove
    */
   public void removeREBook(REBook p_book) {
@@ -289,7 +289,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns the NamedText with the passed name, if existing. If no such Text exists, <code>null</code> is returned.
-   * 
+   *
    * @param p_name
    *          the name of the text to return
    * @return the NamedText or null
@@ -306,7 +306,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns <code>true</code> if and only if a NamedText with the passed name is among the texts currently held with the plugin.
-   * 
+   *
    * @param p_name
    *          the name of the text which should be looked for
    * @return <code>true</code> if a text with the passed name exists
@@ -317,7 +317,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns a String-array with all names of saved texts.
-   * 
+   *
    * @return an array with test-text names (or an empty array if no test-texts are saved)
    */
   public String[] getTestTextNames() {
@@ -339,20 +339,20 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Deletes all RegularExpressions with String-values among the Strings passed in the array from the list of Regular-Expressions saved with the
    * plugin
-   * 
+   *
    * @param p_regExps
    *          the String-representations of Reg. Exp.s to be removed from memory
    */
   public void deleteRegularExpressions(String[] p_regExps) {
-    for (int i = 0; i < p_regExps.length; i++) {
-      deleteRegularExpression(p_regExps[i]);
+    for (String p_regExp : p_regExps) {
+      deleteRegularExpression(p_regExp);
     }
   }
 
   /**
    * Returns an array of all REBooks currently in the list of books in the Reg. Exp. Library.
    * Since there always is the default book, this array is never empty.
-   * 
+   *
    * @return an array of all books from the library
    */
   public REBook[] getREBooks() {
@@ -584,7 +584,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns <code>true</code> if and only if currently the JDK-implementation of regular expressions is used.
-   * 
+   *
    * @return <code>true</code> if and only if currently the JDK-implementation of regular expressions is used
    */
   public boolean isUsingJavaRE() {
@@ -593,7 +593,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns <code>true</code> if and only if currently the Reg. Exp. Lib.-View is linked with the RE-Entry-editor.
-   * 
+   *
    * @return <code>true</code> if and only if currently the Reg. Exp. Lib.-View is linked with the RE-Entry-editor
    */
   public boolean isLinkRELibViewWithEditor() {
@@ -602,7 +602,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Set (and store) the flag governing if the Reg. Exp. Lib.-View is linked with the RE-Entry-editor.
-   * 
+   *
    * @param p_flag the state of the flag to set and store
    */
   public void setLinkRELibViewWithEditor(boolean p_flag) {
@@ -618,7 +618,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns the currently used RE-implementation-flavour (actually, a flag corresponding to it as defined in MatchSetFactory).
-   * 
+   *
    * @return the currently used RE-implementation-flavour
    */
   public int getREFlavour() {
@@ -635,7 +635,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * Initializes the passed structure with the completion proposals defined in XML-files.
    * In case the files have already been parsed, the information is only copied to the
    * passed instance. If the files were not parsed yet, this is done now...
-   * 
+   *
    * @param p_proposals the structure to initialize
    */
   public void initCompletionProposals(CompletionProposals p_proposals) {
@@ -681,7 +681,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  public void initCategoriesFromFile(HashMap p_mappings, ArrayList p_categories, int p_flavour) {
+  public void initCategoriesFromFile(HashMap p_mappings, List<String> p_categories, int p_flavour) {
     String filepath = JDK_CATEGORIES_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.readerror.jdk.categories"; //$NON-NLS-1$
     try {
@@ -698,7 +698,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Saves the values of all flags to the PreferenceStore, where any flag contained in the passed collection is saved as 'set', any flag known to the
    * MatchSetFactory but not contained in the passed Collection is saved as 'not set'.
-   * 
+   *
    * @param p_flags
    *          a Collection holding the actually set flags
    */
@@ -712,7 +712,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns <code>true</code> if and only if the passed Flag is saved as 'set' in the PreferenceStore.
-   * 
+   *
    * @param p_flag
    *          the flag to check for
    * @return the state for the flag in the store (set: true, not set: false)
@@ -723,7 +723,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns the scope used for the last search of the Reg. Exp. Library.
-   * 
+   *
    * @return the scope used
    */
   public int getLastSearchScope() {
@@ -732,7 +732,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Set (and store) the scope used for the last search of the Reg. Exp. Library.
-   * 
+   *
    * @param p_scope the scope to set and store
    */
   public void setLastSearchScope(int p_scope) {
@@ -742,7 +742,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Adds the passed listened to the list of listeners which get informed when the RE-Library
    * changes (structurally, i.e. when books are added or removed)
-   * 
+   *
    * @param p_listener the listener to add
    */
   public void addRELibraryListener(IPropertyChangeListener p_listener) {
@@ -754,7 +754,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Removes the passed listened from the list of listeners which get informed when the RE-Library
    * changes (structurally, i.e. when books are added or removed)
-   * 
+   *
    * @param p_listener the listener to remove
    */
   public void removeRELibraryListener(IPropertyChangeListener p_listener) {
@@ -766,7 +766,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Returns <code>true</code> if and only if a book with the passed name already exists in the
    * list of books in teh Reg. Exp. Library
-   * 
+   *
    * @param p_bookName The name to check for
    * @return <code>true</code> if and only if a book with the passed name exists
    */
@@ -777,7 +777,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Returns the REBook with the passed name from the Reg. Exp. Library (if no book with
    * the name exists, <code>null</code> is returned).
-   * 
+   *
    * @param p_bookName The name of the book to return
    * @return the REBook with the passed name or <code>null</code>
    */
@@ -794,7 +794,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Returns <code>true</code> if and only if currently the QuickREx-View operates
    * in 'Live-evaluation-mode'.
-   * 
+   *
    * @return <code>true</code> if and only if currently the QuickREx-View operates in 'Live-evaluation-mode'
    */
   public boolean isLiveEvaluation() {
@@ -808,18 +808,18 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Returns an ArrayList of Categories (in fact, Category-names) defined for the
    * passed RE-Flavour.
-   * 
+   *
    * @param p_flavour the Flavour, one of the constants defined in MatchSetFactory
    * @return an ArrayList of category-names (Strings) or null if the flavour is unkown
    */
-  public ArrayList getRECategories(int p_flavour) {
+  public List<String> getRECategories(int p_flavour) {
     return jdkCategories;
   }
 
   /**
    * Returns an HashMap of Expressions mapped to Categories defined for the
    * passed RE-Flavour.
-   * 
+   *
    * @param p_flavour the Flavour, one of the constants defined in MatchSetFactory
    * @return a HashMap containing category-names as keys and ArrayListe of RECompletionProposal-
    *          instances as Objects.

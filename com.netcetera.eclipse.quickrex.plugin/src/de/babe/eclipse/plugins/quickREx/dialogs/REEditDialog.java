@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -12,6 +12,7 @@ package de.babe.eclipse.plugins.quickREx.dialogs;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -48,13 +49,13 @@ public class REEditDialog extends Dialog {
   private StyledText text;
   private Label additionalREInfoLabel;
   private QuickRExView view;
-  private ArrayList categories;
+  private List<String> categories;
   private HashMap expressions;
   private String currentText = "";
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param view
    * @param shell
    * @param flavour
@@ -68,7 +69,7 @@ public class REEditDialog extends Dialog {
 
   /**
    * Returns the content of the text-field.
-   * 
+   *
    * @return the contents of the text-field.
    */
   public String getSelectedText() {
@@ -85,7 +86,7 @@ public class REEditDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -113,8 +114,7 @@ public class REEditDialog extends Dialog {
   }
 
   private void createSnippetControls(Composite composite) {
-    for (Iterator iter = categories.iterator(); iter.hasNext();) {
-      final String catName = (String) iter.next();
+    for (final String catName : categories) {
       Label catLab = new Label(composite, SWT.NONE);
       catLab.setText(catName);
       GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);

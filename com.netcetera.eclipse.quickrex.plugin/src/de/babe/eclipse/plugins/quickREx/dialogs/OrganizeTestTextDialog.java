@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -71,8 +71,8 @@ public class OrganizeTestTextDialog extends Dialog {
   private String selectedPath;
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param p_parentShell
    * @param p_type
    */
@@ -83,7 +83,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /**
    * Returns the selected text or <code>null</code> if a button other than 'ok' was pressed (or the dialog is not in 'LOAD'-mode)
-   * 
+   *
    * @return the selected text or <code>null</code>
    */
   public NamedText getSelectedText() {
@@ -96,7 +96,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /**
    * Sets the text to be saved to the passed text.
-   * 
+   *
    * @param p_text
    *          the text to be saved
    */
@@ -106,7 +106,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -137,7 +137,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -316,7 +316,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
    */
   @Override
@@ -362,7 +362,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#okPressed()
    */
   @Override
@@ -419,7 +419,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#cancelPressed()
    */
   @Override
@@ -431,12 +431,12 @@ public class OrganizeTestTextDialog extends Dialog {
   /**
    * Returns the NamedText (name and contents of a piece of text) to be saved or <code>null</code> if a button other than 'ok' was pressed or the
    * dialog is not in 'SAVE'-mode
-   * 
+   *
    * @return the NamedText to be saved or <code>null</code>
    */
   public NamedText getSaveInformation() {
     if (okPressed) {
-      return new NamedText(this.nameToSave, (this.textToSave == null ? "" : this.textToSave)); //$NON-NLS-1$
+      return new NamedText(this.nameToSave, this.textToSave == null ? "" : this.textToSave); //$NON-NLS-1$
     } else {
       return null;
     }

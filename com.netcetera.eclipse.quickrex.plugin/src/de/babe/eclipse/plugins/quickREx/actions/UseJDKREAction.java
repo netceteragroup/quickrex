@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -29,7 +29,7 @@ public class UseJDKREAction extends Action {
     this.setText(Messages.getString("views.QuickRExView.useJDKREAction.text")); //$NON-NLS-1$
     this.setToolTipText(Messages.getString("views.QuickRExView.useJDKREAction.text.tooltip")); //$NON-NLS-1$
     this.setChecked(QuickRExPlugin.getDefault().isUsingJavaRE());
-    this.setImageDescriptor(((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry())
+    this.setImageDescriptor(((PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry())
         .getImageDescriptor(PluginImageRegistry.IMG_JAVA_LOGO));
     this.setId("de.babe.eclipse.plugins.quickREx.actions.UseJDKREAction"); //$NON-NLS-1$
   }

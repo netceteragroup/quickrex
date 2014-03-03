@@ -118,10 +118,6 @@
     <module name="ArrayTypeStyle"/>
     <module name="UpperEll"/>
     <module name="RegexpSinglelineJava">
-      <property name="format" value="(.*)\/\/\$NON-NLS-(.+)\$" />
-      <property name="message" value="Netcetera: Do not use Eclipse's string externalisation" />
-    </module>
-    <module name="RegexpSinglelineJava">
       <property name="format" value="new\s+String\s*[(]\s*&quot;" />
       <property name="message" value="Netcetera: Possible redundant String object" />
       <property name="ignoreComments" value="true" />

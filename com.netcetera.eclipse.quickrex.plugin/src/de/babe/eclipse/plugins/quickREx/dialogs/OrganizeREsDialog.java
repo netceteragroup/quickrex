@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -35,17 +35,17 @@ public class OrganizeREsDialog extends Dialog {
   private static final int DELETE_BUTTON_ID = Integer.MAX_VALUE - 1;
 
   /**
-   * The constructor
-   * 
-   * @param p_parentShell
+   * The constructor.
+   *
+   * @param parentShell
    */
-  public OrganizeREsDialog(Shell p_parentShell) {
-    super(p_parentShell);
+  public OrganizeREsDialog(Shell parentShell) {
+    super(parentShell);
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -56,7 +56,7 @@ public class OrganizeREsDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -97,7 +97,7 @@ public class OrganizeREsDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#cancelPressed()
    */
   @Override
@@ -107,7 +107,7 @@ public class OrganizeREsDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
    */
   @Override

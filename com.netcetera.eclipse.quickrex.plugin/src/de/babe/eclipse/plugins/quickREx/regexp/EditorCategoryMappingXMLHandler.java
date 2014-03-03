@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -11,6 +11,7 @@ package de.babe.eclipse.plugins.quickREx.regexp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -22,24 +23,24 @@ public class EditorCategoryMappingXMLHandler extends DefaultHandler {
 
   private final HashMap mappings;
 
-  private final ArrayList categories;
+  private final List<String> categories;
 
   private REEditorCategoryMapping currentMapping;
 
   /**
    * The constructor
-   * 
+   *
    * @param p_categoryMappings
    * @param p_categories
    */
-  public EditorCategoryMappingXMLHandler(HashMap p_categoryMappings, ArrayList p_categories) {
+  public EditorCategoryMappingXMLHandler(HashMap p_categoryMappings, List<String> p_categories) {
     this.mappings = p_categoryMappings;
     this.categories = p_categories;
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
@@ -57,7 +58,7 @@ public class EditorCategoryMappingXMLHandler extends DefaultHandler {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
    */
   @Override
