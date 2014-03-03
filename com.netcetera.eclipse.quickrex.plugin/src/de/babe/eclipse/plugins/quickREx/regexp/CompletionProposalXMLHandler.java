@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005, 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -44,6 +44,7 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
    * 
    * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
    */
+  @Override
   public void endElement(String uri, String localName, String qName) {
     if (CompletionTriggerExpression.INSTANCE_QNAME.equals(qName)) {
       currentProposal.addTriggerExpression(currentTriggerExpression.getRegExp(), currentTriggerExpression.getProposal());
@@ -62,6 +63,7 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
    * 
    * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
    */
+  @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) {
     if (RECompletionProposal.INSTANCE_QNAME.equals(qName)) {
       String key = attributes.getValue(RECompletionProposal.KEY_ATTRIBUTE_QNAME);

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -56,6 +56,7 @@ public class RESearchInputDialog extends Dialog {
   /* (non-Javadoc)
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected Control createDialogArea(Composite parent) {
     getShell().setText(Messages.getString("dialogs.RESearchInputDialog.title")); //$NON-NLS-1$
     // create a composite with standard margins and spacing
@@ -129,6 +130,7 @@ public class RESearchInputDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
    */
+  @Override
   protected void buttonPressed(int buttonId) {
     if (buttonId == IDialogConstants.OK_ID) {
       query = new RESearchQuery(getText(), getSearchScope());

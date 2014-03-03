@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -52,7 +52,7 @@ public class REBook {
   }
 
   /**
-   * Sets the name 
+   * Sets the name
    * 
    * @param p_name the name to set
    */
@@ -87,8 +87,8 @@ public class REBook {
   }
 
   /**
-   * Sets the contents (i.e. the categories in this book), updating the 
-   * book in all the passed RECategories to <code>this</code> 
+   * Sets the contents (i.e. the categories in this book), updating the
+   * book in all the passed RECategories to <code>this</code>
    * 
    * @param contents an ArrayList holding RECategory-entries with the contents of this book
    */
@@ -137,7 +137,7 @@ public class REBook {
 
   /**
    * Writes the xml-file with the serialized representation of this book
-   *  
+   * 
    * @param monitor the progress-monitor
    */
   public void writeFile(IProgressMonitor monitor) {
@@ -189,7 +189,7 @@ public class REBook {
   }
 
   /**
-   * Returns the category with the passed name if it is among the 
+   * Returns the category with the passed name if it is among the
    * categories of this book. If not, <code>null</code> is returned
    * 
    * @param p_catName the name for the category to return
@@ -211,8 +211,8 @@ public class REBook {
 
   /**
    * Returns <code>true</code> if and only if a category with the passed name exists in this book
-   *  
-   * @param catName the name to look for 
+   * 
+   * @param catName the name to look for
    * @return <code>true</code> if and only if a category with the passed name exists in this book
    */
   public boolean containsCategoryWithName(String catName) {

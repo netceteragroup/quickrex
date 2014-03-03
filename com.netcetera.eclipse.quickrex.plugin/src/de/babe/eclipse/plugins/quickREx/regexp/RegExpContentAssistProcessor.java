@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyright (c) 2005, 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *     Georg Sendt - added JRegexp-related implementations
@@ -24,7 +24,6 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
@@ -33,13 +32,13 @@ import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
 /**
  * @author bastian.bergerhoff, georg.sendt
  */
-public class RegExpContentAssistProcessor implements IContentAssistProcessor, ISubjectControlContentAssistProcessor {
+public class RegExpContentAssistProcessor implements ISubjectControlContentAssistProcessor {
 
   /**
    * The available proposals.
    */
   private final static CompletionProposals proposals = new CompletionProposals();
-  
+
   static {
     initializeProposals();
   }
@@ -56,6 +55,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see IContentAssistProcessor#computeCompletionProposals(ITextViewer, int)
    */
+  @Override
   public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int documentOffset) {
     return computeCompletionProposals((IContentAssistSubjectControl)null, documentOffset);
   }
@@ -63,6 +63,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see IContentAssistProcessor#computeContextInformation(ITextViewer, int)
    */
+  @Override
   public IContextInformation[] computeContextInformation(ITextViewer viewer, int documentOffset) {
     return computeContextInformation((IContentAssistSubjectControl)null, documentOffset);
   }
@@ -70,6 +71,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see IContentAssistProcessor#getCompletionProposalAutoActivationCharacters()
    */
+  @Override
   public char[] getCompletionProposalAutoActivationCharacters() {
     return new char[] { '\\', '[', '(' };
   }
@@ -77,6 +79,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see IContentAssistProcessor#getContextInformationAutoActivationCharacters()
    */
+  @Override
   public char[] getContextInformationAutoActivationCharacters() {
     return new char[] {};
   }
@@ -84,6 +87,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see IContentAssistProcessor#getContextInformationValidator()
    */
+  @Override
   public IContextInformationValidator getContextInformationValidator() {
     return fValidator;
   }
@@ -91,6 +95,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see IContentAssistProcessor#getErrorMessage()
    */
+  @Override
   public String getErrorMessage() {
     return null;
   }
@@ -98,6 +103,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see ISubjectControlContentAssistProcessor#computeCompletionProposals(IContentAssistSubjectControl, int)
    */
+  @Override
   public ICompletionProposal[] computeCompletionProposals(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
     Set results = new TreeSet(new RECompletionProposalComparator());
     Iterator iter = proposals.getKeys(MatchSetFactory.JAVA_FLAVOUR).iterator();
@@ -129,6 +135,7 @@ public class RegExpContentAssistProcessor implements IContentAssistProcessor, IS
   /*
    * @see ISubjectControlContentAssistProcessor#computeContextInformation(IContentAssistSubjectControl, int)
    */
+  @Override
   public IContextInformation[] computeContextInformation(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
     return null;
   }

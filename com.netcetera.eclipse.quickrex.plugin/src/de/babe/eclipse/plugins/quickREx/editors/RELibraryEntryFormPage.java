@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006, 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -74,6 +74,7 @@ public class RELibraryEntryFormPage extends FormPage {
   /* (non-Javadoc)
    * @see org.eclipse.ui.forms.editor.FormPage#createFormContent(org.eclipse.ui.forms.IManagedForm)
    */
+  @Override
   protected void createFormContent(IManagedForm managedForm) {
     FormToolkit tk = managedForm.getToolkit();
     ScrolledForm form = managedForm.getForm();
@@ -94,6 +95,7 @@ public class RELibraryEntryFormPage extends FormPage {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
+      @Override
       public void modifyText(ModifyEvent e) {
         ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
       }
@@ -117,6 +119,7 @@ public class RELibraryEntryFormPage extends FormPage {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
+      @Override
       public void modifyText(ModifyEvent e) {
         ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
       }
@@ -143,6 +146,7 @@ public class RELibraryEntryFormPage extends FormPage {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
+      @Override
       public void modifyText(ModifyEvent e) {
         ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
       }
@@ -166,6 +170,7 @@ public class RELibraryEntryFormPage extends FormPage {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
+      @Override
       public void modifyText(ModifyEvent e) {
         ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
       }
@@ -189,6 +194,7 @@ public class RELibraryEntryFormPage extends FormPage {
       /* (non-Javadoc)
        * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
        */
+      @Override
       public void modifyText(ModifyEvent e) {
         ((RELibraryEntryEditor)getEditor()).setIsDirty(true);
       }
@@ -221,6 +227,7 @@ public class RELibraryEntryFormPage extends FormPage {
       /*
        * @see org.eclipse.jface.text.IInformationControlCreator#createInformationControl(org.eclipse.swt.widgets.Shell)
        */
+      @Override
       public IInformationControl createInformationControl(Shell parent) {
         return new DefaultInformationControl(parent);
       }
@@ -232,6 +239,7 @@ public class RELibraryEntryFormPage extends FormPage {
   /* (non-Javadoc)
    * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
    */
+  @Override
   public void doSave(IProgressMonitor monitor) {
     RELibraryEntry myEntry = ((RELibraryEntryEditorInput)getEditorInput()).getRELibraryEntry();
     myEntry.setTitle(titleText.getText());
@@ -247,6 +255,7 @@ public class RELibraryEntryFormPage extends FormPage {
    * 
    * @see org.eclipse.ui.IWorkbenchPart#dispose()
    */
+  @Override
   public void dispose() {
     regExpText.dispose();
     regExpText = null;

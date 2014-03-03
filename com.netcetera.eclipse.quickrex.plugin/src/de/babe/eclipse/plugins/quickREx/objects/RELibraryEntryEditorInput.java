@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -50,6 +50,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
    * 
    * @see org.eclipse.ui.IEditorInput#exists()
    */
+  @Override
   public boolean exists() {
     return false;
   }
@@ -59,6 +60,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
    * 
    * @see org.eclipse.ui.IEditorInput#getImageDescriptor()
    */
+  @Override
   public ImageDescriptor getImageDescriptor() {
     return null;
   }
@@ -68,6 +70,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
    * 
    * @see org.eclipse.ui.IEditorInput#getName()
    */
+  @Override
   public String getName() {
     return entry.getPath();
   }
@@ -77,6 +80,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
    * 
    * @see org.eclipse.ui.IEditorInput#getPersistable()
    */
+  @Override
   public IPersistableElement getPersistable() {
     return this.persistableElement;
   }
@@ -86,6 +90,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
    * 
    * @see org.eclipse.ui.IEditorInput#getToolTipText()
    */
+  @Override
   public String getToolTipText() {
     return ""; //$NON-NLS-1$
   }
@@ -95,6 +100,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
    * 
    * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
    */
+  @Override
   public Object getAdapter(Class adapter) {
     return null;
   }
@@ -102,6 +108,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
   /* (non-Javadoc)
    * @see java.lang.Object#equals(java.lang.Object)
    */
+  @Override
   public boolean equals(Object other) {
     try {
       if (((RELibraryEntryEditorInput)other).getRELibraryEntry() == getRELibraryEntry()) {

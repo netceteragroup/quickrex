@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -42,6 +42,7 @@ public class RELibraryEntryEditor extends FormEditor {
   /* (non-Javadoc)
    * @see org.eclipse.ui.IWorkbenchPart#getTitleToolTip()
    */
+  @Override
   public String getTitleToolTip() {
     return ""; //$NON-NLS-1$
   }
@@ -49,6 +50,7 @@ public class RELibraryEntryEditor extends FormEditor {
   /* (non-Javadoc)
    * @see org.eclipse.ui.IEditorPart#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
    */
+  @Override
   public void init(IEditorSite site, IEditorInput input) {
     if (!(input instanceof RELibraryEntryEditorInput)) {
       throw new IllegalStateException();
@@ -63,6 +65,7 @@ public class RELibraryEntryEditor extends FormEditor {
    * 
    * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
    */
+  @Override
   protected void addPages() {
     try {
       entryPage = new RELibraryEntryFormPage(this);
@@ -77,6 +80,7 @@ public class RELibraryEntryEditor extends FormEditor {
    * 
    * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
    */
+  @Override
   public void doSave(IProgressMonitor monitor) {
     if (getMyEditorInput().getRELibraryEntry().getCategory().containsEntryWithTitle(entryPage.getTitleText().getText())
         && !getMyEditorInput().getRELibraryEntry().getTitle().equals(entryPage.getTitleText().getText())) {
@@ -95,6 +99,7 @@ public class RELibraryEntryEditor extends FormEditor {
    * 
    * @see org.eclipse.ui.part.EditorPart#doSaveAs()
    */
+  @Override
   public void doSaveAs() {
     // not possible since isSaveAsAllowed() returns false
   }
@@ -104,6 +109,7 @@ public class RELibraryEntryEditor extends FormEditor {
    * 
    * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
    */
+  @Override
   public boolean isSaveAsAllowed() {
     return false;
   }
@@ -120,12 +126,13 @@ public class RELibraryEntryEditor extends FormEditor {
   /* (non-Javadoc)
    * @see org.eclipse.ui.ISaveablePart#isDirty()
    */
+  @Override
   public boolean isDirty() {
     return this.isDirty;
   }
 
   /**
-   * Sets the dirty-state of the editor to the passed value, firing a 
+   * Sets the dirty-state of the editor to the passed value, firing a
    * PropertyChangeEvent.
    * 
    * @param flag the new value for the dirty-state
@@ -138,6 +145,7 @@ public class RELibraryEntryEditor extends FormEditor {
   /* (non-Javadoc)
    * @see org.eclipse.ui.IWorkbenchPart#setFocus()
    */
+  @Override
   public void setFocus() {
     if (QuickRExPlugin.getDefault().isLinkRELibViewWithEditor()) {
       try {

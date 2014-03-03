@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -37,6 +37,7 @@ public class RELibraryEntryPersistable implements IPersistableElement {
    * 
    * @see org.eclipse.ui.IPersistableElement#getFactoryId()
    */
+  @Override
   public String getFactoryId() {
     return RELibraryEntryFactory.ID;
   }
@@ -46,6 +47,7 @@ public class RELibraryEntryPersistable implements IPersistableElement {
    * 
    * @see org.eclipse.ui.IPersistableElement#saveState(org.eclipse.ui.IMemento)
    */
+  @Override
   public void saveState(IMemento memento) {
     try {
       memento.putString(ENTRY_PATH_KEY, entry.getPath());

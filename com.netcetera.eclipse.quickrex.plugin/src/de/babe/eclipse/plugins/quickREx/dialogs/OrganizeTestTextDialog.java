@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -109,6 +109,7 @@ public class OrganizeTestTextDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected Control createDialogArea(Composite parent) {
     getShell().setText(Messages.getString("dialogs.OrganizeTestTextDialog.title")); //$NON-NLS-1$
     // create a composite with standard margins and spacing
@@ -123,14 +124,14 @@ public class OrganizeTestTextDialog extends Dialog {
     composite.setLayoutData(new GridData(GridData.FILL_BOTH));
     applyDialogFont(composite);
     switch (type) {
-    case TYPE_SAVE:
-      return createDialogAreaContentsForSave(composite);
-    case TYPE_LOAD:
-      return createDialogAreaContentsForLoad(composite);
-    case TYPE_ORGANIZE:
-      return createDialogAreaContentsForOrganize(composite);
-    default:
-      throw new IllegalStateException(Messages.getString("dialogs.OrganizeTestTextDialog.errror.message1") + type); //$NON-NLS-1$
+      case TYPE_SAVE:
+        return createDialogAreaContentsForSave(composite);
+      case TYPE_LOAD:
+        return createDialogAreaContentsForLoad(composite);
+      case TYPE_ORGANIZE:
+        return createDialogAreaContentsForOrganize(composite);
+      default:
+        throw new IllegalStateException(Messages.getString("dialogs.OrganizeTestTextDialog.errror.message1") + type); //$NON-NLS-1$
     }
   }
 
@@ -139,19 +140,20 @@ public class OrganizeTestTextDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected void createButtonsForButtonBar(Composite parent) {
     switch (type) {
-    case TYPE_SAVE:
-      super.createButtonsForButtonBar(parent);
-      return;
-    case TYPE_LOAD:
-      createButtonsForLoad(parent);
-      return;
-    case TYPE_ORGANIZE:
-      createButtonsForOrganize(parent);
-      return;
-    default:
-      throw new IllegalStateException(Messages.getString("dialogs.OrganizeTestTextDialog.error.message2") + type); //$NON-NLS-1$
+      case TYPE_SAVE:
+        super.createButtonsForButtonBar(parent);
+        return;
+      case TYPE_LOAD:
+        createButtonsForLoad(parent);
+        return;
+      case TYPE_ORGANIZE:
+        createButtonsForOrganize(parent);
+        return;
+      default:
+        throw new IllegalStateException(Messages.getString("dialogs.OrganizeTestTextDialog.error.message2") + type); //$NON-NLS-1$
     }
   }
 
@@ -186,12 +188,14 @@ public class OrganizeTestTextDialog extends Dialog {
     nameList.setLayoutData(gd);
     nameList.setItems(QuickRExPlugin.getDefault().getTestTextNames());
     nameList.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent e) {
         if (nameList.getSelection() != null && nameList.getSelection().length > 0) {
           testTextField.setText(QuickRExPlugin.getDefault().getTestTextByName(nameList.getSelection()[0]).getText());
         }
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent e) {
       }
     });
@@ -231,6 +235,7 @@ public class OrganizeTestTextDialog extends Dialog {
     nameList.setLayoutData(gd);
     nameList.setItems(QuickRExPlugin.getDefault().getTestTextNames());
     nameList.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent e) {
         if (nameList.getSelection() != null && nameList.getSelection().length > 0) {
           testTextField.setText(QuickRExPlugin.getDefault().getTestTextByName(nameList.getSelection()[0]).getText());
@@ -238,6 +243,7 @@ public class OrganizeTestTextDialog extends Dialog {
         }
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent e) {
       }
     });
@@ -275,6 +281,7 @@ public class OrganizeTestTextDialog extends Dialog {
     gd.grabExcessHorizontalSpace = true;
     nameText.setLayoutData(gd);
     nameText.addModifyListener(new ModifyListener() {
+      @Override
       public void modifyText(ModifyEvent p_e) {
         handleNameTextModified();
       }
@@ -312,6 +319,7 @@ public class OrganizeTestTextDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
    */
+  @Override
   protected void buttonPressed(int buttonId) {
     super.buttonPressed(buttonId);
     if (DELETE_BUTTON_ID == buttonId) {
@@ -357,6 +365,7 @@ public class OrganizeTestTextDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#okPressed()
    */
+  @Override
   protected void okPressed() {
     okPressed = true;
     if (type == TYPE_SAVE) {
@@ -413,6 +422,7 @@ public class OrganizeTestTextDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#cancelPressed()
    */
+  @Override
   protected void cancelPressed() {
     okPressed = false;
     this.close();

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -52,6 +52,7 @@ public class SimpleTextDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected Control createDialogArea(Composite parent) {
     getShell().setText(title);
     // create a composite with standard margins and spacing
@@ -83,6 +84,7 @@ public class SimpleTextDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected void createButtonsForButtonBar(Composite parent) {
     createButton(parent, IDialogConstants.CANCEL_ID, Messages.getString("dialogs.SimpleTextDialog.button.close"), true); //$NON-NLS-1$
   }

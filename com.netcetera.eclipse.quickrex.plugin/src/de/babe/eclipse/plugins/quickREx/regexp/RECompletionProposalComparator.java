@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -22,6 +22,7 @@ public class RECompletionProposalComparator implements Comparator {
   /* (non-Javadoc)
    * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
+  @Override
   public int compare(Object arg0, Object arg1) {
     RECompletionProposal prop1 = null;
     RECompletionProposal prop2 = null;

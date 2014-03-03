@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -15,9 +15,9 @@ package de.babe.eclipse.plugins.quickREx.regexp;
 public abstract class CompletionTrigger {
 
   public final static String COMPLETION_VALUE_ATTRIBUTE_QNAME = "completion"; //$NON-NLS-1$
-  
+
   protected String text;
-  
+
   public abstract boolean isMatchFor(String p_text);
 
   public abstract String getInsertString(String p_text);
@@ -27,7 +27,7 @@ public abstract class CompletionTrigger {
   public abstract int compareTo(CompletionTrigger p_other);
 
   /*package*/ abstract String getPlainProposal();
-  
+
   /**
    * @param string
    */

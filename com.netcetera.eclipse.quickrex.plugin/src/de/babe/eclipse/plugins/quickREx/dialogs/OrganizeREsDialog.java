@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -48,6 +48,7 @@ public class OrganizeREsDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected void createButtonsForButtonBar(Composite parent) {
     createButton(parent, DELETE_BUTTON_ID, Messages.getString("dialogs.OrganizeREsDialog.button.delete"), false); //$NON-NLS-1$
     createButton(parent, IDialogConstants.CANCEL_ID, Messages.getString("dialogs.OrganizeREsDialog.button.close"), true); //$NON-NLS-1$
@@ -58,6 +59,7 @@ public class OrganizeREsDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected Control createDialogArea(Composite parent) {
     getShell().setText(Messages.getString("dialogs.OrganizeREsDialog.title")); //$NON-NLS-1$
     // create a composite with standard margins and spacing
@@ -98,6 +100,7 @@ public class OrganizeREsDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#cancelPressed()
    */
+  @Override
   protected void cancelPressed() {
     this.close();
   }
@@ -107,6 +110,7 @@ public class OrganizeREsDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
    */
+  @Override
   protected void buttonPressed(int buttonId) {
     super.buttonPressed(buttonId);
     if (DELETE_BUTTON_ID == buttonId) {

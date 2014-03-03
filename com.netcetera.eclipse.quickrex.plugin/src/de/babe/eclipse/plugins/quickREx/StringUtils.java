@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005, 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -20,8 +20,8 @@ public abstract class StringUtils {
   /**
    * Returns the passed String with any occurrence of " replaced by \"
    * and any occurrence of \ replaced by \\.
-   *  
-   * @param p_text the String to escape 
+   * 
+   * @param p_text the String to escape
    * @return the escaped String or "" if null was passed.
    */
   public static String escapeForJava(String p_text) {
@@ -48,7 +48,7 @@ public abstract class StringUtils {
   public static String firstLine(String p_text) {
     if(p_text == null)
       return ""; //$NON-NLS-1$
-    
+
     if (p_text.indexOf("\r") >= 0) { //$NON-NLS-1$
       return p_text.substring(0, p_text.indexOf("\r")); //$NON-NLS-1$
     } else {

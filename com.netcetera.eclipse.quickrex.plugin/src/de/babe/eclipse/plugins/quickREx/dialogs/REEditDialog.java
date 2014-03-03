@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -78,6 +78,7 @@ public class REEditDialog extends Dialog {
   /* (non-Javadoc)
    * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected void createButtonsForButtonBar(Composite parent) {
     createButton(parent, IDialogConstants.OK_ID, Messages.getString("dialogs.SimpleTextDialog.button.close"), true); //$NON-NLS-1$
   }
@@ -87,6 +88,7 @@ public class REEditDialog extends Dialog {
    * 
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   protected Control createDialogArea(Composite parent) {
     getShell().setText(Messages.getString("dialogs.REEditDialog.title")); //$NON-NLS-1$
     // create a composite with standard margins and spacing
@@ -96,14 +98,14 @@ public class REEditDialog extends Dialog {
     layout.marginWidth = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN);
     layout.verticalSpacing = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
     layout.horizontalSpacing = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
-    
+
     layout.numColumns = 3;
     composite.setLayout(layout);
     composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
     createTextLine(composite);
     createSnippetControls(composite);
-    
+
     updateMarkup();
 
     applyDialogFont(composite);
@@ -122,9 +124,11 @@ public class REEditDialog extends Dialog {
       catCombo.setItems(createComboItems((ArrayList)expressions.get(catName)));
       catCombo.addSelectionListener(new SelectionListener() {
 
+        @Override
         public void widgetDefaultSelected(SelectionEvent e) {
         }
 
+        @Override
         public void widgetSelected(SelectionEvent e) {
           if (catCombo.getSelectionIndex() >= 0) {
             additionalREInfoLabel.setText(((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getAdditionalInfo());
@@ -132,6 +136,7 @@ public class REEditDialog extends Dialog {
         }});
       catCombo.addFocusListener(new FocusListener() {
 
+        @Override
         public void focusGained(FocusEvent e) {
           if (catCombo.getSelectionIndex() >= 0) {
             additionalREInfoLabel.setText(((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getAdditionalInfo());
@@ -140,6 +145,7 @@ public class REEditDialog extends Dialog {
           }
         }
 
+        @Override
         public void focusLost(FocusEvent e) {
         }});
       gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
@@ -152,9 +158,11 @@ public class REEditDialog extends Dialog {
       catButton.setLayoutData(gd);
       catButton.addSelectionListener(new SelectionListener() {
 
+        @Override
         public void widgetDefaultSelected(SelectionEvent e) {
         }
 
+        @Override
         public void widgetSelected(SelectionEvent e) {
           if (catCombo.getSelectionIndex() >= 0) {
             text.insert(((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getInsertString());
@@ -198,6 +206,7 @@ public class REEditDialog extends Dialog {
     text.setText(currentText);
     text.setSelection(view.getLastComboSelection());
     text.addModifyListener(new ModifyListener() {
+      @Override
       public void modifyText(ModifyEvent p_e) {
         handleTextModified();
       }
@@ -209,7 +218,7 @@ public class REEditDialog extends Dialog {
     currentText = text.getText();
     view.setRegularExpression(currentText);
   }
-  
+
   private void updateMarkup() {
     char[] chars = text.getText().toCharArray();
     Vector ranges = new Vector();

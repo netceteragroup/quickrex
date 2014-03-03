@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -62,6 +62,7 @@ public class RESearchQuery implements ISearchQuery {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchQuery#run(org.eclipse.core.runtime.IProgressMonitor)
    */
+  @Override
   public IStatus run(IProgressMonitor monitor) throws OperationCanceledException {
     REBook[] allBooks = QuickRExPlugin.getDefault().getREBooks();
     for (int i = 0; i < allBooks.length; i++) {
@@ -120,6 +121,7 @@ public class RESearchQuery implements ISearchQuery {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchQuery#getLabel()
    */
+  @Override
   public String getLabel() {
     return Messages.getString("search.RESearchQuery.label", new Object[] { text}); //$NON-NLS-1$
   }
@@ -127,6 +129,7 @@ public class RESearchQuery implements ISearchQuery {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchQuery#canRerun()
    */
+  @Override
   public boolean canRerun() {
     return false;
   }
@@ -134,6 +137,7 @@ public class RESearchQuery implements ISearchQuery {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchQuery#canRunInBackground()
    */
+  @Override
   public boolean canRunInBackground() {
     return true;
   }
@@ -141,6 +145,7 @@ public class RESearchQuery implements ISearchQuery {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchQuery#getSearchResult()
    */
+  @Override
   public ISearchResult getSearchResult() {
     return searchResult;
   }

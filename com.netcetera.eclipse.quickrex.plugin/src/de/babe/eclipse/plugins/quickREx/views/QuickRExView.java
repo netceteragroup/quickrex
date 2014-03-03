@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005, 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -158,7 +158,7 @@ public class QuickRExView extends ViewPart {
   private boolean liveEval;
 
   private Button editButton;
-  
+
   private Point lastRESelection = new Point(0, 0);
 
   /**
@@ -172,6 +172,7 @@ public class QuickRExView extends ViewPart {
    * 
    * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   public void createPartControl(Composite parent) {
     createViewContents(parent);
     makeActions();
@@ -195,7 +196,7 @@ public class QuickRExView extends ViewPart {
     FormToolkit tk = new FormToolkit(parent.getDisplay());
     Form form = tk.createForm(parent);
     GridLayout layout = new GridLayout();
-    
+
     layout.numColumns = 4;
 
     form.getBody().setLayout(layout);
@@ -205,7 +206,7 @@ public class QuickRExView extends ViewPart {
     createSecondRow(tk, form);
 
     createNavigationSection(tk, form);
-    
+
     createFlagsSection(tk, form);
   }
 
@@ -219,13 +220,14 @@ public class QuickRExView extends ViewPart {
     section.setText(Messages.getString("views.QuickRExView.global.navigation")); //$NON-NLS-1$
     tk.createCompositeSeparator(section);
     section.addExpansionListener(new ExpansionAdapter() {
+      @Override
       public void expansionStateChanged(ExpansionEvent e) {
         QuickRExPlugin.getDefault().getPreferenceStore().setValue(QuickRExPlugin.EXPAND_NAVIGATION_SECTION, section.isExpanded());
         form.redraw();
       }
     });
     if (QuickRExPlugin.getDefault().getPreferenceStore().contains(QuickRExPlugin.EXPAND_NAVIGATION_SECTION)) {
-      section.setExpanded(QuickRExPlugin.getDefault().getPreferenceStore().getBoolean(QuickRExPlugin.EXPAND_NAVIGATION_SECTION));      
+      section.setExpanded(QuickRExPlugin.getDefault().getPreferenceStore().getBoolean(QuickRExPlugin.EXPAND_NAVIGATION_SECTION));
     } else {
       QuickRExPlugin.getDefault().getPreferenceStore().setValue(QuickRExPlugin.EXPAND_NAVIGATION_SECTION, true);
       QuickRExPlugin.getDefault().getPreferenceStore().setDefault(QuickRExPlugin.EXPAND_NAVIGATION_SECTION, true);
@@ -239,7 +241,7 @@ public class QuickRExView extends ViewPart {
     gd.horizontalSpan = 2;
     gd.grabExcessHorizontalSpace = true;
     client.setLayoutData(gd);
-    
+
     createThirdRow(tk, client);
 
     createFourthRow(tk, client);
@@ -261,6 +263,7 @@ public class QuickRExView extends ViewPart {
     tk.createCompositeSeparator(section);
     section.setDescription(Messages.getString("views.QuickRExView.global.flags.description") + msg); //$NON-NLS-1$
     section.addExpansionListener(new ExpansionAdapter() {
+      @Override
       public void expansionStateChanged(ExpansionEvent e) {
         form.redraw();
       }
@@ -300,6 +303,7 @@ public class QuickRExView extends ViewPart {
       checkButton.setToolTipText(element.getDescription());
       checkButton.setSelection(QuickRExPlugin.getDefault().isFlagSaved(element));
       checkButton.addSelectionListener(new SelectionListener() {
+        @Override
         public void widgetSelected(SelectionEvent p_e) {
           if (checkButton.getSelection()) {
             currentFlags.add(element);
@@ -309,6 +313,7 @@ public class QuickRExView extends ViewPart {
           updateEvaluation();
         }
 
+        @Override
         public void widgetDefaultSelected(SelectionEvent p_e) {
         }
       });
@@ -331,10 +336,12 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     previousGroupButton.setLayoutData(gd);
     previousGroupButton.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent p_e) {
         handlePreviousGroupButtonPressed();
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent p_e) {
       }
     });
@@ -344,10 +351,12 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     nextGroupButton.setLayoutData(gd);
     nextGroupButton.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent p_e) {
         handleNextGroupButtonPressed();
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent p_e) {
       }
     });
@@ -370,10 +379,12 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     previousButton.setLayoutData(gd);
     previousButton.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent p_e) {
         handlePreviousButtonPressed();
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent p_e) {
       }
     });
@@ -383,10 +394,12 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     nextButton.setLayoutData(gd);
     nextButton.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent p_e) {
         handleNextButtonPressed();
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent p_e) {
       }
     });
@@ -403,6 +416,7 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     liveEvalButton.setLayoutData(gd);
     liveEvalButton.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent p_e) {
         if (liveEvalButton.getSelection()) {
           QuickRExPlugin.getDefault().getPreferenceStore().setValue(QuickRExPreferencesPage.P_LIVE_EVAL, true);
@@ -416,6 +430,7 @@ public class QuickRExView extends ViewPart {
         }
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent p_e) {
       }
     });
@@ -427,10 +442,12 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     evaluateButton.setLayoutData(gd);
     evaluateButton.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent p_e) {
         evaluate();
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent p_e) {
       }
     });
@@ -454,10 +471,11 @@ public class QuickRExView extends ViewPart {
     gd = new GridData(GridData.FILL_BOTH);
     gd.grabExcessHorizontalSpace = true;
     gd.grabExcessVerticalSpace = true;
-    
+
     gd.horizontalSpan = 3;
     testText.setLayoutData(gd);
     testText.addModifyListener(new ModifyListener() {
+      @Override
       public void modifyText(ModifyEvent p_e) {
         handleTestTextModified();
       }
@@ -481,17 +499,20 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = true;
     regExpCombo.setLayoutData(gd);
     regExpCombo.addModifyListener(new ModifyListener() {
+      @Override
       public void modifyText(ModifyEvent p_e) {
         handleRegExpModified();
       }
     });
     regExpCombo.addFocusListener(new FocusListener() {
+      @Override
       public void focusGained(FocusEvent p_e) {
         // This is a hack to keep the Previous- and Next-Buttons from generating
         // selections in the component...
         regExpCombo.clearSelection();
       }
 
+      @Override
       public void focusLost(FocusEvent p_e) {
         // This is a hack to keep the Previous- and Next-Buttons from generating
         // selections in the component...
@@ -499,21 +520,26 @@ public class QuickRExView extends ViewPart {
       }
     });
     regExpCombo.addKeyListener(new KeyListener() {
+      @Override
       public void keyPressed(KeyEvent e) {
         lastRESelection = regExpCombo.getSelection();
       }
 
+      @Override
       public void keyReleased(KeyEvent e) {
         lastRESelection = regExpCombo.getSelection();
       }});
     regExpCombo.addMouseListener(new MouseListener() {
+      @Override
       public void mouseDoubleClick(MouseEvent e) {
       }
 
+      @Override
       public void mouseDown(MouseEvent e) {
         lastRESelection = regExpCombo.getSelection();
       }
 
+      @Override
       public void mouseUp(MouseEvent e) {
       }});
     tk.adapt(regExpCombo, true, true);
@@ -523,18 +549,20 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     editButton.setLayoutData(gd);
     editButton.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent p_e) {
         edit();
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent p_e) {
       }
     });
     editButton.setEnabled(true);
-    
+
     createRegExpContentAssist();
   }
-  
+
   private void createRegExpContentAssist() {
     regExpContentAssistant = new SubjectControlContentAssistant();
     regExpContentAssistant.enableAutoActivation(false);
@@ -546,6 +574,7 @@ public class QuickRExView extends ViewPart {
       /*
        * @see org.eclipse.jface.text.IInformationControlCreator#createInformationControl(org.eclipse.swt.widgets.Shell)
        */
+      @Override
       public IInformationControl createInformationControl(Shell parent) {
         return new DefaultInformationControl(parent);
       }
@@ -637,7 +666,7 @@ public class QuickRExView extends ViewPart {
     updateEvaluation();
   }
 
-  
+
   /**
    * The handle-method for organizing saved RegExp.s
    */
@@ -836,12 +865,13 @@ public class QuickRExView extends ViewPart {
       matches.setForeground(null);
       matches.setText(""); //$NON-NLS-1$
       groups.setText(""); //$NON-NLS-1$
-      
+
       final Boolean[] canceledEvaluation = new Boolean[1];
       try {
         final String sRegExpCombo = regExpCombo.getText();
         final String sTestText = testText.getText();
         getSite().getWorkbenchWindow().getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
+          @Override
           public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 
             // set progress-thread to low priority - so the workbench has a higher priority
@@ -853,6 +883,7 @@ public class QuickRExView extends ViewPart {
 
             // create a processing thread with low priority
             Thread regExpThread = new Thread("QuickREx-Processing") { //$NON-NLS-1$
+              @Override
               public void run() {
                 try {
                   hits.init(sRegExpCombo, sTestText, currentFlags);
@@ -910,15 +941,15 @@ public class QuickRExView extends ViewPart {
       }
 
       if (hits.containsException()) {
-        Throwable t = hits.getException();        
+        Throwable t = hits.getException();
         if(t instanceof PatternSyntaxException) {
           matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
         } else {
           String msg = t.getMessage();
           if(msg == null) msg = t.toString();
-          matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$          
+          matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
         }
-        
+
         matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
         hits.reset();
         updateMatchView(null);
@@ -944,7 +975,7 @@ public class QuickRExView extends ViewPart {
           groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
         }
         nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
-        previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());        
+        previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
       } else {
         updateMatchView(null);
         matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
@@ -971,7 +1002,7 @@ public class QuickRExView extends ViewPart {
     String groupID = hits.getCurrentMatch().getCurrentGroup().getID();
     if(groupID != null)
       ret +=" - {" + groupID + "}"; //$NON-NLS-1$ //$NON-NLS-2$
-    
+
     return ret;
   }
 
@@ -988,6 +1019,7 @@ public class QuickRExView extends ViewPart {
    * 
    * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
    */
+  @Override
   public void setFocus() {
   }
 
@@ -996,6 +1028,7 @@ public class QuickRExView extends ViewPart {
    * 
    * @see org.eclipse.ui.IWorkbenchPart#dispose()
    */
+  @Override
   public void dispose() {
     QuickRExPlugin.getDefault().saveSelectedFlagValues(currentFlags);
     super.dispose();
@@ -1027,7 +1060,7 @@ public class QuickRExView extends ViewPart {
   public String getRegularExpression() {
     return regExpCombo.getText();
   }
-  
+
   /**
    * Returns the last selection in the RE-Combo
    * 

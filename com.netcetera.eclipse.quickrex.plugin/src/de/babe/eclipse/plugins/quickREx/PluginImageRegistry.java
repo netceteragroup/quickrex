@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -36,7 +36,7 @@ public class PluginImageRegistry extends ImageRegistry {
   public static final String IMG_ORO_PERL_LOGO = "IMG_ORO_PERL_LOGO"; //$NON-NLS-1$
 
   public static final String IMG_ORO_AWK_LOGO = "IMG_ORO_AWK_LOGO"; //$NON-NLS-1$
-  
+
   public static final String IMG_JREGEX_LOGO = "IMG_JREGEX_LOGO"; //$NON-NLS-1$
 
   public static final String IMG_JAKARTA_REGEXP_LOGO = "IMG_JAKARTA_REGEXP_LOGO"; //$NON-NLS-1$
@@ -97,8 +97,8 @@ public class PluginImageRegistry extends ImageRegistry {
       put(IMG_JAVA_LOGO, ImageDescriptor.createFromURL(new URL(iconBaseURL, "JavalogoSmall.gif"))); //$NON-NLS-1$
       put(IMG_ORO_PERL_LOGO, ImageDescriptor.createFromURL(new URL(iconBaseURL, "OROPerllogoSmall.gif"))); //$NON-NLS-1$
       put(IMG_ORO_AWK_LOGO, ImageDescriptor.createFromURL(new URL(iconBaseURL, "OROAwklogoSmall.gif"))); //$NON-NLS-1$
-      put(IMG_JREGEX_LOGO, ImageDescriptor.createFromURL(new URL(iconBaseURL, "JRegexSmall.gif"))); //$NON-NLS-1$      
-      put(IMG_JAKARTA_REGEXP_LOGO, ImageDescriptor.createFromURL(new URL(iconBaseURL, "JakartaRegexpSmall.gif"))); //$NON-NLS-1$      
+      put(IMG_JREGEX_LOGO, ImageDescriptor.createFromURL(new URL(iconBaseURL, "JRegexSmall.gif"))); //$NON-NLS-1$
+      put(IMG_JAKARTA_REGEXP_LOGO, ImageDescriptor.createFromURL(new URL(iconBaseURL, "JakartaRegexpSmall.gif"))); //$NON-NLS-1$
       put(IMG_KEEP_RE, ImageDescriptor.createFromURL(new URL(iconBaseURL, "saveRE.gif"))); //$NON-NLS-1$
       put(IMG_SAVE_TT, ImageDescriptor.createFromURL(new URL(iconBaseURL, "saveText.gif"))); //$NON-NLS-1$
       put(IMG_LOAD_TT, ImageDescriptor.createFromURL(new URL(iconBaseURL, "loadText.gif"))); //$NON-NLS-1$

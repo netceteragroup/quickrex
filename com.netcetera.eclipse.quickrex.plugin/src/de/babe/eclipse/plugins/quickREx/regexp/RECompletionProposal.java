@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005, 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -16,7 +16,7 @@ import java.util.Vector;
  * @author bastian.bergerhoff
  */
 public class RECompletionProposal {
-  
+
   public final static String INSTANCE_QNAME = "proposal";  //$NON-NLS-1$
   public final static String KEY_ATTRIBUTE_QNAME = "key"; //$NON-NLS-1$
   public final static String PLAIN_VALUE_ATTRIBUTE_QNAME = "value"; //$NON-NLS-1$
@@ -31,7 +31,7 @@ public class RECompletionProposal {
   private String text;
   private String displayString;
   private String additionalInfo;
-  
+
   public RECompletionProposal(String p_proposalKey, String p_plainProposal) {
     this(p_proposalKey, p_plainProposal, true);
   }
@@ -48,7 +48,7 @@ public class RECompletionProposal {
   }
 
   public void addTriggerWord(String p_word, String p_extendWith) {
-    this.triggers.add(0,new CompletionTriggerWord(p_word, p_extendWith, this.plainProposal));    
+    this.triggers.add(0,new CompletionTriggerWord(p_word, p_extendWith, this.plainProposal));
   }
 
   /**
@@ -57,21 +57,21 @@ public class RECompletionProposal {
   public String getAdditionalInfo() {
     return this.additionalInfo;
   }
-  
+
   /**
    * @param additionalInfo The additionalInfo to set.
    */
   public void setAdditionalInfo(String additionalInfo) {
     this.additionalInfo = additionalInfo;
   }
-  
+
   /**
    * @return Returns the displayString.
    */
   public String getDisplayString() {
     return this.displayString;
   }
-  
+
   /**
    * @param displayString The displayString to set.
    */
@@ -168,7 +168,7 @@ public class RECompletionProposal {
     // If this is no match or a plain match (not an actual one), prefer the other one
     if (!this.isMatch() || this.isPlainMatch()) {
       return +1;
-    } 
+    }
     // If this is a match but the other is not or is a plain match (not an actual one), prefer this one
     if (!p_other.isMatch() || p_other.isPlainMatch()) {
       return -1;

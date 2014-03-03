@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -52,6 +52,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchResult#getEditorMatchAdapter()
    */
+  @Override
   public IEditorMatchAdapter getEditorMatchAdapter() {
     return null;
   }
@@ -59,6 +60,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchResult#getFileMatchAdapter()
    */
+  @Override
   public IFileMatchAdapter getFileMatchAdapter() {
     return null;
   }
@@ -66,6 +68,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchResult#getLabel()
    */
+  @Override
   public String getLabel() {
     return Messages.getString("search.RESearchResult.label", new Object[] { new Integer(matches.size()), query.getText()}); //$NON-NLS-1$
   }
@@ -73,6 +76,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchResult#getTooltip()
    */
+  @Override
   public String getTooltip() {
     return this.query.getLabel();
   }
@@ -80,6 +84,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchResult#getImageDescriptor()
    */
+  @Override
   public ImageDescriptor getImageDescriptor() {
     return QuickRExPlugin.getDefault().getImageRegistry().getDescriptor(PluginImageRegistry.IMG_SEARCH_RE);
   }
@@ -87,6 +92,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.ISearchResult#getQuery()
    */
+  @Override
   public ISearchQuery getQuery() {
     return this.query;
   }
@@ -179,6 +185,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchResult#removeMatch(org.eclipse.search.ui.text.Match)
    */
+  @Override
   public void removeMatch(Match match) {
     super.removeMatch(match);
     RELibraryEntry entry = (RELibraryEntry)match.getElement();
@@ -189,6 +196,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchResult#removeMatches(org.eclipse.search.ui.text.Match[])
    */
+  @Override
   public void removeMatches(Match[] matches) {
     super.removeMatches(matches);
     for (int i = 0; i < matches.length; i++) {

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -96,7 +96,7 @@ public class RECategory {
     StringBuffer retBuffer = new StringBuffer(p_prefix);
     retBuffer.append("<").append(INSTANCE_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
     retBuffer.append(p_prefix).append(p_prefix).append("<").append(NAME_QNAME).append(">").append(replaceIllegalChars(this.name)).append("</") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        .append(NAME_QNAME).append(">\r\n"); //$NON-NLS-1$
+    .append(NAME_QNAME).append(">\r\n"); //$NON-NLS-1$
     for (Iterator iter = contents.iterator(); iter.hasNext();) {
       RELibraryEntry element = (RELibraryEntry)iter.next();
       retBuffer.append(element.toXMLString(p_prefix, 2));
@@ -133,7 +133,7 @@ public class RECategory {
   }
 
   /**
-   * Returns the entry with the passed title if it is among the 
+   * Returns the entry with the passed title if it is among the
    * entries of this book. If not, <code>null</code> is returned
    * 
    * @param entryTitle the title for the entry to return
@@ -151,7 +151,7 @@ public class RECategory {
 
   /**
    * Returns <code>true</code> if and only if this category contains an entry with the passed title
-   *  
+   * 
    * @param entryTitle the title to look for
    * @return <code>true</code> if and only if this category contains an entry with the passed title
    */

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -19,7 +19,7 @@ public class CompletionProposals {
 
   private HashMap keysMap;
   private HashMap proposalsMap;
-  
+
   /**
    * The constructor
    */
@@ -27,9 +27,9 @@ public class CompletionProposals {
     keysMap = new HashMap();
     proposalsMap = new HashMap();
   }
-  
+
   /**
-   * Returns a list of completion-proposal-keys for the passed flavour (one of the constants 
+   * Returns a list of completion-proposal-keys for the passed flavour (one of the constants
    * defined in MatchSetFactory).
    * 
    * @param p_flavour the flavour

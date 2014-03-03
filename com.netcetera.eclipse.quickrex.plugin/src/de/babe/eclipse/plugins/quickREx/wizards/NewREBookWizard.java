@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -40,6 +40,7 @@ public class NewREBookWizard extends Wizard implements INewWizard {
   /* (non-Javadoc)
    * @see org.eclipse.jface.wizard.IWizard#addPages()
    */
+  @Override
   public void addPages() {
     page = new NewREBookWizardPage();
     addPage(page);
@@ -48,6 +49,7 @@ public class NewREBookWizard extends Wizard implements INewWizard {
   /* (non-Javadoc)
    * @see org.eclipse.jface.wizard.IWizard#performFinish()
    */
+  @Override
   public boolean performFinish() {
     final String filePath = page.getFilePath();
     final String bookName = page.getBookName();
@@ -70,6 +72,7 @@ public class NewREBookWizard extends Wizard implements INewWizard {
   /* (non-Javadoc)
    * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
    */
+  @Override
   public void init(IWorkbench workbench, IStructuredSelection selection) {
   }
 }

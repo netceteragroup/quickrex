@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -113,7 +113,7 @@ public class RELibraryEntry {
   /**
    * Sets the title for this entry. This fires a PropertyChangeEvent to all registered
    * TitleChangeListeners
-   *  
+   * 
    * @param title the title
    */
   public void setTitle(String title) {
@@ -184,7 +184,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Adds the passed listener to the listeners which are informed when the 
+   * Adds the passed listener to the listeners which are informed when the
    * title of this entry is changed
    * 
    * @param listener the listener to add
@@ -196,7 +196,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Removes the passed listener from the list of listeners registered for 
+   * Removes the passed listener from the list of listeners registered for
    * changes of the title of this entry
    * 
    * @param listener the listener to remove
@@ -223,15 +223,15 @@ public class RELibraryEntry {
     StringBuffer retBuffer = new StringBuffer(prefix);
     retBuffer.append("<").append(INSTANCE_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
     retBuffer.append(prefix).append(p_prefix).append("<").append(TITLE_QNAME).append(">").append(replaceIllegalChars(this.title)).append("</") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        .append(TITLE_QNAME).append(">\r\n"); //$NON-NLS-1$
+    .append(TITLE_QNAME).append(">\r\n"); //$NON-NLS-1$
     retBuffer.append(prefix).append(p_prefix).append("<").append(RE_QNAME).append(">").append(replaceIllegalChars(this.re)).append("</").append( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         RE_QNAME).append(">\r\n"); //$NON-NLS-1$
     retBuffer.append(prefix).append(p_prefix).append("<").append(DESCRIPTION_QNAME).append(">").append(replaceIllegalChars(this.description)).append( //$NON-NLS-1$ //$NON-NLS-2$
         "</").append(DESCRIPTION_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
     retBuffer.append(prefix).append(p_prefix).append("<").append(TEST_TEXT_QNAME).append(">").append(replaceIllegalChars(this.testtext)).append("</") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        .append(TEST_TEXT_QNAME).append(">\r\n"); //$NON-NLS-1$
+    .append(TEST_TEXT_QNAME).append(">\r\n"); //$NON-NLS-1$
     retBuffer.append(prefix).append(p_prefix).append("<").append(SOURCE_QNAME).append(">").append(replaceIllegalChars(this.source)).append("</") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        .append(SOURCE_QNAME).append(">\r\n"); //$NON-NLS-1$
+    .append(SOURCE_QNAME).append(">\r\n"); //$NON-NLS-1$
     retBuffer.append(prefix).append("</").append(INSTANCE_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
     return retBuffer.toString();
   }
@@ -242,7 +242,7 @@ public class RELibraryEntry {
 
   /**
    * Persists this entry by writing the file for the containing book
-   *  
+   * 
    * @param monitor the progress-monitor
    */
   public void doSave(IProgressMonitor monitor) {
@@ -256,7 +256,7 @@ public class RELibraryEntry {
    * because book-names are unique in the plugin, category-names are unique within
    * books and entry-titles are unique within categories
    * 
-   * @return the path within the book for this entry 
+   * @return the path within the book for this entry
    */
   public String getPath() {
     return getCategory().getBook().getName() + "\\" + getCategory().getName() + "\\" + getTitle(); //$NON-NLS-1$ //$NON-NLS-2$

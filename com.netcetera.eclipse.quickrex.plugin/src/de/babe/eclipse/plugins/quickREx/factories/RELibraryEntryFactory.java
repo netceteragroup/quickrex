@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -31,6 +31,7 @@ public class RELibraryEntryFactory implements IElementFactory {
   /* (non-Javadoc)
    * @see org.eclipse.ui.IElementFactory#createElement(org.eclipse.ui.IMemento)
    */
+  @Override
   public IAdaptable createElement(IMemento memento) {
     try {
       String entryPath = memento.getString(RELibraryEntryPersistable.ENTRY_PATH_KEY);

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005, 2007 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -96,7 +96,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private static final String ORO_PERL_PROPOSAL_FILE_NAME = "$nl$/oroPerlCompletion.xml"; //$NON-NLS-1$
 
   private static final String JDK_PROPOSAL_FILE_NAME = "$nl$/jdkCompletion.xml"; //$NON-NLS-1$
-  
+
   private static final String JREGEX_PROPOSAL_FILE_NAME = "$nl$/jregexCompletion.xml"; //$NON-NLS-1$
 
   private static final String JAKARTA_REGEX_PROPOSAL_FILE_NAME = "$nl$/jakartaRegexpCompletion.xml"; //$NON-NLS-1$
@@ -106,7 +106,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private static final String ORO_PERL_CATEGORIES_FILE_NAME = "$nl$/oroPerlCategories.xml"; //$NON-NLS-1$
 
   private static final String JDK_CATEGORIES_FILE_NAME = "$nl$/jdkCategories.xml"; //$NON-NLS-1$
-  
+
   private static final String JREGEX_CATEGORIES_FILE_NAME = "$nl$/jregexCategories.xml"; //$NON-NLS-1$
 
   private static final String JAKARTA_REGEX_CATEGORIES_FILE_NAME = "$nl$/jakartaRegexpCategories.xml"; //$NON-NLS-1$
@@ -130,6 +130,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * 
    * @see org.eclipse.ui.plugin.AbstractUIPlugin#createImageRegistry()
    */
+  @Override
   protected ImageRegistry createImageRegistry() {
     return new PluginImageRegistry(this);
   }
@@ -137,6 +138,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * This method is called upon plug-in activation
    */
+  @Override
   public void start(BundleContext p_context) throws Exception {
     super.start(p_context);
     regularExpressions = initREsFromFile();
@@ -171,6 +173,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * This method is called when the plug-in is stopped
    */
+  @Override
   public void stop(BundleContext p_context) throws Exception {
     super.stop(p_context);
     writeREsToFile(regularExpressions);
@@ -641,7 +644,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
     proposals.copyValuesTo(p_proposals);
   }
-  
+
   private synchronized void initProposals() {
     proposals = new CompletionProposals();
 
@@ -650,16 +653,16 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     initCompletionsFromFile(jdkProposals, jdkKeys, MatchSetFactory.JAVA_FLAVOUR);
     proposals.setKeys(MatchSetFactory.JAVA_FLAVOUR, jdkKeys);
     proposals.setProposals(MatchSetFactory.JAVA_FLAVOUR, jdkProposals);
-    
+
     HashMap oroPerlProposals = new HashMap();
     ArrayList oroPerlKeys = new ArrayList();
-    
+
     HashMap oroAwkProposals = new HashMap();
     ArrayList oroAwkKeys = new ArrayList();
-    
+
     HashMap jRegexpProposals = new HashMap();
     ArrayList jRegexpKeys = new ArrayList();
-    
+
     HashMap jakartaProposals = new HashMap();
     ArrayList jakartaKeys = new ArrayList();
   }
@@ -692,7 +695,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
- /**
+  /**
    * Saves the values of all flags to the PreferenceStore, where any flag contained in the passed collection is saved as 'set', any flag known to the
    * MatchSetFactory but not contained in the passed Collection is saved as 'not set'.
    * 
@@ -761,8 +764,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Returns <code>true</code> if and only if a book with the passed name already exists in the 
-   * list of books in teh Reg. Exp. Library 
+   * Returns <code>true</code> if and only if a book with the passed name already exists in the
+   * list of books in teh Reg. Exp. Library
    * 
    * @param p_bookName The name to check for
    * @return <code>true</code> if and only if a book with the passed name exists
@@ -772,9 +775,9 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Returns the REBook with the passed name from the Reg. Exp. Library (if no book with 
+   * Returns the REBook with the passed name from the Reg. Exp. Library (if no book with
    * the name exists, <code>null</code> is returned).
-   *  
+   * 
    * @param p_bookName The name of the book to return
    * @return the REBook with the passed name or <code>null</code>
    */
@@ -803,7 +806,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Returns an ArrayList of Categories (in fact, Category-names) defined for the 
+   * Returns an ArrayList of Categories (in fact, Category-names) defined for the
    * passed RE-Flavour.
    * 
    * @param p_flavour the Flavour, one of the constants defined in MatchSetFactory
@@ -814,7 +817,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Returns an HashMap of Expressions mapped to Categories defined for the 
+   * Returns an HashMap of Expressions mapped to Categories defined for the
    * passed RE-Flavour.
    * 
    * @param p_flavour the Flavour, one of the constants defined in MatchSetFactory

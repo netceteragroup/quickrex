@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -80,6 +80,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
    * 
    * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
    */
+  @Override
   public void createPartControl(Composite parent) {
     createViewContents(parent);
     makeActions();
@@ -108,6 +109,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
 
   private void makeActions() {
     linkWithEditorAction = new Action("", IAction.AS_CHECK_BOX) { //$NON-NLS-1$
+      @Override
       public void run() {
         setLinkWithEditor(isChecked());
       }
@@ -158,6 +160,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
     treeView = new TreeViewer(form.getBody(), SWT.H_SCROLL | SWT.V_SCROLL);
     treeView.addDoubleClickListener(new IDoubleClickListener() {
 
+      @Override
       public void doubleClick(DoubleClickEvent event) {
         try {
           if (treeView.getTree().getSelection()[0].getData() instanceof RELibraryEntry) {
@@ -185,10 +188,11 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
 
     treeView.setContentProvider(new ITreeContentProvider() {
 
+      @Override
       public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof REBook) {
           REBook book = (REBook)parentElement;
-          return (RECategory[])book.getContents().toArray(new RECategory[book.getContents().size()]);
+          return book.getContents().toArray(new RECategory[book.getContents().size()]);
         } else if (parentElement instanceof RECategory) {
           RECategory cat = (RECategory)parentElement;
           return cat.getCategoryContents();
@@ -197,6 +201,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         }
       }
 
+      @Override
       public Object getParent(Object element) {
         if (element instanceof RECategory) {
           RECategory cat = (RECategory)element;
@@ -209,6 +214,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         }
       }
 
+      @Override
       public boolean hasChildren(Object element) {
         if (element instanceof REBook) {
           REBook book = (REBook)element;
@@ -221,6 +227,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         }
       }
 
+      @Override
       public Object[] getElements(Object inputElement) {
         if (inputElement instanceof REBook[]) {
           // this is called to get the roots of the tree...
@@ -230,14 +237,17 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         }
       }
 
+      @Override
       public void dispose() {
       }
 
+      @Override
       public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
       }
     });
 
     treeView.setLabelProvider(new LabelProvider() {
+      @Override
       public Image getImage(Object element) {
         if (element instanceof REBook) {
           return ((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry()).getImageDescriptor(PluginImageRegistry.IMG_BOOK).createImage();
@@ -252,6 +262,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         }
       }
 
+      @Override
       public String getText(Object element) {
         if (element instanceof REBook) {
           return ((REBook)element).getName();
@@ -264,6 +275,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
         }
       }
 
+      @Override
       public boolean isLabelProperty(Object element, String property) {
         return true;
       }
@@ -274,6 +286,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
     MenuManager mm = new MenuManager();
     mm.setRemoveAllWhenShown(true);
     mm.addMenuListener(new IMenuListener() {
+      @Override
       public void menuAboutToShow(IMenuManager mm2) {
         if (treeView.getTree().getSelection()[0].getData() instanceof REBook) {
           createBookContextMenu(mm2);
@@ -291,21 +304,23 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             InputDialog dlg = new InputDialog(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.category.actions.addRE.dlg.title"), Messages.getString("views.RELibraryView.context.category.actions.add.dlgRE.text"), "", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new IInputValidator() {
 
-                  public String isValid(String newText) {
-                    if (newText == null || newText.trim().length() == 0) {
-                      return Messages.getString("views.RELibraryView.context.category.actions.add.dlgRE.message1"); //$NON-NLS-1$
-                    } else if (((RECategory)treeView.getTree().getSelection()[0].getData()).containsEntryWithTitle(newText)) {
-                      return Messages.getString("views.RELibraryView.context.category.actions.add.dlgRE.message2"); //$NON-NLS-1$
-                    } else {
-                      return null;
-                    }
-                  }
+              @Override
+              public String isValid(String newText) {
+                if (newText == null || newText.trim().length() == 0) {
+                  return Messages.getString("views.RELibraryView.context.category.actions.add.dlgRE.message1"); //$NON-NLS-1$
+                } else if (((RECategory)treeView.getTree().getSelection()[0].getData()).containsEntryWithTitle(newText)) {
+                  return Messages.getString("views.RELibraryView.context.category.actions.add.dlgRE.message2"); //$NON-NLS-1$
+                } else {
+                  return null;
+                }
+              }
 
-                });
+            });
             int retCode = dlg.open();
             if (Dialog.OK == retCode) {
               RECategory selectedCat = (RECategory)treeView.getTree().getSelection()[0].getData();
@@ -333,21 +348,23 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             InputDialog dlg = new InputDialog(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.category.actions.addCat.dlg.title"), Messages.getString("views.RELibraryView.context.category.actions.addCat.dlg.text"), "", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new IInputValidator() {
 
-                  public String isValid(String newText) {
-                    if (newText == null || newText.trim().length() == 0) {
-                      return Messages.getString("views.RELibraryView.context.category.actions.addCat.dlg.message1"); //$NON-NLS-1$
-                    } else if (((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).containsCategoryWithName(newText)) {
-                      return Messages.getString("views.RELibraryView.context.category.actions.addCat.dlg.message2"); //$NON-NLS-1$
-                    } else {
-                      return null;
-                    }
-                  }
+              @Override
+              public String isValid(String newText) {
+                if (newText == null || newText.trim().length() == 0) {
+                  return Messages.getString("views.RELibraryView.context.category.actions.addCat.dlg.message1"); //$NON-NLS-1$
+                } else if (((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).containsCategoryWithName(newText)) {
+                  return Messages.getString("views.RELibraryView.context.category.actions.addCat.dlg.message2"); //$NON-NLS-1$
+                } else {
+                  return null;
+                }
+              }
 
-                });
+            });
             int retCode = dlg.open();
             if (Dialog.OK == retCode) {
               REBook selectedBook = (REBook)treeView.getTree().getSelection()[0].getParentItem().getData();
@@ -368,22 +385,24 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             InputDialog dlg = new InputDialog(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.category.actions.renameCat.dlg.title"), Messages.getString("views.RELibraryView.context.category.actions.renameCat.dlg.text"), //$NON-NLS-1$ //$NON-NLS-2$
                 ((RECategory)treeView.getTree().getSelection()[0].getData()).getName(), new IInputValidator() {
 
-                  public String isValid(String newText) {
-                    if (newText == null || newText.trim().length() == 0) {
-                      return Messages.getString("views.RELibraryView.context.category.actions.renameCat.dlg.message1"); //$NON-NLS-1$
-                    } else if (((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).containsCategoryWithName(newText)
-                        && !newText.equals(((RECategory)treeView.getTree().getSelection()[0].getData()).getName())) {
-                      return Messages.getString("views.RELibraryView.context.category.actions.renameCat.dlg.message2"); //$NON-NLS-1$
-                    } else {
-                      return null;
-                    }
-                  }
+              @Override
+              public String isValid(String newText) {
+                if (newText == null || newText.trim().length() == 0) {
+                  return Messages.getString("views.RELibraryView.context.category.actions.renameCat.dlg.message1"); //$NON-NLS-1$
+                } else if (((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).containsCategoryWithName(newText)
+                    && !newText.equals(((RECategory)treeView.getTree().getSelection()[0].getData()).getName())) {
+                  return Messages.getString("views.RELibraryView.context.category.actions.renameCat.dlg.message2"); //$NON-NLS-1$
+                } else {
+                  return null;
+                }
+              }
 
-                });
+            });
             int retCode = dlg.open();
             if (Dialog.OK == retCode) {
               RECategory selected = (RECategory)treeView.getTree().getSelection()[0].getData();
@@ -393,7 +412,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
           }
         };
         fRenameAction
-            .setEnabled(!((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).getName().equals(REBook.DEFAULT_BOOK_NAME));
+        .setEnabled(!((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).getName().equals(REBook.DEFAULT_BOOK_NAME));
         mm2.add(fRenameAction);
         mm2.add(new Separator());
         Action fDeleteAction = new Action(Messages.getString("views.RELibraryView.context.category.actions.deleteCat.name")) { //$NON-NLS-1$
@@ -402,6 +421,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             boolean proceed = MessageDialog.openQuestion(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.category.actions.deleteCat.dlg.title"), //$NON-NLS-1$
                 Messages.getString("views.RELibraryView.context.category.actions.deleteCat.dlg.text")); //$NON-NLS-1$
@@ -422,7 +442,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
           }
         };
         fDeleteAction
-            .setEnabled(!((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).getName().equals(REBook.DEFAULT_BOOK_NAME));
+        .setEnabled(!((REBook)treeView.getTree().getSelection()[0].getParentItem().getData()).getName().equals(REBook.DEFAULT_BOOK_NAME));
         mm2.add(fDeleteAction);
       }
 
@@ -433,21 +453,23 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             InputDialog dlg = new InputDialog(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.re.actions.addRE.dlg.title"), Messages.getString("views.RELibraryView.context.re.actions.add.dlgRE.text"), "", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new IInputValidator() {
 
-                  public String isValid(String newText) {
-                    if (newText == null || newText.trim().length() == 0) {
-                      return Messages.getString("views.RELibraryView.context.re.actions.add.dlgRE.message1"); //$NON-NLS-1$
-                    } else if (((RECategory)treeView.getTree().getSelection()[0].getParentItem().getData()).containsEntryWithTitle(newText)) {
-                      return Messages.getString("views.RELibraryView.context.re.actions.add.dlgRE.message2"); //$NON-NLS-1$
-                    } else {
-                      return null;
-                    }
-                  }
+              @Override
+              public String isValid(String newText) {
+                if (newText == null || newText.trim().length() == 0) {
+                  return Messages.getString("views.RELibraryView.context.re.actions.add.dlgRE.message1"); //$NON-NLS-1$
+                } else if (((RECategory)treeView.getTree().getSelection()[0].getParentItem().getData()).containsEntryWithTitle(newText)) {
+                  return Messages.getString("views.RELibraryView.context.re.actions.add.dlgRE.message2"); //$NON-NLS-1$
+                } else {
+                  return null;
+                }
+              }
 
-                });
+            });
             int retCode = dlg.open();
             if (Dialog.OK == retCode) {
               RECategory selectedCat = (RECategory)treeView.getTree().getSelection()[0].getParentItem().getData();
@@ -478,6 +500,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
              * 
              * @see org.eclipse.jface.action.Action#run()
              */
+            @Override
             public void run() {
               RELibraryEntry selected = (RELibraryEntry)treeView.getTree().getSelection()[0].getData();
               try {
@@ -497,6 +520,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
              * 
              * @see org.eclipse.jface.action.Action#run()
              */
+            @Override
             public void run() {
               RELibraryEntry selected = (RELibraryEntry)treeView.getTree().getSelection()[0].getData();
               try {
@@ -518,6 +542,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             boolean proceed = MessageDialog.openQuestion(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.re.actions.deleteRE.dlg.title"), //$NON-NLS-1$
                 Messages.getString("views.RELibraryView.context.re.actions.deleteRE.dlg.text")); //$NON-NLS-1$
@@ -543,6 +568,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             RELibraryEntry selected = (RELibraryEntry)treeView.getTree().getSelection()[0].getData();
             try {
@@ -565,21 +591,23 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             InputDialog dlg = new InputDialog(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.book.actions.addCat.dlg.title"), Messages.getString("views.RELibraryView.context.book.actions.addCat.dlg.text"), "", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 new IInputValidator() {
 
-                  public String isValid(String newText) {
-                    if (newText == null || newText.trim().length() == 0) {
-                      return Messages.getString("views.RELibraryView.context.book.actions.addCat.dlg.message1"); //$NON-NLS-1$
-                    } else if (((REBook)treeView.getTree().getSelection()[0].getData()).containsCategoryWithName(newText)) {
-                      return Messages.getString("views.RELibraryView.context.book.actions.addCat.dlg.message2"); //$NON-NLS-1$
-                    } else {
-                      return null;
-                    }
-                  }
+              @Override
+              public String isValid(String newText) {
+                if (newText == null || newText.trim().length() == 0) {
+                  return Messages.getString("views.RELibraryView.context.book.actions.addCat.dlg.message1"); //$NON-NLS-1$
+                } else if (((REBook)treeView.getTree().getSelection()[0].getData()).containsCategoryWithName(newText)) {
+                  return Messages.getString("views.RELibraryView.context.book.actions.addCat.dlg.message2"); //$NON-NLS-1$
+                } else {
+                  return null;
+                }
+              }
 
-                });
+            });
             int retCode = dlg.open();
             if (Dialog.OK == retCode) {
               REBook selectedBook = (REBook)treeView.getTree().getSelection()[0].getData();
@@ -600,22 +628,24 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             InputDialog dlg = new InputDialog(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.book.actions.renameBook.dlg.title"), Messages.getString("views.RELibraryView.context.book.actions.renameBook.dlg.text"), //$NON-NLS-1$ //$NON-NLS-2$
                 ((REBook)treeView.getTree().getSelection()[0].getData()).getName(), new IInputValidator() {
 
-                  public String isValid(String newText) {
-                    if (newText == null || newText.trim().length() == 0) {
-                      return Messages.getString("views.RELibraryView.context.book.actions.renameBook.dlg.message1"); //$NON-NLS-1$
-                    } else if (QuickRExPlugin.getDefault().reBookWithNameExists(newText)
-                        && !newText.equals(((REBook)treeView.getTree().getSelection()[0].getData()).getName())) {
-                      return Messages.getString("views.RELibraryView.context.book.actions.renameBook.dlg.message2"); //$NON-NLS-1$
-                    } else {
-                      return null;
-                    }
-                  }
+              @Override
+              public String isValid(String newText) {
+                if (newText == null || newText.trim().length() == 0) {
+                  return Messages.getString("views.RELibraryView.context.book.actions.renameBook.dlg.message1"); //$NON-NLS-1$
+                } else if (QuickRExPlugin.getDefault().reBookWithNameExists(newText)
+                    && !newText.equals(((REBook)treeView.getTree().getSelection()[0].getData()).getName())) {
+                  return Messages.getString("views.RELibraryView.context.book.actions.renameBook.dlg.message2"); //$NON-NLS-1$
+                } else {
+                  return null;
+                }
+              }
 
-                });
+            });
             int retCode = dlg.open();
             if (Dialog.OK == retCode) {
               REBook selected = (REBook)treeView.getTree().getSelection()[0].getData();
@@ -632,6 +662,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             FileDialog dialog = new FileDialog(treeView.getControl().getShell(), SWT.SAVE);
             dialog.setText(Messages.getString("views.RELibraryView.context.book.actions.moveBook.dlg.text")); //$NON-NLS-1$
@@ -670,6 +701,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
            * 
            * @see org.eclipse.jface.action.Action#run()
            */
+          @Override
           public void run() {
             boolean proceed = MessageDialog.openQuestion(treeView.getControl().getShell(), Messages.getString("views.RELibraryView.context.book.actions.deleteBook.dlg.title"), //$NON-NLS-1$
                 Messages.getString("views.RELibraryView.context.book.actions.deleteBook.dlg.text")); //$NON-NLS-1$
@@ -711,12 +743,14 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
    * 
    * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
    */
+  @Override
   public void setFocus() {
   }
 
   /* (non-Javadoc)
    * @see org.eclipse.jface.util.IPropertyChangeListener#propertyChange(org.eclipse.jface.util.PropertyChangeEvent)
    */
+  @Override
   public void propertyChange(PropertyChangeEvent event) {
     if (event.getSource() instanceof RELibraryEntry && "title".equals(event.getProperty())) { //$NON-NLS-1$
       treeView.update(event.getSource(), new String[] { event.getProperty() });
@@ -728,6 +762,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
   /* (non-Javadoc)
    * @see org.eclipse.ui.IWorkbenchPart#dispose()
    */
+  @Override
   public void dispose() {
     QuickRExPlugin.getDefault().removeRELibraryListener(this);
     super.dispose();
@@ -744,7 +779,7 @@ public class RELibraryView extends ViewPart implements IPropertyChangeListener {
   }
 
   /**
-   * Returns the index of the passed item as a child of the passed 
+   * Returns the index of the passed item as a child of the passed
    * parent-item. Returns -1 if the passed item is not found among
    * the children of the passed parent-item
    * 

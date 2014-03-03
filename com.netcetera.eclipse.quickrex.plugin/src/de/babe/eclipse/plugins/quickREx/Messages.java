@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005, 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -25,7 +25,7 @@ public class Messages {
   }
 
   /**
-   * Returns the (localized) string stored under the passed key or '!<key>!' if 
+   * Returns the (localized) string stored under the passed key or '!<key>!' if
    * the string was not found
    * 
    * @param p_key the key for the (localized) string
@@ -43,7 +43,7 @@ public class Messages {
    * Returns the (localized) string stored under the passed key with placeholders
    * replaced by the passed Objects or '!<key>!' if the string was not found
    * 
-   * @param p_key the key for the (localized) string 
+   * @param p_key the key for the (localized) string
    * @param p_params parameters for the message
    * @return the (localized) string stored under the passed key
    */

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -47,6 +47,7 @@ public class RECategoriesXMLHandler extends DefaultHandler {
    * 
    * @see org.xml.sax.ContentHandler#characters(char[], int, int)
    */
+  @Override
   public void characters(char[] ch, int start, int end) {
     if (receivingNameInformation) {
       currentName.append(ch, start, end);
@@ -60,6 +61,7 @@ public class RECategoriesXMLHandler extends DefaultHandler {
    * 
    * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
    */
+  @Override
   public void endElement(String uri, String localName, String qName) {
     if (receivingREEntryInformation) {
       libEntryHandler.endElement(uri, localName, qName);
@@ -88,6 +90,7 @@ public class RECategoriesXMLHandler extends DefaultHandler {
    * 
    * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
    */
+  @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) {
     if (receivingREEntryInformation) {
       libEntryHandler.startElement(uri, localName, qName, attributes);

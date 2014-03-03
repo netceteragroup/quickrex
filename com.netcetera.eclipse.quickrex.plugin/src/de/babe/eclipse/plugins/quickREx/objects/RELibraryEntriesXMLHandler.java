@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -36,7 +36,7 @@ public class RELibraryEntriesXMLHandler extends DefaultHandler {
   /**
    * This instance fills the passed list with instances
    * of RELibraryEntry initialized from the XML-file that this
-   * Handler is used with. 
+   * Handler is used with.
    * 
    * @param p_list the list to put the RELibraryEntry-instances into
    */
@@ -47,6 +47,7 @@ public class RELibraryEntriesXMLHandler extends DefaultHandler {
   /* (non-Javadoc)
    * @see org.xml.sax.ContentHandler#characters(char[], int, int)
    */
+  @Override
   public void characters(char[] ch, int start, int end) {
     if (receivingTitleInformation) {
       currentTitle.append(ch, start, end);
@@ -64,6 +65,7 @@ public class RELibraryEntriesXMLHandler extends DefaultHandler {
   /* (non-Javadoc)
    * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
    */
+  @Override
   public void endElement(String uri, String localName, String qName) {
     if (RELibraryEntry.INSTANCE_QNAME.equals(qName)) {
       list.add(new RELibraryEntry(currentTitle.toString(), currentRE.toString(), currentDescription.toString(), currentTestText.toString(), currentSource.toString()));
@@ -93,6 +95,7 @@ public class RELibraryEntriesXMLHandler extends DefaultHandler {
   /* (non-Javadoc)
    * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
    */
+  @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) {
     if (RELibraryEntry.INSTANCE_QNAME.equals(qName)) {
     } else if (RELibraryEntry.TITLE_QNAME.equals(qName)) {

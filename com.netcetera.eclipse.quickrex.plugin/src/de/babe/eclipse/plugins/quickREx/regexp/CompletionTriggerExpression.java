@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2005 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -18,12 +18,12 @@ public class CompletionTriggerExpression extends CompletionTrigger {
 
   public final static String INSTANCE_QNAME = "retrigger";  //$NON-NLS-1$
   public final static String REG_EXP_ATTRIBUTE_QNAME = "re"; //$NON-NLS-1$
-  
+
   private final String regExp;
   private final Pattern pattern;
   private final String proposal;
   private final String plainProposal;
-  
+
   /**
    * @param p_regExp
    * @param p_proposal
@@ -39,7 +39,8 @@ public class CompletionTriggerExpression extends CompletionTrigger {
     return this.regExp;
   }
 
-  /*package*/ String getPlainProposal() {
+  /*package*/ @Override
+  String getPlainProposal() {
     return this.plainProposal;
   }
 
@@ -50,6 +51,7 @@ public class CompletionTriggerExpression extends CompletionTrigger {
   /* (non-Javadoc)
    * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#isMatchFor(java.lang.String)
    */
+  @Override
   public boolean isMatchFor(String text) {
     return this.pattern.matcher(text).matches();
   }
@@ -57,13 +59,15 @@ public class CompletionTriggerExpression extends CompletionTrigger {
   /* (non-Javadoc)
    * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#getInsertString(java.lang.String)
    */
+  @Override
   public String getInsertString(String text) {
     return this.proposal;
   }
-  
+
   /* (non-Javadoc)
    * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#getInsertString()
    */
+  @Override
   public String getInsertString() {
     return this.getInsertString(this.text);
   }
@@ -71,6 +75,7 @@ public class CompletionTriggerExpression extends CompletionTrigger {
   /* (non-Javadoc)
    * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#compareTo(de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger)
    */
+  @Override
   public int compareTo(CompletionTrigger p_other) {
     // Always prefer WordCompletions
     if (p_other instanceof CompletionTriggerWord) {
@@ -82,7 +87,7 @@ public class CompletionTriggerExpression extends CompletionTrigger {
     }
     // The shorter the String to insert, the better...
     int thisLength = this.getInsertString().length();
-    int otherLength = p_other.getInsertString().length(); 
+    int otherLength = p_other.getInsertString().length();
     if (thisLength < otherLength) {
       return -1;
     } else {

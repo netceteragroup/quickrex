@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -46,6 +46,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#elementsChanged(java.lang.Object[])
    */
+  @Override
   protected void elementsChanged(Object[] objects) {
     viewer.refresh();
   }
@@ -53,6 +54,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#clear()
    */
+  @Override
   protected void clear() {
     ((RESearchResult)viewer.getInput()).doRemoveAll();
     viewer.refresh();
@@ -61,10 +63,12 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#configureTreeViewer(org.eclipse.jface.viewers.TreeViewer)
    */
+  @Override
   protected void configureTreeViewer(final TreeViewer viewer) {
     this.viewer = viewer;
     viewer.addDoubleClickListener(new IDoubleClickListener() {
 
+      @Override
       public void doubleClick(DoubleClickEvent event) {
         try {
           RELibraryEntry selected = (RELibraryEntry)viewer.getTree().getSelection()[0].getData();
@@ -88,18 +92,21 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.IContentProvider#dispose()
        */
+      @Override
       public void dispose() {
       }
 
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
        */
+      @Override
       public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
       }
 
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
        */
+      @Override
       public Object[] getElements(Object inputElement) {
         return ((RESearchResult)getInput()).getBooksWithMatches();
       }
@@ -107,6 +114,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
        */
+      @Override
       public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof REBook) {
           return ((RESearchResult)getInput()).getMatchingCategoriesInBook((REBook)parentElement);
@@ -120,6 +128,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object)
        */
+      @Override
       public Object getParent(Object element) {
         if (element instanceof RELibraryEntry) {
           return ((RELibraryEntry)element).getCategory();
@@ -133,6 +142,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.Object)
        */
+      @Override
       public boolean hasChildren(Object element) {
         return (element instanceof REBook || element instanceof RECategory);
       }
@@ -142,6 +152,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.ILabelProvider#getImage(java.lang.Object)
        */
+      @Override
       public Image getImage(Object element) {
         if (element instanceof REBook) {
           return ((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry()).getImageDescriptor(PluginImageRegistry.IMG_BOOK).createImage();
@@ -159,6 +170,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.ILabelProvider#getText(java.lang.Object)
        */
+      @Override
       public String getText(Object element) {
         if (element instanceof REBook) {
           return ((REBook)element).getName();
@@ -174,6 +186,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       /* (non-Javadoc)
        * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object, java.lang.String)
        */
+      @Override
       public boolean isLabelProperty(Object element, String property) {
         return true;
       }
@@ -184,6 +197,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#configureTableViewer(org.eclipse.jface.viewers.TableViewer)
    */
+  @Override
   protected void configureTableViewer(TableViewer viewer) {
   }
 

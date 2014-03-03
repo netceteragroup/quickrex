@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2006 Bastian Bergerhoff and others
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
  * 
@@ -47,6 +47,7 @@ public class NewREBookWizardPage extends WizardPage {
   /**
    * @see IDialogPage#createControl(Composite)
    */
+  @Override
   public void createControl(Composite parent) {
     Composite container = new Composite(parent, SWT.NULL);
     GridLayout layout = new GridLayout();
@@ -60,6 +61,7 @@ public class NewREBookWizardPage extends WizardPage {
     GridData gd = new GridData(GridData.FILL_HORIZONTAL);
     fileText.setLayoutData(gd);
     fileText.addModifyListener(new ModifyListener() {
+      @Override
       public void modifyText(ModifyEvent e) {
         dialogChanged();
       }
@@ -68,6 +70,7 @@ public class NewREBookWizardPage extends WizardPage {
     Button button = new Button(container, SWT.PUSH);
     button.setText(Messages.getString("wizards.NewREBookWizardPage.fileButton.text")); //$NON-NLS-1$
     button.addSelectionListener(new SelectionAdapter() {
+      @Override
       public void widgetSelected(SelectionEvent e) {
         handleBrowse();
       }
@@ -79,6 +82,7 @@ public class NewREBookWizardPage extends WizardPage {
     gd = new GridData(GridData.FILL_HORIZONTAL);
     nameText.setLayoutData(gd);
     nameText.addModifyListener(new ModifyListener() {
+      @Override
       public void modifyText(ModifyEvent e) {
         dialogChanged();
       }
