@@ -94,25 +94,9 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private static final String LINK_RE_LIB_VIEW_WITH_EDITOR = "de.babe.eclipse.plugins.quickREx.QuickRExPlugin.LinkRELibViewWithEditor"; //$NON-NLS-1$
 
-  private static final String ORO_AWK_PROPOSAL_FILE_NAME = "$nl$/oroAwkCompletion.xml"; //$NON-NLS-1$
-
-  private static final String ORO_PERL_PROPOSAL_FILE_NAME = "$nl$/oroPerlCompletion.xml"; //$NON-NLS-1$
-
   private static final String JDK_PROPOSAL_FILE_NAME = "$nl$/jdkCompletion.xml"; //$NON-NLS-1$
 
-  private static final String JREGEX_PROPOSAL_FILE_NAME = "$nl$/jregexCompletion.xml"; //$NON-NLS-1$
-
-  private static final String JAKARTA_REGEX_PROPOSAL_FILE_NAME = "$nl$/jakartaRegexpCompletion.xml"; //$NON-NLS-1$
-
-  private static final String ORO_AWK_CATEGORIES_FILE_NAME = "$nl$/oroAwkCategories.xml"; //$NON-NLS-1$
-
-  private static final String ORO_PERL_CATEGORIES_FILE_NAME = "$nl$/oroPerlCategories.xml"; //$NON-NLS-1$
-
   private static final String JDK_CATEGORIES_FILE_NAME = "$nl$/jdkCategories.xml"; //$NON-NLS-1$
-
-  private static final String JREGEX_CATEGORIES_FILE_NAME = "$nl$/jregexCategories.xml"; //$NON-NLS-1$
-
-  private static final String JAKARTA_REGEX_CATEGORIES_FILE_NAME = "$nl$/jakartaRegexpCategories.xml"; //$NON-NLS-1$
 
   /**
    * The constructor.
@@ -139,7 +123,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * This method is called upon plug-in activation
+   * This method is called upon plug-in activation.
    */
   @Override
   public void start(BundleContext p_context) throws Exception {
@@ -248,7 +232,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Adds the passed NamedText to the list of Test-Texts kept with the plugin and persisted to a file on plugin-dectivation.
    *
-   * @param p_expression
+   * @param p_text
    *          The NamedText to be saved
    */
   public void addTestText(NamedText p_text) {
@@ -342,7 +326,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Deletes all RegularExpressions with String-values among the Strings passed in the array from the list of Regular-Expressions saved with the
-   * plugin
+   * plugin.
    *
    * @param p_regExps
    *          the String-representations of Reg. Exp.s to be removed from memory
