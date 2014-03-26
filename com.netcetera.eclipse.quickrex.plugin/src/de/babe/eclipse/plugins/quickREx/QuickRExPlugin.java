@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -49,6 +50,7 @@ import de.babe.eclipse.plugins.quickREx.regexp.CompletionProposals;
 import de.babe.eclipse.plugins.quickREx.regexp.EditorCategoryMappingXMLHandler;
 import de.babe.eclipse.plugins.quickREx.regexp.Flag;
 import de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory;
+import de.babe.eclipse.plugins.quickREx.regexp.RECompletionProposal;
 import de.babe.eclipse.plugins.quickREx.regexp.REEditorCategoryMapping;
 
 /**
@@ -64,11 +66,11 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private List<NamedText> testTexts;
 
-  private ArrayList reBooks;
+  private List<REBook> reBooks;
 
-  private ArrayList listeners;
+  private List<IPropertyChangeListener> listeners;
 
-  private HashMap jdkCatMappings;
+  private Map<String, List<RECompletionProposal>> jdkCatMappings;
 
   private List<String> jdkCategories;
 
@@ -118,7 +120,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   public QuickRExPlugin() {
     super();
     plugin = this;
-    listeners = new ArrayList();
+    listeners = new ArrayList<>();
     try {
       resourceBundle = ResourceBundle.getBundle("de.babe.eclipse.plugins.quickREx.QuickRExPluginResources"); //$NON-NLS-1$
     } catch (MissingResourceException x) {
@@ -152,22 +154,24 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private void prepareRegexpCategories() {
 
     jdkCategories = new ArrayList<>();
-    jdkCatMappings = new HashMap();
-    initCategoriesFromFile(jdkCatMappings, jdkCategories, MatchSetFactory.JAVA_FLAVOUR);
-    addProposalsToMappings(jdkCategories, jdkCatMappings, MatchSetFactory.JAVA_FLAVOUR);
+    Map<String, List<REEditorCategoryMapping>> editorMappings = new HashMap<>();
+    initCategoriesFromFile(editorMappings, jdkCategories);
+    jdkCatMappings = addProposalsToMappings(jdkCategories, editorMappings, MatchSetFactory.JAVA_FLAVOUR);
 
   }
 
-  private void addProposalsToMappings(List<String> p_categories, HashMap p_catMappings, int p_flavour) {
+  private Map<String, List<RECompletionProposal>> addProposalsToMappings(List<String> p_categories, Map<String, List<REEditorCategoryMapping>> p_catMappings, int p_flavour) {
+    Map<String, List<RECompletionProposal>> result = new HashMap<>(p_catMappings.size());
     for (String category : p_categories) {
-      ArrayList proposalKeys = (ArrayList) p_catMappings.get(category);
-      ArrayList proposalsForCat = new ArrayList();
-      for (Iterator iterator = proposalKeys.iterator(); iterator.hasNext();) {
-        String currentKey = ((REEditorCategoryMapping) iterator.next()).getProposalKey();
+      List<REEditorCategoryMapping> proposalKeys = p_catMappings.get(category);
+      List<RECompletionProposal> proposalsForCat = new ArrayList<>();
+      for (REEditorCategoryMapping element : proposalKeys) {
+        String currentKey = element.getProposalKey();
         proposalsForCat.add(proposals.getProposal(p_flavour, currentKey));
       }
-      p_catMappings.put(category, proposalsForCat);
+      result.put(category, proposalsForCat);
     }
+    return result;
   }
 
   /**
@@ -201,7 +205,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Returns the plugin's resource bundle,
+   * Returns the plugin's resource bundle.
    */
   public ResourceBundle getResourceBundle() {
     return resourceBundle;
@@ -264,8 +268,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     reBooks.add(p_book);
     if (listeners.size() > 0) {
       PropertyChangeEvent event = new PropertyChangeEvent(this, "reBooks", this.reBooks, null); //$NON-NLS-1$
-      for (Iterator iter = listeners.iterator(); iter.hasNext();) {
-        IPropertyChangeListener listener = (IPropertyChangeListener)iter.next();
+      for (Object element : listeners) {
+        IPropertyChangeListener listener = (IPropertyChangeListener) element;
         listener.propertyChange(event);
       }
     }
@@ -280,8 +284,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     reBooks.remove(p_book);
     if (listeners.size() > 0) {
       PropertyChangeEvent event = new PropertyChangeEvent(this, "reBooks", this.reBooks, null); //$NON-NLS-1$
-      for (Iterator iter = listeners.iterator(); iter.hasNext();) {
-        IPropertyChangeListener listener = (IPropertyChangeListener)iter.next();
+      for (Object element : listeners) {
+        IPropertyChangeListener listener = (IPropertyChangeListener) element;
         listener.propertyChange(event);
       }
     }
@@ -356,7 +360,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * @return an array of all books from the library
    */
   public REBook[] getREBooks() {
-    return (REBook[])reBooks.toArray(new REBook[reBooks.size()]);
+    return reBooks.toArray(new REBook[reBooks.size()]);
   }
 
   private List<RegularExpression > initREsFromFile() {
@@ -409,10 +413,10 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  private ArrayList initREBooksFromFile() {
+  private List<REBook> initREBooksFromFile() {
     IPath reBooksFilePath = getStateLocation().append(RE_BOOKS_FILE_NAME);
     File reBooksFile = reBooksFilePath.toFile();
-    ArrayList res = new ArrayList();
+    List<REBook> res = new ArrayList<>();
     REBook standardBook = new REBook(REBook.DEFAULT_BOOK_NAME, (new Path(RE_LIB_FILE_NAME)).makeAbsolute().toString());
     standardBook.setContents(readStandardRELibraryFromFile());
     if (reBooksFile.exists() && reBooksFile.canRead()) {
@@ -424,8 +428,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
         IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 5, Messages.getString("QuickRExPlugin.error.message10"), ex); //$NON-NLS-1$
         getLog().log(status);
       }
-      for (Iterator iter = res.iterator(); iter.hasNext();) {
-        REBook element = (REBook)iter.next();
+      for (Object element2 : res) {
+        REBook element = (REBook) element2;
         element.setContents(readRELibraryFromFile(element.getPath()));
       }
       res.add(0, standardBook);
@@ -442,10 +446,9 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  private ArrayList readStandardRELibraryFromFile() {
-    ArrayList res = new ArrayList();
-    try {
-      InputStream libFileStream = openStream(new Path(RE_LIB_FILE_NAME), true);
+  private List<RECategory> readStandardRELibraryFromFile() {
+    List<RECategory> res = new ArrayList<>();
+    try (InputStream libFileStream = openStream(new Path(RE_LIB_FILE_NAME), true)) {
       SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
       parser.parse(libFileStream, new RECategoriesXMLHandler(res));
     } catch (Exception ex) {
@@ -456,11 +459,11 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     return res;
   }
 
-  private ArrayList readRELibraryFromFile(String p_path) {
+  private List<RECategory> readRELibraryFromFile(String p_path) {
     IPath reLibFilePath = new Path(p_path);
     File reLibFile = reLibFilePath.toFile();
     if (reLibFile.exists() && reLibFile.canRead()) {
-      ArrayList res = new ArrayList();
+      List<RECategory> res = new ArrayList<>();
       try {
         SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
         parser.parse(reLibFile, new RECategoriesXMLHandler(res));
@@ -480,14 +483,12 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private void writeREsToFile(List<RegularExpression> p_regularExpressions) {
     IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
     File reFile = reFilePath.toFile();
-    try {
-      FileOutputStream fos = new FileOutputStream(reFile);
+    try (FileOutputStream fos = new FileOutputStream(reFile)) {
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<regularExpressions>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       for (RegularExpression each : regularExpressions) {
         fos.write(each.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       fos.write("</regularExpressions>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      fos.close();
     } catch (Exception e) {
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message5"), e); //$NON-NLS-1$
       getLog().log(status);
@@ -511,22 +512,18 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  private void writeREBooksToFile(ArrayList p_reBooks) {
+  private void writeREBooksToFile(List<REBook> p_reBooks) {
     IPath reBooksFilePath = getStateLocation().append(RE_BOOKS_FILE_NAME);
     File reBooksFile = reBooksFilePath.toFile();
-    try {
-      FileOutputStream fos = new FileOutputStream(reBooksFile);
+    try (FileOutputStream fos = new FileOutputStream(reBooksFile);) {
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<reBooks>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      Iterator it = p_reBooks.iterator();
-      while (it.hasNext()) {
-        REBook book = (REBook)it.next();
+      for (REBook book : p_reBooks) {
         if (!REBook.DEFAULT_BOOK_NAME.equals(book.getName())) {
           writeBookContentsToFile(book);
           fos.write(book.toXMLString("\t", 1).getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
       fos.write("</reBooks>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      fos.close();
     } catch (Exception e) {
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 4, Messages.getString("QuickRExPlugin.error.message15"), e); //$NON-NLS-1$
       getLog().log(status);
@@ -554,7 +551,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private int getTestTextIndexByName(String p_name) {
     int i = 0;
     for (Object element2 : testTexts) {
-      NamedText element = (NamedText)element2;
+      NamedText element = (NamedText) element2;
       if (p_name.equals(element.getName())) {
         return i;
       }
@@ -646,29 +643,16 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     proposals = new CompletionProposals();
 
     HashMap jdkProposals = new HashMap();
-    ArrayList jdkKeys = new ArrayList();
+    List<String> jdkKeys = new ArrayList<>();
     initCompletionsFromFile(jdkProposals, jdkKeys, MatchSetFactory.JAVA_FLAVOUR);
     proposals.setKeys(MatchSetFactory.JAVA_FLAVOUR, jdkKeys);
     proposals.setProposals(MatchSetFactory.JAVA_FLAVOUR, jdkProposals);
-
-    HashMap oroPerlProposals = new HashMap();
-    ArrayList oroPerlKeys = new ArrayList();
-
-    HashMap oroAwkProposals = new HashMap();
-    ArrayList oroAwkKeys = new ArrayList();
-
-    HashMap jRegexpProposals = new HashMap();
-    ArrayList jRegexpKeys = new ArrayList();
-
-    HashMap jakartaProposals = new HashMap();
-    ArrayList jakartaKeys = new ArrayList();
   }
 
-  private void initCompletionsFromFile(HashMap p_proposals, ArrayList p_keys, int p_flavour) {
+  private void initCompletionsFromFile(HashMap p_proposals, List<String> p_keys, int p_flavour) {
     String filepath = JDK_PROPOSAL_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.message7"; //$NON-NLS-1$
-    try {
-      InputStream propFileStream = openStream(new Path(filepath), true);
+    try (InputStream propFileStream = openStream(new Path(filepath), true)) {
       SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
       parser.parse(propFileStream, new CompletionProposalXMLHandler(p_proposals, p_keys));
     } catch (Exception ex) {
@@ -678,11 +662,10 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  public void initCategoriesFromFile(HashMap p_mappings, List<String> p_categories, int p_flavour) {
+  public void initCategoriesFromFile(Map<String, List<REEditorCategoryMapping>> p_mappings, List<String> p_categories) {
     String filepath = JDK_CATEGORIES_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.readerror.jdk.categories"; //$NON-NLS-1$
-    try {
-      InputStream propFileStream = openStream(new Path(filepath), true);
+    try (InputStream propFileStream = openStream(new Path(filepath), true)) {
       SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
       parser.parse(propFileStream, new EditorCategoryMappingXMLHandler(p_mappings, p_categories));
     } catch (Exception ex) {
@@ -779,8 +762,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * @return the REBook with the passed name or <code>null</code>
    */
   public REBook getReBookWithName(String p_bookName) {
-    for (Iterator iter = reBooks.iterator(); iter.hasNext();) {
-      REBook book = (REBook)iter.next();
+    for (Object element : reBooks) {
+      REBook book = (REBook)element;
       if (book.getName().equals(p_bookName)) {
         return book;
       }
@@ -821,7 +804,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * @return a HashMap containing category-names as keys and ArrayListe of RECompletionProposal-
    *          instances as Objects.
    */
-  public HashMap getREMappings(int p_flavour) {
+  public Map<String, List<RECompletionProposal>> getREMappings(int p_flavour) {
     return jdkCatMappings;
   }
 }

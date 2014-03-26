@@ -3,14 +3,14 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -22,7 +22,7 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
 
   private final HashMap proposals;
 
-  private final ArrayList keys;
+  private final List<String> keys;
 
   private RECompletionProposal currentProposal;
 
@@ -34,14 +34,14 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
    * @param p_proposals
    * @param p_keys
    */
-  public CompletionProposalXMLHandler(HashMap p_proposals, ArrayList p_keys) {
+  public CompletionProposalXMLHandler(HashMap p_proposals, List<String> p_keys) {
     this.proposals = p_proposals;
     this.keys = p_keys;
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
@@ -60,7 +60,7 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
    */
   @Override

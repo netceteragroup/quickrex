@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -11,6 +11,7 @@ package de.babe.eclipse.plugins.quickREx.objects;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -26,7 +27,7 @@ public class RECategoriesXMLHandler extends DefaultHandler {
 
   private StringBuffer currentName = new StringBuffer();
 
-  private ArrayList list;
+  private List<RECategory> list;
 
   private RELibraryEntriesXMLHandler libEntryHandler;
 
@@ -34,17 +35,17 @@ public class RECategoriesXMLHandler extends DefaultHandler {
 
   /**
    * This instance fills the passed list with instances of RECategories initialized from the XML-file that this Handler is used with.
-   * 
+   *
    * @param p_list
    *          the list to put the RECategory-instances into
    */
-  public RECategoriesXMLHandler(ArrayList p_list) {
+  public RECategoriesXMLHandler(List<RECategory> p_list) {
     this.list = p_list;
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.xml.sax.ContentHandler#characters(char[], int, int)
    */
   @Override
@@ -58,7 +59,7 @@ public class RECategoriesXMLHandler extends DefaultHandler {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
@@ -87,7 +88,7 @@ public class RECategoriesXMLHandler extends DefaultHandler {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
    */
   @Override

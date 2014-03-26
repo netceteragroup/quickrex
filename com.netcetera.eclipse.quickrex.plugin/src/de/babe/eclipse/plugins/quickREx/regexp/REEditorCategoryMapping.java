@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -14,16 +14,16 @@ package de.babe.eclipse.plugins.quickREx.regexp;
  */
 public class REEditorCategoryMapping {
 
-  public final static String INSTANCE_QNAME = "categoryMapping";  //$NON-NLS-1$
-  public final static String PROPOSAL_KEY_ATTRIBUTE_QNAME = "proposalKey"; //$NON-NLS-1$
-  public final static String CATEGORY_ATTRIBUTE_QNAME = "category"; //$NON-NLS-1$
+  public static final String INSTANCE_QNAME = "categoryMapping";  //$NON-NLS-1$
+  public static final String PROPOSAL_KEY_ATTRIBUTE_QNAME = "proposalKey"; //$NON-NLS-1$
+  public static final String CATEGORY_ATTRIBUTE_QNAME = "category"; //$NON-NLS-1$
 
   private final String proposalKey;
   private final String category;
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param p_proposalKey
    * @param p_category
    */
@@ -33,8 +33,8 @@ public class REEditorCategoryMapping {
   }
 
   /**
-   * Returns the Category (name) for the proposal as String
-   * 
+   * Returns the Category (name) for the proposal as String.
+   *
    * @return the category-name
    */
   public String getCategory() {
@@ -42,8 +42,8 @@ public class REEditorCategoryMapping {
   }
 
   /**
-   * Returns the key of the proposal as String
-   * 
+   * Returns the key of the proposal as String.
+   *
    * @return the key of the proposal
    */
   public String getProposalKey() {

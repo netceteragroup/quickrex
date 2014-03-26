@@ -3,13 +3,13 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.objects;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -27,16 +27,16 @@ public class REBooksXMLHandler extends DefaultHandler {
 
   private StringBuffer currentPath = new StringBuffer();
 
-  private ArrayList list;
+  private List<REBook> list;
 
   /**
    * This instance fills the passed list with instances
    * of REBook initialized from the XML-file that this
    * Handler is used with.
-   * 
+   *
    * @param p_list the list to put the REBook-instances into
    */
-  public REBooksXMLHandler(ArrayList p_list) {
+  public REBooksXMLHandler(List<REBook> p_list) {
     this.list = p_list;
   }
 

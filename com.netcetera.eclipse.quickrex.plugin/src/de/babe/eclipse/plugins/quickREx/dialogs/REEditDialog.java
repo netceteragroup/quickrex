@@ -10,11 +10,9 @@
 package de.babe.eclipse.plugins.quickREx.dialogs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
-import java.util.Vector;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -50,7 +48,7 @@ public class REEditDialog extends Dialog {
   private Label additionalREInfoLabel;
   private QuickRExView view;
   private List<String> categories;
-  private HashMap expressions;
+  private Map<String, List<RECompletionProposal>> expressions;
   private String currentText = "";
 
   /**
@@ -121,7 +119,7 @@ public class REEditDialog extends Dialog {
       gd.grabExcessHorizontalSpace = false;
       catLab.setLayoutData(gd);
       final Combo catCombo = new Combo(composite, SWT.SINGLE | SWT.READ_ONLY);
-      catCombo.setItems(createComboItems((ArrayList)expressions.get(catName)));
+      catCombo.setItems(createComboItems(expressions.get(catName)));
       catCombo.addSelectionListener(new SelectionListener() {
 
         @Override
@@ -131,7 +129,7 @@ public class REEditDialog extends Dialog {
         @Override
         public void widgetSelected(SelectionEvent e) {
           if (catCombo.getSelectionIndex() >= 0) {
-            additionalREInfoLabel.setText(((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getAdditionalInfo());
+            additionalREInfoLabel.setText(expressions.get(catName).get(catCombo.getSelectionIndex()).getAdditionalInfo());
           }
         }});
       catCombo.addFocusListener(new FocusListener() {
@@ -139,7 +137,7 @@ public class REEditDialog extends Dialog {
         @Override
         public void focusGained(FocusEvent e) {
           if (catCombo.getSelectionIndex() >= 0) {
-            additionalREInfoLabel.setText(((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getAdditionalInfo());
+            additionalREInfoLabel.setText(expressions.get(catName).get(catCombo.getSelectionIndex()).getAdditionalInfo());
           } else {
             additionalREInfoLabel.setText(""); //$NON-NLS-1$
           }
@@ -165,9 +163,9 @@ public class REEditDialog extends Dialog {
         @Override
         public void widgetSelected(SelectionEvent e) {
           if (catCombo.getSelectionIndex() >= 0) {
-            text.insert(((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getInsertString());
-            text.setSelection(text.getSelection().x+((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getInsertString().length());
-            additionalREInfoLabel.setText(((RECompletionProposal)((ArrayList)expressions.get(catName)).get(catCombo.getSelectionIndex())).getAdditionalInfo());
+            text.insert(expressions.get(catName).get(catCombo.getSelectionIndex()).getInsertString());
+            text.setSelection(text.getSelection().x+expressions.get(catName).get(catCombo.getSelectionIndex()).getInsertString().length());
+            additionalREInfoLabel.setText(expressions.get(catName).get(catCombo.getSelectionIndex()).getAdditionalInfo());
           }
         }});
     }
@@ -184,15 +182,14 @@ public class REEditDialog extends Dialog {
     }
   }
 
-  private String[] createComboItems(ArrayList list) {
-    Vector expressionNames = new Vector();
-    for (Iterator iter = list.iterator(); iter.hasNext();) {
-      RECompletionProposal element = (RECompletionProposal) iter.next();
+  private String[] createComboItems(List<RECompletionProposal> list) {
+    List<String> expressionNames = new ArrayList<>();
+    for (RECompletionProposal element : list) {
       if (element != null) {
         expressionNames.add(element.getDisplayString());
       }
     }
-    return (String[])expressionNames.toArray(new String[]{});
+    return expressionNames.toArray(new String[expressionNames.size()]);
   }
 
   private void createTextLine(Composite composite) {
@@ -221,7 +218,7 @@ public class REEditDialog extends Dialog {
 
   private void updateMarkup() {
     char[] chars = text.getText().toCharArray();
-    Vector ranges = new Vector();
+    List<StyleRange> ranges = new ArrayList<>();
     Stack bStack = new Stack();
     int colorCounter = 3;
     boolean ignoreOnce = false; // flag to ignore next char (escaped brackets...)
@@ -237,7 +234,7 @@ public class REEditDialog extends Dialog {
         } else if (currentChar == '(') {
           StyleRange range = new StyleRange(i, 1, getShell().getDisplay().getSystemColor(colorCounter), getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE), SWT.BOLD);
           ranges.add(range);
-          bStack.push(new Integer(colorCounter));
+          bStack.push(colorCounter);
           colorCounter+=2;
           if (colorCounter == 15) { // avoid shades of grey...
             colorCounter = 3;
@@ -270,6 +267,6 @@ public class REEditDialog extends Dialog {
         ignoreOnce = false;
       }
     }
-    text.setStyleRanges((StyleRange[])ranges.toArray(new StyleRange[]{}));
+    text.setStyleRanges(ranges.toArray(new StyleRange[ranges.size()]));
   }
 }

@@ -10,8 +10,8 @@
 package de.babe.eclipse.plugins.quickREx.regexp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,19 +21,19 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class EditorCategoryMappingXMLHandler extends DefaultHandler {
 
-  private final HashMap mappings;
+  private final Map<String, List<REEditorCategoryMapping>> mappings;
 
   private final List<String> categories;
 
   private REEditorCategoryMapping currentMapping;
 
   /**
-   * The constructor
+   * The constructor.
    *
    * @param p_categoryMappings
    * @param p_categories
    */
-  public EditorCategoryMappingXMLHandler(HashMap p_categoryMappings, List<String> p_categories) {
+  public EditorCategoryMappingXMLHandler(Map<String, List<REEditorCategoryMapping>> p_categoryMappings, List<String> p_categories) {
     this.mappings = p_categoryMappings;
     this.categories = p_categories;
   }
@@ -46,9 +46,9 @@ public class EditorCategoryMappingXMLHandler extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String qName) {
     if (REEditorCategoryMapping.INSTANCE_QNAME.equals(qName)) {
-      ArrayList currentContents = (ArrayList) mappings.get(currentMapping.getCategory());
+      List<REEditorCategoryMapping> currentContents = mappings.get(currentMapping.getCategory());
       if (currentContents == null) {
-        currentContents = new ArrayList();
+        currentContents = new ArrayList<>();
         categories.add(currentMapping.getCategory());
       }
       currentContents.add(currentMapping);
