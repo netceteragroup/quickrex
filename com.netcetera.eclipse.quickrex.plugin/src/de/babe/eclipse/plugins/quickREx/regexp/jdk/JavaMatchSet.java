@@ -3,16 +3,18 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
- *     Andreas Studer - Contributions to handling global flags
+ *     Andreas Studer - Contributions to handling global FLAGS
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp.jdk;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +23,7 @@ import de.babe.eclipse.plugins.quickREx.regexp.MatchSet;
 
 /**
  * MatchSet using JDK-regular expressions.
- * 
+ *
  * @author bastian.bergerhoff, andreas.studer
  */
 public class JavaMatchSet implements MatchSet {
@@ -29,37 +31,37 @@ public class JavaMatchSet implements MatchSet {
   private final Pattern pattern;
   private final Matcher matcher;
 
-  private final static Collection flags = new Vector();
+  private static final List<Flag> FLAGS = new ArrayList<>();
 
   static {
-    flags.add(JavaFlag.JDK_CANON_EQ);
-    flags.add(JavaFlag.JDK_CASE_INSENSITIVE);
-    flags.add(JavaFlag.JDK_COMMENTS);
-    flags.add(JavaFlag.JDK_DOTALL);
-    flags.add(JavaFlag.JDK_MULTILINE);
-    flags.add(JavaFlag.JDK_UNICODE_CASE);
-    flags.add(JavaFlag.JDK_UNIX_LINES);
+    FLAGS.add(JavaFlag.JDK_CANON_EQ);
+    FLAGS.add(JavaFlag.JDK_CASE_INSENSITIVE);
+    FLAGS.add(JavaFlag.JDK_COMMENTS);
+    FLAGS.add(JavaFlag.JDK_DOTALL);
+    FLAGS.add(JavaFlag.JDK_MULTILINE);
+    FLAGS.add(JavaFlag.JDK_UNICODE_CASE);
+    FLAGS.add(JavaFlag.JDK_UNIX_LINES);
   }
 
   /**
    * Returns a Collection of all Compiler-Flags the JDK-implementation
    * knows about.
-   * 
+   *
    * @return a Collection of all Compiler-Flags the JDK-implementation
    * knows about
    */
-  public static Collection getAllFlags() {
-    return flags;
+  public static List<Flag> getAllFlags() {
+    return Collections.unmodifiableList(FLAGS);
   }
 
   /**
    * The constructor - uses JDK-regular expressions
    * to evaluate the passed regular expression against
    * the passed text.
-   * 
+   *
    * @param regExp the regular expression
    * @param text the text to evaluate regExp against
-   * @param flags a Collection of Flags to pass to the Compiler
+   * @param FLAGS a Collection of Flags to pass to the Compiler
    */
   public JavaMatchSet(String regExp, String text, Collection flags) {
     int iFlags = 0;

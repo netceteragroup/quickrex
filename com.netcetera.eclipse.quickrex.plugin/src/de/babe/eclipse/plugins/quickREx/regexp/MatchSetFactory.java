@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *     Andreas Studer - Contributions to handling global flags
@@ -12,6 +12,7 @@
 package de.babe.eclipse.plugins.quickREx.regexp;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 
 import de.babe.eclipse.plugins.quickREx.regexp.jdk.JavaMatchSet;
@@ -25,7 +26,7 @@ public class MatchSetFactory {
 
   /**
    * Factory-Method to create a MatchSet for the passed details.
-   * 
+   *
    * @param flavour
    *          one of the Flavour-Flags defined in this class
    * @param regExp
@@ -39,36 +40,32 @@ public class MatchSetFactory {
    */
   public static MatchSet createMatchSet(int flavour, String regExp, String text, Collection flags) {
     Vector flavourFlags = new Vector(flags);
-    flavourFlags.retainAll(MatchSetFactory.getAllFlags(flavour));
+    flavourFlags.retainAll(MatchSetFactory.getAllFlags());
     return new JavaMatchSet(regExp, text, flavourFlags);
   }
 
   /**
    * Gets all possible flags for a specific regex-flavour.
-   * 
-   * @param flavour
-   *          The flavour
+   *
    * @return A collection of the type de.babe.eclipse.plugins.quickREx.regexp.Flag
    * @see de.babe.eclipse.plugins.quickREx.regexp.Flag
    */
-  public static Collection getAllFlags(int flavour) {
+  public static List<Flag> getAllFlags() {
     return JavaMatchSet.getAllFlags();
   }
 
   /**
    * Returns a Collection of all flags supported by any of the regular-expression Compilers used by the plug-in.
-   * 
+   *
    * @return a Collection of all flags supported by any of the regular-expression Compilers used by the plug-in
    */
-  public static Collection getAllSupportedFlags() {
-    Vector allFlags = new Vector();
-    allFlags.addAll(MatchSetFactory.getAllFlags(JAVA_FLAVOUR));
-    return allFlags;
+  public static List<Flag> getAllSupportedFlags() {
+    return MatchSetFactory.getAllFlags();
   }
 
   /**
    * Helper-Method to get the maximum number of flags supported by any of the regular-expression Compilers used by the plug-in.
-   * 
+   *
    * @return the maximum number of flags
    */
   public static int getMaxFlagColumns() {

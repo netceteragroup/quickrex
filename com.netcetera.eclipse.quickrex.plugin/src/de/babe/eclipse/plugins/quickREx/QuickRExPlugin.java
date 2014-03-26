@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -164,7 +163,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   @Override
   public void stop(BundleContext p_context) throws Exception {
     super.stop(p_context);
-    writeREsToFile(regularExpressions);
+    writeREsToFile();
     writeTestTextsToFile(testTexts);
     writeREBooksToFile(reBooks);
   }
@@ -464,7 +463,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  private void writeREsToFile(List<RegularExpression> p_regularExpressions) {
+  private void writeREsToFile() {
     IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
     File reFile = reFilePath.toFile();
     try (FileOutputStream fos = new FileOutputStream(reFile)) {
@@ -482,14 +481,12 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private void writeTestTextsToFile(List<NamedText> p_testTexts) {
     IPath ttFilePath = getStateLocation().append(TEST_TEXT_FILE_NAME);
     File reFile = ttFilePath.toFile();
-    try {
-      FileOutputStream fos = new FileOutputStream(reFile);
+    try (FileOutputStream fos = new FileOutputStream(reFile)) {
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<testTexts>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       for (NamedText each : p_testTexts) {
         fos.write(each.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       fos.write("</testTexts>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      fos.close();
     } catch (Exception e) {
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message6"), e); //$NON-NLS-1$
       getLog().log(status);
@@ -517,15 +514,12 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private void writeBookContentsToFile(REBook p_book) {
     IPath bookFilePath = new Path(p_book.getPath());
     File bookFile = bookFilePath.toFile();
-    try {
-      FileOutputStream fos = new FileOutputStream(bookFile);
+    try (FileOutputStream fos = new FileOutputStream(bookFile)) {
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<regularExpressionLibrary>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      Iterator it = p_book.getContents().iterator();
-      while (it.hasNext()) {
-        fos.write(((RECategory)it.next()).toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
+      for (RECategory category : p_book.getContents()) {
+        fos.write(category.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       fos.write("</regularExpressionLibrary>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      fos.close();
     } catch (Exception e) {
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 5, Messages.getString("QuickRExPlugin.error.message16"), e); //$NON-NLS-1$
       getLog().log(status);
@@ -667,9 +661,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    *          a Collection holding the actually set flags
    */
   public void saveSelectedFlagValues(Collection p_flags) {
-    Collection allSupported = MatchSetFactory.getAllSupportedFlags();
-    for (Iterator iter = allSupported.iterator(); iter.hasNext();) {
-      Flag element = (Flag)iter.next();
+    for (Flag element : MatchSetFactory.getAllSupportedFlags()) {
       getPreferenceStore().setValue(element.getCode(), p_flags.contains(element));
     }
   }
@@ -773,10 +765,9 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * Returns an ArrayList of Categories (in fact, Category-names) defined for the
    * passed RE-Flavour.
    *
-   * @param p_flavour the Flavour, one of the constants defined in MatchSetFactory
    * @return an ArrayList of category-names (Strings) or null if the flavour is unkown
    */
-  public List<String> getRECategories(int p_flavour) {
+  public List<String> getRECategories() {
     return jdkCategories;
   }
 
@@ -784,11 +775,10 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * Returns an HashMap of Expressions mapped to Categories defined for the
    * passed RE-Flavour.
    *
-   * @param p_flavour the Flavour, one of the constants defined in MatchSetFactory
    * @return a HashMap containing category-names as keys and ArrayListe of RECompletionProposal-
    *          instances as Objects.
    */
-  public Map<String, List<RECompletionProposal>> getREMappings(int p_flavour) {
+  public Map<String, List<RECompletionProposal>> getREMappings() {
     return jdkCatMappings;
   }
 }

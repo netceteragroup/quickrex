@@ -292,7 +292,7 @@ public class QuickRExView extends ViewPart {
   private void createFlagFlavourSection(FormToolkit tk, Composite client, GridLayout layout, GridData gd, String text, int flavour) {
     Label l = tk.createLabel(client, text);
     int nButtons = 1;
-    Collection jdkFlags = MatchSetFactory.getAllFlags(flavour);
+    Collection jdkFlags = MatchSetFactory.getAllFlags();
     for (Iterator iter = jdkFlags.iterator(); iter.hasNext();) {
       nButtons++;
       final Flag element = (Flag)iter.next();

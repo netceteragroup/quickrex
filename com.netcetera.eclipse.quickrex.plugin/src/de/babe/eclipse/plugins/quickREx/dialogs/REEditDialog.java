@@ -61,8 +61,8 @@ public class REEditDialog extends Dialog {
   public REEditDialog(QuickRExView view, Shell shell, int flavour) {
     super(shell);
     this.view = view;
-    categories = QuickRExPlugin.getDefault().getRECategories(flavour);
-    expressions = QuickRExPlugin.getDefault().getREMappings(flavour);
+    categories = QuickRExPlugin.getDefault().getRECategories();
+    expressions = QuickRExPlugin.getDefault().getREMappings();
   }
 
   /**
