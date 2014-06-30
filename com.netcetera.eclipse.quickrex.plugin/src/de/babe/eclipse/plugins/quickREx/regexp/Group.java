@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *     Georg Sendt - added code for groups with IDs
@@ -23,7 +23,7 @@ public class Group {
 
   /**
    * The constructor. Instances of this class are immutable.
-   * 
+   *
    * @param p_index the index of this group
    * @param p_id the ID of this group, can be null
    * @param p_text the textual contents of this group
@@ -40,7 +40,7 @@ public class Group {
 
   /**
    * The constructor. Instances of this class are immutable.
-   * 
+   *
    * @param p_index the index of this group
    * @param p_text the textual contents of this group
    * @param p_start the start-index of this group
@@ -52,8 +52,8 @@ public class Group {
 
 
   /**
-   * Returns the index of this group
-   * 
+   * Returns the index of this group.
+   *
    * @return the index
    */
   public int getIndex() {
@@ -61,8 +61,8 @@ public class Group {
   }
 
   /**
-   * Returns the ID of this group or null if the group has no ID
-   * 
+   * Returns the ID of this group or null if the group has no ID.
+   *
    * @return the ID
    */
   public String getID() {
@@ -70,8 +70,8 @@ public class Group {
   }
 
   /**
-   * Returns the start-index of this group
-   * 
+   * Returns the start-index of this group.
+   *
    * @return the start-index
    */
   public int getStart() {
@@ -79,8 +79,8 @@ public class Group {
   }
 
   /**
-   * Returns the end-index of this group
-   * 
+   * Returns the end-index of this group.
+   *
    * @return the end-index
    */
   public int getEnd() {
@@ -90,7 +90,7 @@ public class Group {
   /**
    * Returns (a one-line represenation of) the textual contents of this group
    * where line-breaks and tabs are represented by their escape-sequences
-   * 
+   *
    * @return the textual contents
    */
   public String getText() {

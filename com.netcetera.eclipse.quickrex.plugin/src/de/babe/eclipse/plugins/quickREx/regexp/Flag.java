@@ -3,17 +3,14 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp;
 
-import java.util.HashMap;
 
 public class Flag {
-
-  protected static HashMap flags = new HashMap();
 
   private final String code;
   private final int flag;

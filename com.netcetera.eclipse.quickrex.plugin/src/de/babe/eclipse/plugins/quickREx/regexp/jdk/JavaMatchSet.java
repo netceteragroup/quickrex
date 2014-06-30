@@ -13,7 +13,6 @@ package de.babe.eclipse.plugins.quickREx.regexp.jdk;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,12 +60,11 @@ public class JavaMatchSet implements MatchSet {
    *
    * @param regExp the regular expression
    * @param text the text to evaluate regExp against
-   * @param FLAGS a Collection of Flags to pass to the Compiler
+   * @param flags a Collection of Flags to pass to the Compiler
    */
-  public JavaMatchSet(String regExp, String text, Collection flags) {
+  public JavaMatchSet(String regExp, String text, Collection<? extends Flag> flags) {
     int iFlags = 0;
-    for (Iterator iter = flags.iterator(); iter.hasNext();) {
-      Flag element = (Flag)iter.next();
+    for (Flag element : flags) {
       iFlags = iFlags | element.getFlag();
     }
     pattern = Pattern.compile(regExp, iFlags);

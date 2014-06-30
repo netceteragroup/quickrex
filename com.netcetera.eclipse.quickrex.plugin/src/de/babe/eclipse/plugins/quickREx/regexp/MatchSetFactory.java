@@ -20,7 +20,7 @@ import de.babe.eclipse.plugins.quickREx.regexp.jdk.JavaMatchSet;
 /**
  * @author bastian.bergerhoff, andreas.studer, georg.sendt
  */
-public class MatchSetFactory {
+public final class MatchSetFactory {
 
   public static final int JAVA_FLAVOUR = 1;
 
