@@ -25,7 +25,7 @@ public abstract class StringUtils {
    * @return the escaped String or "" if null was passed.
    */
   public static String escapeForJava(String p_text) {
-    StringBuffer retBuffer = new StringBuffer();
+    StringBuilder retBuffer = new StringBuilder();
     StringCharacterIterator it = new StringCharacterIterator(p_text);
     for (char c = it.first(); c != StringCharacterIterator.DONE; c = it.next()) {
       if (c == '\\') {

@@ -10,7 +10,6 @@
 package de.babe.eclipse.plugins.quickREx.objects;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.xml.sax.Attributes;
@@ -25,13 +24,13 @@ public class RECategoriesXMLHandler extends DefaultHandler {
 
   private boolean receivingREEntryInformation = false;
 
-  private StringBuffer currentName = new StringBuffer();
+  private StringBuilder currentName = new StringBuilder();
 
   private List<RECategory> list;
 
   private RELibraryEntriesXMLHandler libEntryHandler;
 
-  private ArrayList currentEntries = new ArrayList();
+  private List<RELibraryEntry> currentEntries = new ArrayList<>();
 
   /**
    * This instance fills the passed list with instances of RECategories initialized from the XML-file that this Handler is used with.
@@ -73,13 +72,13 @@ public class RECategoriesXMLHandler extends DefaultHandler {
     } else {
       if (RECategory.INSTANCE_QNAME.equals(qName)) {
         RECategory cat = new RECategory(currentName.toString(), currentEntries);
-        for (Iterator iter = currentEntries.iterator(); iter.hasNext();) {
-          RELibraryEntry element = (RELibraryEntry)iter.next();
+        for (Object element2 : currentEntries) {
+          RELibraryEntry element = (RELibraryEntry) element2;
           element.setCategory(cat);
         }
         list.add(cat);
-        currentName = new StringBuffer();
-        currentEntries = new ArrayList();
+        currentName = new StringBuilder();
+        currentEntries = new ArrayList<>();
       } else if (RECategory.NAME_QNAME.equals(qName)) {
         receivingNameInformation = false;
       }

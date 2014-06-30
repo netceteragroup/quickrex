@@ -19,8 +19,8 @@ public class NamedTextXMLHandler extends DefaultHandler {
   private boolean receivingNameInformation = false;
   private boolean receivingTextInformation = false;
 
-  private StringBuffer currentName = new StringBuffer();
-  private StringBuffer currentText = new StringBuffer();
+  private StringBuilder currentName = new StringBuilder();
+  private StringBuilder currentText = new StringBuilder();
 
   private List<NamedText> list;
 
@@ -54,8 +54,8 @@ public class NamedTextXMLHandler extends DefaultHandler {
   public void endElement(String uri, String localName, String qName) {
     if (NamedText.INSTANCE_QNAME.equals(qName)) {
       list.add(new NamedText(currentName.toString(), currentText.toString()));
-      currentName = new StringBuffer();
-      currentText = new StringBuffer();
+      currentName = new StringBuilder();
+      currentText = new StringBuilder();
     } else if (NamedText.NAME_QNAME.equals(qName)) {
       receivingNameInformation = false;
     } else if (NamedText.TEXT_QNAME.equals(qName)) {

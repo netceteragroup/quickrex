@@ -121,7 +121,7 @@ public class REBook {
     for (int i = 1; i < p_depth; i++) {
       prefix += p_prefix;
     }
-    StringBuffer retBuffer = new StringBuffer(prefix);
+    StringBuilder retBuffer = new StringBuilder(prefix);
     retBuffer.append("<").append(INSTANCE_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
     retBuffer.append(prefix).append(p_prefix).append("<").append(NAME_QNAME).append(">").append(replaceIllegalChars(this.name)).append("</").append( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         NAME_QNAME).append(">\r\n"); //$NON-NLS-1$

@@ -21,7 +21,7 @@ public class RegularExpressionsXMLHandler extends DefaultHandler {
 
   private boolean receivingInstanceInformation = false;
 
-  private StringBuffer currentString = new StringBuffer();
+  private StringBuilder currentString = new StringBuilder();
 
   private List<RegularExpression> list;
 
@@ -54,7 +54,7 @@ public class RegularExpressionsXMLHandler extends DefaultHandler {
     if (RegularExpression.INSTANCE_QNAME.equals(qName)) {
       list.add(new RegularExpression(currentString.toString()));
       receivingInstanceInformation = false;
-      currentString = new StringBuffer();
+      currentString = new StringBuilder();
     }
   }
 

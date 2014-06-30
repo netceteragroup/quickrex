@@ -57,7 +57,7 @@ public class NamedText {
    * @return an XML-String-representation of this object
    */
   public String toXMLString(String p_prefix) {
-    StringBuffer retBuffer = new StringBuffer(p_prefix);
+    StringBuilder retBuffer = new StringBuilder(p_prefix);
     retBuffer.append("<").append(INSTANCE_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
     retBuffer.append(p_prefix).append(p_prefix).append("<").append(NAME_QNAME).append(">").append(replaceIllegalChars(this.name)).append("</").append(NAME_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     retBuffer.append(p_prefix).append(p_prefix).append("<").append(TEXT_QNAME).append(">").append(replaceIllegalChars(this.text)).append("</").append(TEXT_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$

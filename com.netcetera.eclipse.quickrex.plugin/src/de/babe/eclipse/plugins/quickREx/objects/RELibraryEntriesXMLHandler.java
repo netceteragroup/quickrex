@@ -3,13 +3,13 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.objects;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -25,22 +25,22 @@ public class RELibraryEntriesXMLHandler extends DefaultHandler {
   private boolean receivingTestTextInformation = false;
   private boolean receivingSourceInformation = false;
 
-  private StringBuffer currentTitle = new StringBuffer();
-  private StringBuffer currentDescription = new StringBuffer();
-  private StringBuffer currentRE = new StringBuffer();
-  private StringBuffer currentTestText = new StringBuffer();
-  private StringBuffer currentSource = new StringBuffer();
+  private StringBuilder currentTitle = new StringBuilder();
+  private StringBuilder currentDescription = new StringBuilder();
+  private StringBuilder currentRE = new StringBuilder();
+  private StringBuilder currentTestText = new StringBuilder();
+  private StringBuilder currentSource = new StringBuilder();
 
-  private ArrayList list;
+  private List<RELibraryEntry> list;
 
   /**
    * This instance fills the passed list with instances
    * of RELibraryEntry initialized from the XML-file that this
    * Handler is used with.
-   * 
+   *
    * @param p_list the list to put the RELibraryEntry-instances into
    */
-  public RELibraryEntriesXMLHandler(ArrayList p_list) {
+  public RELibraryEntriesXMLHandler(List<RELibraryEntry> p_list) {
     this.list = p_list;
   }
 
@@ -69,11 +69,11 @@ public class RELibraryEntriesXMLHandler extends DefaultHandler {
   public void endElement(String uri, String localName, String qName) {
     if (RELibraryEntry.INSTANCE_QNAME.equals(qName)) {
       list.add(new RELibraryEntry(currentTitle.toString(), currentRE.toString(), currentDescription.toString(), currentTestText.toString(), currentSource.toString()));
-      currentTitle = new StringBuffer();
-      currentRE = new StringBuffer();
-      currentDescription = new StringBuffer();
-      currentTestText = new StringBuffer();
-      currentSource = new StringBuffer();
+      currentTitle = new StringBuilder();
+      currentRE = new StringBuilder();
+      currentDescription = new StringBuilder();
+      currentTestText = new StringBuilder();
+      currentSource = new StringBuilder();
       receivingTitleInformation = false;
       receivingREInformation = false;
       receivingDescriptionInformation = false;
@@ -112,11 +112,11 @@ public class RELibraryEntriesXMLHandler extends DefaultHandler {
   }
 
   /**
-   * Returns the list of entries
-   * 
+   * Returns the list of entries.
+   *
    * @return the list of entries
    */
-  public ArrayList getList() {
+  public List<RELibraryEntry> getList() {
     return this.list;
   }
 }

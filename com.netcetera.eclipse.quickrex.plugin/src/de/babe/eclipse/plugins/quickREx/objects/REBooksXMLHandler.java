@@ -23,9 +23,9 @@ public class REBooksXMLHandler extends DefaultHandler {
 
   private boolean receivingPathInformation = false;
 
-  private StringBuffer currentName = new StringBuffer();
+  private StringBuilder currentName = new StringBuilder();
 
-  private StringBuffer currentPath = new StringBuffer();
+  private StringBuilder currentPath = new StringBuilder();
 
   private List<REBook> list;
 
@@ -61,8 +61,8 @@ public class REBooksXMLHandler extends DefaultHandler {
       list.add(new REBook(currentName.toString(), currentPath.toString()));
       receivingNameInformation = false;
       receivingPathInformation = false;
-      currentName = new StringBuffer();
-      currentPath = new StringBuffer();
+      currentName = new StringBuilder();
+      currentPath = new StringBuilder();
     } else if (REBook.NAME_QNAME.equals(qName)) {
       receivingNameInformation = false;
     } else if (REBook.PATH_QNAME.equals(qName)) {

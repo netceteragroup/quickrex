@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -49,7 +49,7 @@ public class RELibraryEntry {
 
   /**
    * The constructor
-   * 
+   *
    * @param p_title
    * @param p_re
    * @param p_description
@@ -67,7 +67,7 @@ public class RELibraryEntry {
 
   /**
    * Sets the category that this entry belongs to
-   * 
+   *
    * @param category the category
    */
   public void setCategory(RECategory category) {
@@ -76,7 +76,7 @@ public class RELibraryEntry {
 
   /**
    * Sets the description for this entry
-   * 
+   *
    * @param description the description
    */
   public void setDescription(String description) {
@@ -85,7 +85,7 @@ public class RELibraryEntry {
 
   /**
    * Sets the regular expression for this entry
-   * 
+   *
    * @param re the regular expression
    */
   public void setRe(String re) {
@@ -94,7 +94,7 @@ public class RELibraryEntry {
 
   /**
    * Sets the source for this entry
-   * 
+   *
    * @param source the source
    */
   public void setSource(String source) {
@@ -103,7 +103,7 @@ public class RELibraryEntry {
 
   /**
    * Sets the test-text for this entry
-   * 
+   *
    * @param testtext the test-text
    */
   public void setTesttext(String testtext) {
@@ -113,7 +113,7 @@ public class RELibraryEntry {
   /**
    * Sets the title for this entry. This fires a PropertyChangeEvent to all registered
    * TitleChangeListeners
-   * 
+   *
    * @param title the title
    */
   public void setTitle(String title) {
@@ -131,7 +131,7 @@ public class RELibraryEntry {
 
   /**
    * Returns the category that this entry belongs to
-   * 
+   *
    * @return the category
    */
   public RECategory getCategory() {
@@ -140,7 +140,7 @@ public class RELibraryEntry {
 
   /**
    * Returns the description for this entry
-   * 
+   *
    * @return the description
    */
   public String getDescription() {
@@ -149,7 +149,7 @@ public class RELibraryEntry {
 
   /**
    * Returns the regular expression in this entry
-   * 
+   *
    * @return the regular expression
    */
   public String getRe() {
@@ -158,7 +158,7 @@ public class RELibraryEntry {
 
   /**
    * Returns the source for this entry
-   * 
+   *
    * @return the source
    */
   public String getSource() {
@@ -167,7 +167,7 @@ public class RELibraryEntry {
 
   /**
    * Returns the test-text for this entry
-   * 
+   *
    * @return the test-text
    */
   public String getTesttext() {
@@ -176,7 +176,7 @@ public class RELibraryEntry {
 
   /**
    * Returns the title of this entry
-   * 
+   *
    * @return the title
    */
   public String getTitle() {
@@ -186,7 +186,7 @@ public class RELibraryEntry {
   /**
    * Adds the passed listener to the listeners which are informed when the
    * title of this entry is changed
-   * 
+   *
    * @param listener the listener to add
    */
   public void addTitleChangeListener(IPropertyChangeListener listener) {
@@ -198,7 +198,7 @@ public class RELibraryEntry {
   /**
    * Removes the passed listener from the list of listeners registered for
    * changes of the title of this entry
-   * 
+   *
    * @param listener the listener to remove
    */
   public void removeTitleChangeListener(IPropertyChangeListener listener) {
@@ -209,7 +209,7 @@ public class RELibraryEntry {
 
   /**
    * Returns an XML-representation of this object, using the passed String as a prefix for each line
-   * 
+   *
    * @param p_prefix
    *          the prefix for the line
    * @param p_depth the indentation-level
@@ -220,7 +220,7 @@ public class RELibraryEntry {
     for (int i = 1; i < p_depth; i++) {
       prefix += p_prefix;
     }
-    StringBuffer retBuffer = new StringBuffer(prefix);
+    StringBuilder retBuffer = new StringBuilder(prefix);
     retBuffer.append("<").append(INSTANCE_QNAME).append(">\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
     retBuffer.append(prefix).append(p_prefix).append("<").append(TITLE_QNAME).append(">").append(replaceIllegalChars(this.title)).append("</") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     .append(TITLE_QNAME).append(">\r\n"); //$NON-NLS-1$
@@ -242,7 +242,7 @@ public class RELibraryEntry {
 
   /**
    * Persists this entry by writing the file for the containing book
-   * 
+   *
    * @param monitor the progress-monitor
    */
   public void doSave(IProgressMonitor monitor) {
@@ -255,7 +255,7 @@ public class RELibraryEntry {
    * similar to file-system paths: "bookname\categoryname\title". This works
    * because book-names are unique in the plugin, category-names are unique within
    * books and entry-titles are unique within categories
-   * 
+   *
    * @return the path within the book for this entry
    */
   public String getPath() {

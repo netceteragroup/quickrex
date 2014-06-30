@@ -11,6 +11,8 @@ package de.babe.eclipse.plugins.quickREx.dialogs;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -397,21 +399,18 @@ public class OrganizeTestTextDialog extends Dialog {
   }
 
   private NamedText getFileContents(String p_filePath) throws Exception {
-    StringBuffer contents = new StringBuffer();
+    StringBuilder contents = new StringBuilder();
     File file = new File(p_filePath);
     if (!(file.exists() && file.canRead()) || file.isDirectory()) {
       throw new Exception(Messages.getString("dialogs.OrganizeTestTextDialog.error.message3")); //$NON-NLS-1$
     } else {
-      FileInputStream fis = null;
-      try {
-        fis = new FileInputStream(file);
+      try (FileInputStream fis = new FileInputStream(file);
+          Reader reader = new InputStreamReader(fis)) {
         int read = 0;
-        while ((read = fis.read()) != -1) {
-          contents.append((char)read);
+        char[] buffer = new char[8192];
+        while ((read = reader.read(buffer)) != -1) {
+          contents.append(buffer, 0, read);
         }
-        fis.close();
-      } catch (Exception e) {
-        throw e;
       }
     }
     return new NamedText(p_filePath, contents.toString());
