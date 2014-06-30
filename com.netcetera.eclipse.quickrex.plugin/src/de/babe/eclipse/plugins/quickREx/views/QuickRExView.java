@@ -93,7 +93,7 @@ import de.babe.eclipse.plugins.quickREx.regexp.RegularExpressionHits;
  */
 public class QuickRExView extends ViewPart {
 
-  public final static String ID = "de.babe.eclipse.plugins.quickREx.views.QuickRExView"; //$NON-NLS-1$
+  public static final String ID = "de.babe.eclipse.plugins.quickREx.views.QuickRExView"; //$NON-NLS-1$
 
   private Combo regExpCombo;
 

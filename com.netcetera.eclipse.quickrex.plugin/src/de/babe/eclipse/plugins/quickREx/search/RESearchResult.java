@@ -69,7 +69,7 @@ public class RESearchResult extends AbstractTextSearchResult {
    */
   @Override
   public String getLabel() {
-    return Messages.getString("search.RESearchResult.label", new Object[] { new Integer(matches.size()), query.getText()}); //$NON-NLS-1$
+    return Messages.getString("search.RESearchResult.label", new Object[] { matches.size(), query.getText()}); //$NON-NLS-1$
   }
 
   /* (non-Javadoc)
