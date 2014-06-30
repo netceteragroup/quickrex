@@ -12,19 +12,16 @@
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.views;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.PatternSyntaxException;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.contentassist.ComboContentAssistSubjectAdapter;
 import org.eclipse.jface.contentassist.SubjectControlContentAssistant;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
@@ -840,78 +837,13 @@ public class QuickRExView extends ViewPart {
       matches.setText(""); //$NON-NLS-1$
       groups.setText(""); //$NON-NLS-1$
 
-      final Boolean[] canceledEvaluation = new Boolean[1];
+      String sRegExpCombo = regExpCombo.getText();
+      String sTestText = testText.getText();
+
       try {
-        final String sRegExpCombo = regExpCombo.getText();
-        final String sTestText = testText.getText();
-        getSite().getWorkbenchWindow().getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
-          @Override
-          public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-            // set progress-thread to low priority - so the workbench has a higher priority
-            Thread.currentThread().setPriority(Thread.MIN_PRIORITY + 1);
-
-            final boolean dontStop = !QuickRExPlugin.getDefault().getPreferenceStore().getBoolean(QuickRExPreferencesPage.P_DO_TIMEOUT);
-            long stopAfterSeconds = QuickRExPlugin.getDefault().getPreferenceStore().getLong(QuickRExPreferencesPage.P_TIMEOUT);
-            final long maxTime = System.currentTimeMillis() + 1000 * stopAfterSeconds;
-
-            // create a processing thread with low priority
-            Thread regExpThread = new Thread("QuickREx-Processing") { //$NON-NLS-1$
-              @Override
-              public void run() {
-                try {
-                  hits.init(sRegExpCombo, sTestText, currentFlags);
-                } catch (Throwable throwable) {
-                  hits.setException(throwable);
-                }
-              }
-            };
-            regExpThread.setPriority(Thread.MIN_PRIORITY);
-            regExpThread.start();
-
-            // control the regExpThread and kill him if time exceeded or user canceled process
-            boolean monitorHasTask = false;
-            while (regExpThread.isAlive() && (dontStop || System.currentTimeMillis() < maxTime) && !monitor.isCanceled()) {
-
-              // do nothing
-              Thread.yield();
-
-              // update progressBar
-              if (!monitorHasTask) {
-                monitor.beginTask(Messages.getString("views.QuickRExView.tasks.processing.name"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-                monitorHasTask = true;
-              }
-            }
-
-            if (regExpThread.isAlive()) {
-              // force thread to stop
-              regExpThread.stop();
-              canceledEvaluation[0] = Boolean.TRUE;
-            }
-
-            monitor.done();
-          }
-        });
-      } catch (InvocationTargetException ex) {
-        ex.printStackTrace();
-
-      } catch (InterruptedException ex) {
-        canceledEvaluation[0] = Boolean.TRUE;
-      }
-
-      if (Boolean.TRUE.equals(canceledEvaluation[0])) {
-        // reset hits because the thread was killed and hits has an unexpected state
-        hits.reset();
-        // user canceled progressDialog
-        matches.setText(Messages.getString("views.QuickRExView.matches.cancelledEvaluation.text")); //$NON-NLS-1$
-        groups.setText(""); //$NON-NLS-1$
-        globalMatch.setText(""); //$NON-NLS-1$
-        updateMatchView(null, false);
-        nextButton.setEnabled(false);
-        previousButton.setEnabled(false);
-        nextGroupButton.setEnabled(false);
-        previousGroupButton.setEnabled(false);
-        return;
+        hits.init(sRegExpCombo, sTestText, currentFlags);
+      } catch (Throwable throwable) {
+        hits.setException(throwable);
       }
 
       if (hits.containsException()) {
