@@ -41,7 +41,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   private ArrayList categoriesWithMatches = new ArrayList();
 
   /**
-   * The constructor
+   * The constructor.
    *
    * @param query
    */

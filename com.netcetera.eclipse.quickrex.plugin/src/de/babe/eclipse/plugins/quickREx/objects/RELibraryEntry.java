@@ -10,7 +10,7 @@
 package de.babe.eclipse.plugins.quickREx.objects;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -45,7 +45,7 @@ public class RELibraryEntry {
 
   private RECategory category;
 
-  private transient ArrayList listeners;
+  private transient List<IPropertyChangeListener> listeners;
 
   /**
    * The constructor
@@ -120,8 +120,7 @@ public class RELibraryEntry {
     if (listeners.size() > 0) {
       PropertyChangeEvent event = new PropertyChangeEvent(this, "title", this.title, title); //$NON-NLS-1$
       this.title = title;
-      for (Iterator iter = listeners.iterator(); iter.hasNext();) {
-        IPropertyChangeListener listener = (IPropertyChangeListener)iter.next();
+      for (IPropertyChangeListener listener : listeners) {
         listener.propertyChange(event);
       }
     } else {

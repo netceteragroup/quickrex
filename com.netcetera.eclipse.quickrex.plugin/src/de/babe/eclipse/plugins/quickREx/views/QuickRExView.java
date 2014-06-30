@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation, all but:
  *     Andreas Studer - Contributions to handling global flags
@@ -13,9 +13,9 @@
 package de.babe.eclipse.plugins.quickREx.views;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -141,7 +141,7 @@ public class QuickRExView extends ViewPart {
 
   private Action useJDKREAction;
 
-  private Collection currentFlags = new Vector();
+  private Collection<Flag> currentFlags = new ArrayList<>();
 
   private String msg = ""; //$NON-NLS-1$
 
@@ -169,7 +169,7 @@ public class QuickRExView extends ViewPart {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -184,8 +184,7 @@ public class QuickRExView extends ViewPart {
   }
 
   private void initializeCurrentFlags() {
-    for (Iterator iter = MatchSetFactory.getAllSupportedFlags().iterator(); iter.hasNext();) {
-      Flag element = (Flag)iter.next();
+    for (Flag element : MatchSetFactory.getAllSupportedFlags()) {
       if (QuickRExPlugin.getDefault().isFlagSaved(element)) {
         currentFlags.add(element);
       }
@@ -286,7 +285,7 @@ public class QuickRExView extends ViewPart {
    * Creates a line of flags. This is a helper for the Method createFlagSection. @param tk The FormToolkit to use @param client The Composite Client
    * @param layout The GridLayout to use. @param gd The GridData to fill. @param text The text for the labe at the beginning. @param flavour The
    * Flavour to use from MatchSetFactory
-   * 
+   *
    * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory
    */
   private void createFlagFlavourSection(FormToolkit tk, Composite client, GridLayout layout, GridData gd, String text, int flavour) {
@@ -946,7 +945,9 @@ public class QuickRExView extends ViewPart {
           matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
         } else {
           String msg = t.getMessage();
-          if(msg == null) msg = t.toString();
+          if(msg == null) {
+            msg = t.toString();
+          }
           matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
         }
 
@@ -1001,7 +1002,9 @@ public class QuickRExView extends ViewPart {
 
     String groupID = hits.getCurrentMatch().getCurrentGroup().getID();
     if(groupID != null)
+     {
       ret +=" - {" + groupID + "}"; //$NON-NLS-1$ //$NON-NLS-2$
+    }
 
     return ret;
   }
@@ -1016,7 +1019,7 @@ public class QuickRExView extends ViewPart {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
    */
   @Override
@@ -1025,7 +1028,7 @@ public class QuickRExView extends ViewPart {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IWorkbenchPart#dispose()
    */
   @Override
@@ -1035,8 +1038,8 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * Set the current RE to the passed String
-   * 
+   * Set the current RE to the passed String.
+   *
    * @param re the String to use
    */
   public void setRegularExpression(String re) {
@@ -1045,7 +1048,7 @@ public class QuickRExView extends ViewPart {
 
   /**
    * Set the current test-text to the passed String
-   * 
+   *
    * @param text the String to use
    */
   public void setTestText(String text) {
@@ -1054,7 +1057,7 @@ public class QuickRExView extends ViewPart {
 
   /**
    * Returns the current RE
-   * 
+   *
    * @return the current RE
    */
   public String getRegularExpression() {
@@ -1063,7 +1066,7 @@ public class QuickRExView extends ViewPart {
 
   /**
    * Returns the last selection in the RE-Combo
-   * 
+   *
    * @return the last selection
    */
   public Point getLastComboSelection() {

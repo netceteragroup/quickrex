@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -35,8 +35,8 @@ public class SimpleTextDialog extends Dialog {
   private String contents;
 
   /**
-   * The constructor
-   * 
+   * The constructor.
+   *
    * @param p_parentShell
    * @param p_title
    * @param p_contents
@@ -49,7 +49,7 @@ public class SimpleTextDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
    */
   @Override
@@ -81,7 +81,7 @@ public class SimpleTextDialog extends Dialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
    */
   @Override

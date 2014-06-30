@@ -3,18 +3,19 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *     Georg Sendt - added JRegex-Implementation
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 import java.util.regex.Matcher;
 
 import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
@@ -24,7 +25,7 @@ import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
  */
 public class RegularExpressionHits {
 
-  private Vector matchData;
+  private List<Match> matchData;
 
   private int matchIndex;
 
@@ -34,13 +35,13 @@ public class RegularExpressionHits {
 
   /**
    * (Re)Initializes this instance with data from the passed Matcher.
-   * 
+   *
    * @param p_matcher
    *          the Matcher to use for initialization
    */
-  public void init(String p_RegExp, String p_testText, Collection flags) {
+  public void init(String p_RegExp, String p_testText, Collection<Flag> flags) {
     MatchSet matches = MatchSetFactory.createMatchSet(QuickRExPlugin.getDefault().getREFlavour(), p_RegExp, p_testText, flags);
-    matchData = new Vector();
+    matchData = new ArrayList<>();
     while (matches.nextMatch()) {
       Match match = new Match(matches.start(), matches.end(), matches.groupContents(0));
       for (int g = 0; g < matches.groupCount(); g++) {
@@ -77,10 +78,10 @@ public class RegularExpressionHits {
 
   /**
    * Returns <code>true</code> if and only if the Matcher used when last
-   * calling
-   * 
+   * calling.
+   *
    * @see RegularExpressionHits#init(Matcher) found at least one match
-   * 
+   *
    * @return <code>true</code> if this hit contains matches
    */
   public boolean containsMatches() {
@@ -90,10 +91,10 @@ public class RegularExpressionHits {
   /**
    * Returns <code>true</code> if and only if this instance has a 'next
    * match'. Matches may be navigated by calling
-   * 
+   *
    * @see RegularExpressionHits#toNextMatch() and
    * @see RegularExpressionHits#toPreviousMatch()
-   * 
+   *
    * @return <code>true</code> if and only if this instance has a 'next match'
    */
   public boolean hasNextMatch() {
@@ -103,10 +104,10 @@ public class RegularExpressionHits {
   /**
    * Returns <code>true</code> if and only if this instance has a 'previous
    * match'. Matches may be navigated by calling
-   * 
+   *
    * @see RegularExpressionHits#toNextMatch() and
    * @see RegularExpressionHits#toPreviousMatch()
-   * 
+   *
    * @return <code>true</code> if and only if this instance has a 'previous
    *         match'
    */
@@ -115,8 +116,8 @@ public class RegularExpressionHits {
   }
 
   /**
-   * Returns the number of matches defined for this hit
-   * 
+   * Returns the number of matches defined for this hit.
+   *
    * @return the number of matches defined for this hit
    */
   public int getNumberOfMatches() {
@@ -125,7 +126,7 @@ public class RegularExpressionHits {
 
   /**
    * Makes the next match the current one. Only call if
-   * 
+   *
    * @see RegularExpressionHits#hasNextMatch() returns <code>true</code>
    */
   public void toNextMatch() {
@@ -134,7 +135,7 @@ public class RegularExpressionHits {
 
   /**
    * Makes the previous match the current one. Only call if
-   * 
+   *
    * @see RegularExpressionHits#hasPreviousMatch() returns <code>true</code>
    */
   public void toPreviousMatch() {
@@ -143,48 +144,44 @@ public class RegularExpressionHits {
 
   /**
    * Returns the current match. Initially, the current match is the first one.
-   * 
+   *
    * @return the current match
    */
   public Match getCurrentMatch() {
-    return (Match)matchData.get(this.matchIndex);
+    return matchData.get(this.matchIndex);
   }
 
   /**
-   * Returns all Matches contained in this instance as array
-   * 
+   * Returns all Matches contained in this instance as array.
+   *
    * @return all Matches contained in this instance as array
    */
   public Match[] getAllMatches() {
-    return (Match[])matchData.toArray(new Match[matchData.size()]);
+    return matchData.toArray(new Match[matchData.size()]);
   }
 
   /**
-   * Resets this instance to an empty one containing no matches
+   * Resets this instance to an empty one containing no matches.
    */
   public void reset() {
-    this.matchData = new Vector();
+    this.matchData = new ArrayList<>();
     this.matchIndex = -1;
     this.throwable = null;
   }
 
   /**
-   * Returns all matches separated by CRs and LFs
-   * 
+   * Returns all matches separated by CRs and LFs.
+   *
    * @return all matches separated by CRs and LFs
    */
   public String grep() {
-    try {
-      StringWriter sw = new StringWriter();
-      PrintWriter pw = new PrintWriter(sw);
-      Iterator iter = matchData.iterator();
-      while (iter.hasNext()) {
-        Match element = (Match)iter.next();
+    try (StringWriter sw = new StringWriter();
+      PrintWriter pw = new PrintWriter(sw)) {
+      for (Match element : matchData) {
         pw.println(element.getText());
       }
-      pw.close();
       return sw.toString();
-    } catch (NullPointerException npe) {
+    } catch (IOException | NullPointerException e) {
       return ""; //$NON-NLS-1$
     }
   }

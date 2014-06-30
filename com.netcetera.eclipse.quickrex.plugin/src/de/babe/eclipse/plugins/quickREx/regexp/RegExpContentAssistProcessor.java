@@ -11,7 +11,6 @@
 package de.babe.eclipse.plugins.quickREx.regexp;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -105,18 +104,14 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
    */
   @Override
   public ICompletionProposal[] computeCompletionProposals(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
-    Set results = new TreeSet(new RECompletionProposalComparator());
-    Iterator iter = proposals.getKeys(MatchSetFactory.JAVA_FLAVOUR).iterator();
-    while (iter.hasNext()) {
-      addProposal((String)iter.next(), contentAssistSubjectControl, documentOffset, results);
+    Set<RECompletionProposal> results = new TreeSet<>(new RECompletionProposalComparator());
+    for (String proposalKey : proposals.getKeys(MatchSetFactory.JAVA_FLAVOUR)) {
+      addProposal(proposalKey, contentAssistSubjectControl, documentOffset, results);
     }
 
-    List proposals = new ArrayList(results.size());
+    List<CompletionProposal> proposals = new ArrayList<>(results.size());
 
-    Iterator propIt = results.iterator();
-
-    while (propIt.hasNext()) {
-      RECompletionProposal proposal = (RECompletionProposal)propIt.next();
+    for (RECompletionProposal proposal : results) {
 
       String proposalKey = proposal.getKey();
       String displayString = proposal.getDisplayString();
@@ -129,7 +124,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
           additionalInfo));
     }
 
-    return (ICompletionProposal[])proposals.toArray(new ICompletionProposal[results.size()]);
+    return proposals.toArray(new ICompletionProposal[results.size()]);
   }
 
   /*
@@ -140,7 +135,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
     return null;
   }
 
-  private void addProposal(String proposalKey, IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset, Set results) {
+  private void addProposal(String proposalKey, IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset, Set<RECompletionProposal> results) {
     RECompletionProposal proposal = proposals.getProposal(MatchSetFactory.JAVA_FLAVOUR, proposalKey);
 
     try {

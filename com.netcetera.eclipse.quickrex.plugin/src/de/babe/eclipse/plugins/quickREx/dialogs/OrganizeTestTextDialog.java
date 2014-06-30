@@ -84,7 +84,7 @@ public class OrganizeTestTextDialog extends Dialog {
   }
 
   /**
-   * Returns the selected text or <code>null</code> if a button other than 'ok' was pressed (or the dialog is not in 'LOAD'-mode)
+   * Returns the selected text or <code>null</code> if a button other than 'ok' was pressed (or the dialog is not in 'LOAD'-mode).
    *
    * @return the selected text or <code>null</code>
    */
