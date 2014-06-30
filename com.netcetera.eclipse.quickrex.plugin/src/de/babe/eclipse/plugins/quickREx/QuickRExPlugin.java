@@ -43,7 +43,6 @@ import de.babe.eclipse.plugins.quickREx.objects.RECategoriesXMLHandler;
 import de.babe.eclipse.plugins.quickREx.objects.RECategory;
 import de.babe.eclipse.plugins.quickREx.objects.RegularExpression;
 import de.babe.eclipse.plugins.quickREx.objects.RegularExpressionsXMLHandler;
-import de.babe.eclipse.plugins.quickREx.preferences.QuickRExPreferencesPage;
 import de.babe.eclipse.plugins.quickREx.regexp.CompletionProposalXMLHandler;
 import de.babe.eclipse.plugins.quickREx.regexp.CompletionProposals;
 import de.babe.eclipse.plugins.quickREx.regexp.EditorCategoryMappingXMLHandler;
@@ -715,20 +714,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
       }
     }
     return null;
-  }
-
-  /**
-   * Returns <code>true</code> if and only if currently the QuickREx-View operates
-   * in 'Live-evaluation-mode'.
-   *
-   * @return <code>true</code> if and only if currently the QuickREx-View operates in 'Live-evaluation-mode'
-   */
-  public boolean isLiveEvaluation() {
-    if (getPreferenceStore().contains(QuickRExPreferencesPage.P_LIVE_EVAL)) {
-      return getPreferenceStore().getBoolean(QuickRExPreferencesPage.P_LIVE_EVAL);
-    } else {
-      return true;
-    }
   }
 
   /**

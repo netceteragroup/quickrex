@@ -114,13 +114,6 @@
       </themeElementCategory>
    </extension>
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="de.babe.eclipse.plugins.quickREx.preferences.QuickRExPreferencesPage"
-            name="%de.babe.eclipse.plugins.quickREx.preferences.QuickRExPreferencesPage"
-            id="de.babe.eclipse.plugins.quickREx.preferences.QuickRExPreferencesPage"/>
-   </extension>
-   <extension
          point="org.eclipse.ui.editors">
       <editor
             class="de.babe.eclipse.plugins.quickREx.editors.RELibraryEntryEditor"

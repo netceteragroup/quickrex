@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -18,6 +18,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.search.ui.text.AbstractTextSearchViewPage;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 import de.babe.eclipse.plugins.quickREx.PluginImageRegistry;
@@ -37,11 +39,11 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
   private TreeViewer viewer;
 
   /**
-   * The constructor
+   * The constructor.
    */
   public RESearchResultViewPage() {
     super(AbstractTextSearchViewPage.FLAG_LAYOUT_TREE);
-  };
+  }
 
   /* (non-Javadoc)
    * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#elementsChanged(java.lang.Object[])
@@ -56,7 +58,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
    */
   @Override
   protected void clear() {
-    ((RESearchResult)viewer.getInput()).doRemoveAll();
+    ((RESearchResult) viewer.getInput()).doRemoveAll();
     viewer.refresh();
   }
 
@@ -71,15 +73,16 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       @Override
       public void doubleClick(DoubleClickEvent event) {
         try {
-          RELibraryEntry selected = (RELibraryEntry)viewer.getTree().getSelection()[0].getData();
-          if (((REBook)viewer.getTree().getSelection()[0].getParentItem().getParentItem().getData()).getName().equals(REBook.DEFAULT_BOOK_NAME)) {
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new RELibraryEntryEditorInput(selected, true),
+          TreeItem firsetSelectedItem = viewer.getTree().getSelection()[0];
+          RELibraryEntry selected = (RELibraryEntry) firsetSelectedItem.getData();
+          IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+          REBook book = (REBook) firsetSelectedItem.getParentItem().getParentItem().getData();
+          if (book.getName().equals(REBook.DEFAULT_BOOK_NAME)) {
+            activePage.openEditor(new RELibraryEntryEditorInput(selected, true),
                 RELibraryEntryEditor.ID);
           } else {
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new RELibraryEntryEditorInput(selected, false),
-                RELibraryEntryEditor.ID);
-            selected.addTitleChangeListener((RELibraryView)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(
-                RELibraryView.ID));
+            activePage.openEditor(new RELibraryEntryEditorInput(selected, false), RELibraryEntryEditor.ID);
+            selected.addTitleChangeListener((RELibraryView) activePage.findView(RELibraryView.ID));
           }
         } catch (Exception ex) {
           // nop
@@ -108,7 +111,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
        */
       @Override
       public Object[] getElements(Object inputElement) {
-        return ((RESearchResult)getInput()).getBooksWithMatches();
+        return ((RESearchResult) getInput()).getBooksWithMatches();
       }
 
       /* (non-Javadoc)
@@ -116,10 +119,13 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
        */
       @Override
       public Object[] getChildren(Object parentElement) {
+        RESearchResult searchResult = (RESearchResult) getInput();
         if (parentElement instanceof REBook) {
-          return ((RESearchResult)getInput()).getMatchingCategoriesInBook((REBook)parentElement);
+          REBook book = (REBook) parentElement;
+          return searchResult.getMatchingCategoriesInBook(book);
         } else if (parentElement instanceof RECategory) {
-          return ((RESearchResult)getInput()).getMatchesInCategory((RECategory)parentElement);
+          RECategory category = (RECategory) parentElement;
+          return searchResult.getMatchesInCategory(category);
         } else {
           return new Object[0];
         }
@@ -131,9 +137,9 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       @Override
       public Object getParent(Object element) {
         if (element instanceof RELibraryEntry) {
-          return ((RELibraryEntry)element).getCategory();
+          return ((RELibraryEntry) element).getCategory();
         } else if (element instanceof RECategory) {
-          return ((RECategory)element).getBook();
+          return ((RECategory) element).getBook();
         } else {
           return null;
         }
@@ -144,7 +150,7 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
        */
       @Override
       public boolean hasChildren(Object element) {
-        return (element instanceof REBook || element instanceof RECategory);
+        return element instanceof REBook || element instanceof RECategory;
       }
     });
 
@@ -154,14 +160,13 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
        */
       @Override
       public Image getImage(Object element) {
+        PluginImageRegistry imageRegistry = (PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry();
         if (element instanceof REBook) {
-          return ((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry()).getImageDescriptor(PluginImageRegistry.IMG_BOOK).createImage();
+          return imageRegistry.getImageDescriptor(PluginImageRegistry.IMG_BOOK).createImage();
         } else if (element instanceof RECategory) {
-          return ((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry()).getImageDescriptor(PluginImageRegistry.IMG_CATEGORY)
-              .createImage();
+          return imageRegistry.getImageDescriptor(PluginImageRegistry.IMG_CATEGORY).createImage();
         } else if (element instanceof RELibraryEntry) {
-          return ((PluginImageRegistry)QuickRExPlugin.getDefault().getImageRegistry()).getImageDescriptor(PluginImageRegistry.IMG_REG_EXP)
-              .createImage();
+          return imageRegistry.getImageDescriptor(PluginImageRegistry.IMG_REG_EXP).createImage();
         } else {
           return null;
         }
@@ -173,11 +178,11 @@ public class RESearchResultViewPage extends AbstractTextSearchViewPage {
       @Override
       public String getText(Object element) {
         if (element instanceof REBook) {
-          return ((REBook)element).getName();
+          return ((REBook) element).getName();
         } else if (element instanceof RECategory) {
-          return ((RECategory)element).getName();
+          return ((RECategory) element).getName();
         } else if (element instanceof RELibraryEntry) {
-          return ((RELibraryEntry)element).getTitle();
+          return ((RELibraryEntry) element).getTitle();
         } else {
           return null;
         }

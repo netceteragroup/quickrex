@@ -79,7 +79,10 @@ class CompletionTriggerExpression extends CompletionTrigger {
   public int compareTo(CompletionTrigger p_other) {
     // Always prefer WordCompletions
     if (p_other instanceof CompletionTriggerWord) {
-      if ((this.getPlainProposal().startsWith(("\\")) || this.getPlainProposal().startsWith(("[")) || this.getPlainProposal().startsWith(("(")))&& this.getInsertString().length() == 1) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      if ((this.getPlainProposal().startsWith("\\") //$NON-NLS-1$
+            || this.getPlainProposal().startsWith("[") //$NON-NLS-1$
+            || this.getPlainProposal().startsWith("("))
+          && this.getInsertString().length() == 1) { //$NON-NLS-1$
         return -1;
       } else {
         return +1;

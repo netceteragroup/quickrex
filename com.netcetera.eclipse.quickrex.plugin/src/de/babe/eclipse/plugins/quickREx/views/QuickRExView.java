@@ -43,6 +43,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -78,7 +79,6 @@ import de.babe.eclipse.plugins.quickREx.dialogs.OrganizeTestTextDialog;
 import de.babe.eclipse.plugins.quickREx.dialogs.REEditDialog;
 import de.babe.eclipse.plugins.quickREx.dialogs.SimpleTextDialog;
 import de.babe.eclipse.plugins.quickREx.objects.RegularExpression;
-import de.babe.eclipse.plugins.quickREx.preferences.QuickRExPreferencesPage;
 import de.babe.eclipse.plugins.quickREx.regexp.Flag;
 import de.babe.eclipse.plugins.quickREx.regexp.Match;
 import de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory;
@@ -101,10 +101,6 @@ public class QuickRExView extends ViewPart {
   private Label matches;
 
   private Label groups;
-
-  private Button liveEvalButton;
-
-  private Button evaluateButton;
 
   private Button previousButton;
 
@@ -148,8 +144,6 @@ public class QuickRExView extends ViewPart {
 
   private Action grepAction;
 
-  private boolean liveEval;
-
   private Button editButton;
 
   private Point lastRESelection = new Point(0, 0);
@@ -171,9 +165,6 @@ public class QuickRExView extends ViewPart {
     makeActions();
     contributeToActionBars();
     initializeCurrentFlags();
-    liveEval = QuickRExPlugin.getDefault().isLiveEvaluation();
-    liveEvalButton.setSelection(liveEval);
-    evaluateButton.setEnabled(!liveEval);
   }
 
   private void initializeCurrentFlags() {
@@ -401,51 +392,12 @@ public class QuickRExView extends ViewPart {
   }
 
   private void createThirdRow(FormToolkit tk, Composite client) {
-    liveEvalButton = tk.createButton(client, Messages.getString("views.QuickRExView.button.toggleLiveEvaluation.label"), SWT.CHECK); //$NON-NLS-1$
-    GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+    GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_END);
     gd.grabExcessHorizontalSpace = false;
-    liveEvalButton.setLayoutData(gd);
-    liveEvalButton.addSelectionListener(new SelectionListener() {
-      @Override
-      public void widgetSelected(SelectionEvent p_e) {
-        if (liveEvalButton.getSelection()) {
-          QuickRExPlugin.getDefault().getPreferenceStore().setValue(QuickRExPreferencesPage.P_LIVE_EVAL, true);
-          liveEval = true;
-          evaluateButton.setEnabled(false);
-          evaluate();
-        } else {
-          QuickRExPlugin.getDefault().getPreferenceStore().setValue(QuickRExPreferencesPage.P_LIVE_EVAL, false);
-          liveEval = false;
-          evaluateButton.setEnabled(true);
-        }
-      }
-
-      @Override
-      public void widgetDefaultSelected(SelectionEvent p_e) {
-      }
-    });
-    liveEvalButton.setEnabled(true);
-    liveEvalButton.setSelection(true);
-    liveEvalButton.setToolTipText(Messages.getString("views.QuickRExView.button.toggleLiveEvaluation.tooltip")); //$NON-NLS-1$
-    evaluateButton = tk.createButton(client, Messages.getString("views.QuickRExView.button.evaluate.label"), SWT.PUSH); //$NON-NLS-1$
-    gd = new GridData(GridData.HORIZONTAL_ALIGN_END);
-    gd.grabExcessHorizontalSpace = false;
-    evaluateButton.setLayoutData(gd);
-    evaluateButton.addSelectionListener(new SelectionListener() {
-      @Override
-      public void widgetSelected(SelectionEvent p_e) {
-        evaluate();
-      }
-
-      @Override
-      public void widgetDefaultSelected(SelectionEvent p_e) {
-      }
-    });
-    evaluateButton.setEnabled(!liveEval);
     globalMatch = tk.createLabel(client, ""); //$NON-NLS-1$
     gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
     gd.grabExcessHorizontalSpace = true;
-    gd.horizontalSpan = 2;
+    gd.horizontalSpan = 4;
     globalMatch.setLayoutData(gd);
   }
 
@@ -796,30 +748,19 @@ public class QuickRExView extends ViewPart {
   private StyleRange[] getStyleRanges(Match[] p_matches) {
     StyleRange[] ranges = new StyleRange[p_matches.length];
     for (int i = 0; i < p_matches.length; i++) {
-      ranges[i] = new StyleRange(p_matches[i].getStart(), p_matches[i].getEnd() - p_matches[i].getStart(), JFaceResources.getColorRegistry().get(
-          MATCH_FG_COLOR_KEY), JFaceResources.getColorRegistry().get(MATCH_BG_COLOR_KEY));
+      int start = p_matches[i].getStart();
+      int length = p_matches[i].getEnd() - start;
+      Color foreground = JFaceResources.getColorRegistry().get(MATCH_FG_COLOR_KEY);
+      Color background = JFaceResources.getColorRegistry().get(MATCH_BG_COLOR_KEY);
+      ranges[i] = new StyleRange(start, length, foreground, background);
     }
     return ranges;
   }
 
   private void updateEvaluation() {
-    if (liveEval) {
-      Point selection = regExpCombo.getSelection();
-      evaluate();
-      regExpCombo.setSelection(selection);
-    } else {
-      Point selection = regExpCombo.getSelection();
-      hits.reset();
-      matches.setText(Messages.getString("views.QuickRExView.matches.notEvaluated.text")); //$NON-NLS-1$
-      groups.setText(""); //$NON-NLS-1$
-      globalMatch.setText(""); //$NON-NLS-1$
-      updateMatchView(null, false);
-      nextButton.setEnabled(false);
-      previousButton.setEnabled(false);
-      nextGroupButton.setEnabled(false);
-      previousGroupButton.setEnabled(false);
-      regExpCombo.setSelection(selection);
-    }
+    Point selection = regExpCombo.getSelection();
+    evaluate();
+    regExpCombo.setSelection(selection);
   }
 
   private void edit() {

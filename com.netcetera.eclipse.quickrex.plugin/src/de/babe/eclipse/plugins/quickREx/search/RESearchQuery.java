@@ -146,7 +146,7 @@ public class RESearchQuery implements ISearchQuery {
   }
 
   /**
-   * Returns the text that was searched for
+   * Returns the text that was searched for.
    *
    * @return the text
    */
