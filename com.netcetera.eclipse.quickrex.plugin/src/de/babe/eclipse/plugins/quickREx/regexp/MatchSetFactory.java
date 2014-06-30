@@ -22,8 +22,6 @@ import de.babe.eclipse.plugins.quickREx.regexp.jdk.JavaMatchSet;
  */
 public final class MatchSetFactory {
 
-  public static final int JAVA_FLAVOUR = 1;
-
   /**
    * Factory-Method to create a MatchSet for the passed details.
    * @param regExp
@@ -36,7 +34,7 @@ public final class MatchSetFactory {
    *
    * @return a MatchSet as requested
    */
-  public static MatchSet createMatchSet(String regExp, String text, Collection<Flag> flags) {
+  static MatchSet createMatchSet(String regExp, String text, Collection<Flag> flags) {
     List<Flag> flavourFlags = new ArrayList<>(flags);
     flavourFlags.retainAll(MatchSetFactory.getAllFlags());
     return new JavaMatchSet(regExp, text, flavourFlags);

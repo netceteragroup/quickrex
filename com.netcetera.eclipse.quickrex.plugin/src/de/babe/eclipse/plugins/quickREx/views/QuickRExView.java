@@ -76,7 +76,6 @@ import de.babe.eclipse.plugins.quickREx.actions.LoadTestTextAction;
 import de.babe.eclipse.plugins.quickREx.actions.OrganizeREsAction;
 import de.babe.eclipse.plugins.quickREx.actions.OrganizeTestTextsAction;
 import de.babe.eclipse.plugins.quickREx.actions.SaveTestTextAction;
-import de.babe.eclipse.plugins.quickREx.actions.UseJDKREAction;
 import de.babe.eclipse.plugins.quickREx.dialogs.OrganizeREsDialog;
 import de.babe.eclipse.plugins.quickREx.dialogs.OrganizeTestTextDialog;
 import de.babe.eclipse.plugins.quickREx.dialogs.REEditDialog;
@@ -137,8 +136,6 @@ public class QuickRExView extends ViewPart {
   public static final String EDITOR_FONT_KEY = "de.babe.eclipse.plugins.QuickREx.textfontDefinition"; //$NON-NLS-1$
 
   private SubjectControlContentAssistant regExpContentAssistant;
-
-  private Action useJDKREAction;
 
   private Collection<Flag> currentFlags = new ArrayList<>();
 
@@ -275,7 +272,7 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = true;
     client.setLayoutData(gd);
 
-    createFlagFlavourSection(tk, client, layout, gd, Messages.getString("views.QuickRExView.jdk.flags"), MatchSetFactory.JAVA_FLAVOUR); //$NON-NLS-1$
+    createFlagFlavourSection(tk, client, layout, gd, Messages.getString("views.QuickRExView.jdk.flags")); //$NON-NLS-1$
 
     section.setClient(client);
   }
@@ -287,7 +284,7 @@ public class QuickRExView extends ViewPart {
    *
    * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory
    */
-  private void createFlagFlavourSection(FormToolkit tk, Composite client, GridLayout layout, GridData gd, String text, int flavour) {
+  private void createFlagFlavourSection(FormToolkit tk, Composite client, GridLayout layout, GridData gd, String text) {
     Label l = tk.createLabel(client, text);
     int nButtons = 1;
     for (final Flag element : MatchSetFactory.getAllFlags()) {
@@ -584,8 +581,6 @@ public class QuickRExView extends ViewPart {
 
     organizeTestTextsAction = new OrganizeTestTextsAction();
 
-    useJDKREAction = new UseJDKREAction();
-
     keepREAction = new KeepREAction();
 
     saveTextAction = new SaveTestTextAction();
@@ -605,8 +600,6 @@ public class QuickRExView extends ViewPart {
   }
 
   private void fillToolBar(IToolBarManager manager) {
-    manager.add(useJDKREAction);
-    manager.add(new Separator("UseRESeparator")); //$NON-NLS-1$
     manager.add(jcopyAction);
     manager.add(grepAction);
     manager.add(new Separator("StoreHandleSeparator1")); //$NON-NLS-1$
@@ -616,8 +609,6 @@ public class QuickRExView extends ViewPart {
   }
 
   private void fillLocalPullDown(IMenuManager manager) {
-    manager.add(useJDKREAction);
-    manager.add(new Separator("UseRESeparator")); //$NON-NLS-1$
     manager.add(jcopyAction);
     manager.add(grepAction);
     manager.add(new Separator("StoreHandleSeparator1")); //$NON-NLS-1$
@@ -647,19 +638,6 @@ public class QuickRExView extends ViewPart {
     } else {
       return null;
     }
-  }
-
-  /**
-   * Sets the RE-flavour to be the JDK-one and triggers a re-evaluation.
-   */
-  public void setUseJavaRE() {
-    QuickRExPlugin.getDefault().useJavaRE();
-    // This is a hack since there is no direct way of getting rid of the
-    // completion-proposal popup...
-    String oldRegExp = regExpCombo.getText();
-    regExpCombo.setText(oldRegExp + " "); //$NON-NLS-1$
-    regExpCombo.setText(oldRegExp);
-    updateEvaluation();
   }
 
 

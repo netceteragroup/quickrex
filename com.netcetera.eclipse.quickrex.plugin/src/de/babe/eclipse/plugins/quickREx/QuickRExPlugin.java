@@ -139,18 +139,18 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     jdkCategories = new ArrayList<>();
     Map<String, List<REEditorCategoryMapping>> editorMappings = new HashMap<>();
     initCategoriesFromFile(editorMappings, jdkCategories);
-    jdkCatMappings = addProposalsToMappings(jdkCategories, editorMappings, MatchSetFactory.JAVA_FLAVOUR);
+    jdkCatMappings = addProposalsToMappings(jdkCategories, editorMappings);
 
   }
 
-  private Map<String, List<RECompletionProposal>> addProposalsToMappings(List<String> p_categories, Map<String, List<REEditorCategoryMapping>> p_catMappings, int p_flavour) {
+  private Map<String, List<RECompletionProposal>> addProposalsToMappings(List<String> p_categories, Map<String, List<REEditorCategoryMapping>> p_catMappings) {
     Map<String, List<RECompletionProposal>> result = new HashMap<>(p_catMappings.size());
     for (String category : p_categories) {
       List<REEditorCategoryMapping> proposalKeys = p_catMappings.get(category);
       List<RECompletionProposal> proposalsForCat = new ArrayList<>();
       for (REEditorCategoryMapping element : proposalKeys) {
         String currentKey = element.getProposalKey();
-        proposalsForCat.add(proposals.getProposal(p_flavour, currentKey));
+        proposalsForCat.add(proposals.getProposal(currentKey));
       }
       result.put(category, proposalsForCat);
     }
@@ -346,7 +346,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     return reBooks.toArray(new REBook[reBooks.size()]);
   }
 
-  private List<RegularExpression > initREsFromFile() {
+  private List<RegularExpression> initREsFromFile() {
     IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
     File reFile = reFilePath.toFile();
     if (reFile.exists() && reFile.canRead()) {
@@ -555,15 +555,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Returns <code>true</code> if and only if currently the JDK-implementation of regular expressions is used.
-   *
-   * @return <code>true</code> if and only if currently the JDK-implementation of regular expressions is used
-   */
-  public boolean isUsingJavaRE() {
-    return getREFlavour() == MatchSetFactory.JAVA_FLAVOUR;
-  }
-
-  /**
    * Returns <code>true</code> if and only if currently the Reg. Exp. Lib.-View is linked with the RE-Entry-editor.
    *
    * @return <code>true</code> if and only if currently the Reg. Exp. Lib.-View is linked with the RE-Entry-editor
@@ -581,27 +572,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     getPreferenceStore().setValue(LINK_RE_LIB_VIEW_WITH_EDITOR, p_flag);
   }
 
-  /**
-   * Tells the Plugin to use the JDK-implementation of regular expressions.
-   */
-  public void useJavaRE() {
-    getPreferenceStore().setValue(RE_FLAVOUR, MatchSetFactory.JAVA_FLAVOUR);
-  }
-
-  /**
-   * Returns the currently used RE-implementation-flavour (actually, a flag corresponding to it as defined in MatchSetFactory).
-   *
-   * @return the currently used RE-implementation-flavour
-   */
-  public int getREFlavour() {
-    int flavour = getPreferenceStore().getInt(RE_FLAVOUR);
-    if (flavour == 0) {
-      // default: JAVA
-      return MatchSetFactory.JAVA_FLAVOUR;
-    } else {
-      return flavour;
-    }
-  }
 
   /**
    * Initializes the passed structure with the completion proposals defined in XML-files.
@@ -620,14 +590,14 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private synchronized void initProposals() {
     proposals = new CompletionProposals();
 
-    HashMap jdkProposals = new HashMap();
+    Map<String, RECompletionProposal> jdkProposals = new HashMap<>();
     List<String> jdkKeys = new ArrayList<>();
-    initCompletionsFromFile(jdkProposals, jdkKeys, MatchSetFactory.JAVA_FLAVOUR);
-    proposals.setKeys(MatchSetFactory.JAVA_FLAVOUR, jdkKeys);
-    proposals.setProposals(MatchSetFactory.JAVA_FLAVOUR, jdkProposals);
+    initCompletionsFromFile(jdkProposals, jdkKeys);
+    proposals.setKeys(jdkKeys);
+    proposals.setProposals(jdkProposals);
   }
 
-  private void initCompletionsFromFile(HashMap p_proposals, List<String> p_keys, int p_flavour) {
+  private void initCompletionsFromFile(Map<String, RECompletionProposal> p_proposals, List<String> p_keys) {
     String filepath = JDK_PROPOSAL_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.message7"; //$NON-NLS-1$
     try (InputStream propFileStream = openStream(new Path(filepath), true)) {

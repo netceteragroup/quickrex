@@ -9,6 +9,7 @@
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,57 +19,53 @@ import java.util.Map;
  */
 public class CompletionProposals {
 
-  private Map<Integer, List<String>> keysMap;
-  private HashMap proposalsMap;
+  private volatile List<String> keysMap;
+  private volatile Map<String, RECompletionProposal> proposalsMap;
 
   /**
    * The constructor.
    */
   public CompletionProposals() {
-    keysMap = new HashMap();
-    proposalsMap = new HashMap();
+    keysMap = new ArrayList<>();
+    proposalsMap = new HashMap<>();
   }
 
   /**
    * Returns a list of completion-proposal-keys for the passed flavour (one of the constants
    * defined in MatchSetFactory).
    *
-   * @param p_flavour the flavour
    * @return an ArrayList of keys for the flavour
    */
-  public List<String> getKeys(int p_flavour) {
-    return keysMap.get(p_flavour);
+  public List<String> getKeys() {
+    return keysMap;
   }
 
   /**
    * Returns the proposal for the passed flavour with the passed key.
    *
-   * @param p_flavour the flavour to look for
    * @param p_proposalKey the key for the proposal
    * @return the RECompletionProposal
    */
-  public RECompletionProposal getProposal(int p_flavour, String p_proposalKey) {
-    return (RECompletionProposal)((HashMap)proposalsMap.get(p_flavour)).get(p_proposalKey);
+  public RECompletionProposal getProposal(String p_proposalKey) {
+    return proposalsMap.get(p_proposalKey);
   }
 
   /**
    * Sets the keys-list (as passed) for the passed flavour.
    *
-   * @param p_flavour the flavour
    * @param p_keys the list of keys
    */
-  public void setKeys(int p_flavour, List<String> p_keys) {
-    keysMap.put(p_flavour, p_keys);
+  public void setKeys(List<String> p_keys) {
+    keysMap = p_keys;
   }
 
   /**
    * Sets the proposals-map (as passed) for the passed flavour.
    *
-   * @param p_flavour the flavour
    * @param p_proposals the HashMap with proposals (String-keys mapped to RECompletionProposal-instances)
    */
-  public void setProposals(int p_flavour, HashMap p_proposals) {
-    proposalsMap.put(p_flavour, p_proposals);
+  public void setProposals(Map<String, RECompletionProposal> p_proposals) {
+    proposalsMap = p_proposals;
   }
 
   /**

@@ -105,7 +105,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
   @Override
   public ICompletionProposal[] computeCompletionProposals(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
     Set<RECompletionProposal> results = new TreeSet<>(new RECompletionProposalComparator());
-    for (String proposalKey : proposals.getKeys(MatchSetFactory.JAVA_FLAVOUR)) {
+    for (String proposalKey : proposals.getKeys()) {
       addProposal(proposalKey, contentAssistSubjectControl, documentOffset, results);
     }
 
@@ -136,7 +136,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
   }
 
   private void addProposal(String proposalKey, IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset, Set<RECompletionProposal> results) {
-    RECompletionProposal proposal = proposals.getProposal(MatchSetFactory.JAVA_FLAVOUR, proposalKey);
+    RECompletionProposal proposal = proposals.getProposal(proposalKey);
 
     try {
       String text = null;

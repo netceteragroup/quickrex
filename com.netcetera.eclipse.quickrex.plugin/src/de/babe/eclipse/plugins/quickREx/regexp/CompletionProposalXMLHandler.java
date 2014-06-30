@@ -9,8 +9,8 @@
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -20,7 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class CompletionProposalXMLHandler extends DefaultHandler {
 
-  private final HashMap proposals;
+  private final Map<String, RECompletionProposal> proposals;
 
   private final List<String> keys;
 
@@ -34,7 +34,7 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
    * @param p_proposals
    * @param p_keys
    */
-  public CompletionProposalXMLHandler(HashMap p_proposals, List<String> p_keys) {
+  public CompletionProposalXMLHandler(Map<String, RECompletionProposal> p_proposals, List<String> p_keys) {
     this.proposals = p_proposals;
     this.keys = p_keys;
   }
