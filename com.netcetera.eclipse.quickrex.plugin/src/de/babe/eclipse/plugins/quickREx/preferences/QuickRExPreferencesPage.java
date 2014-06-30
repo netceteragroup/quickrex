@@ -30,7 +30,7 @@ public class QuickRExPreferencesPage extends FieldEditorPreferencePage implement
   private StringFieldEditor timeoutValue;
 
   /**
-   * The constructor
+   * The constructor.
    */
   public QuickRExPreferencesPage() {
     super(FLAT);

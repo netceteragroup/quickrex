@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 /**
  * @author bastian.bergerhoff
  */
-public class CompletionTriggerExpression extends CompletionTrigger {
+class CompletionTriggerExpression extends CompletionTrigger {
 
   public final static String INSTANCE_QNAME = "retrigger";  //$NON-NLS-1$
   public final static String REG_EXP_ATTRIBUTE_QNAME = "re"; //$NON-NLS-1$
@@ -28,7 +28,7 @@ public class CompletionTriggerExpression extends CompletionTrigger {
    * @param p_regExp
    * @param p_proposal
    */
-  public CompletionTriggerExpression(String p_regExp, String p_proposal, String p_plainProposal) {
+  CompletionTriggerExpression(String p_regExp, String p_proposal, String p_plainProposal) {
     this.regExp = p_regExp;
     this.proposal = p_proposal;
     this.pattern = Pattern.compile(this.regExp);

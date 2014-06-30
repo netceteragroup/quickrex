@@ -67,7 +67,7 @@ public class RELibraryEntryFormPage extends FormPage {
    * @param editor
    * @param title
    */
-  public RELibraryEntryFormPage(FormEditor editor) {
+  RELibraryEntryFormPage(FormEditor editor) {
     super(editor, ID, TITLE);
   }
 

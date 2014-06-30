@@ -21,17 +21,17 @@ import org.eclipse.jface.util.PropertyChangeEvent;
  */
 public class RELibraryEntry {
 
-  public static final String INSTANCE_QNAME = "reLibraryEntry"; //$NON-NLS-1$
+  static final String INSTANCE_QNAME = "reLibraryEntry"; //$NON-NLS-1$
 
-  public static final String TITLE_QNAME = "title"; //$NON-NLS-1$
+  static final String TITLE_QNAME = "title"; //$NON-NLS-1$
 
-  public static final String RE_QNAME = "re"; //$NON-NLS-1$
+  static final String RE_QNAME = "re"; //$NON-NLS-1$
 
-  public static final String DESCRIPTION_QNAME = "description"; //$NON-NLS-1$
+  static final String DESCRIPTION_QNAME = "description"; //$NON-NLS-1$
 
-  public static final String TEST_TEXT_QNAME = "testText"; //$NON-NLS-1$
+  static final String TEST_TEXT_QNAME = "testText"; //$NON-NLS-1$
 
-  public static final String SOURCE_QNAME = "source"; //$NON-NLS-1$
+  static final String SOURCE_QNAME = "source"; //$NON-NLS-1$
 
   private String title;
 

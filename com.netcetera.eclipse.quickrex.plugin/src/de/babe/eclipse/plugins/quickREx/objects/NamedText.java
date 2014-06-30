@@ -16,9 +16,9 @@ public class NamedText {
 
   private String name;
   private String text;
-  public static final String INSTANCE_QNAME = "namedText"; //$NON-NLS-1$
-  public static final String NAME_QNAME = "name"; //$NON-NLS-1$
-  public static final String TEXT_QNAME = "text"; //$NON-NLS-1$
+  static final String INSTANCE_QNAME = "namedText"; //$NON-NLS-1$
+  static final String NAME_QNAME = "name"; //$NON-NLS-1$
+  static final String TEXT_QNAME = "text"; //$NON-NLS-1$
 
   /**
    * The constructor.

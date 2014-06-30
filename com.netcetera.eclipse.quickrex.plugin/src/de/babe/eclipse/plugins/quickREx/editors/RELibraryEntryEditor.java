@@ -119,7 +119,7 @@ public class RELibraryEntryEditor extends FormEditor {
    *
    * @return the EditorInput of this editor
    */
-  protected RELibraryEntryEditorInput getMyEditorInput() {
+  private RELibraryEntryEditorInput getMyEditorInput() {
     return (RELibraryEntryEditorInput) super.getEditorInput();
   }
 

@@ -36,7 +36,7 @@ public class CompletionProposals {
    *
    * @return an ArrayList of keys for the flavour
    */
-  public List<String> getKeys() {
+  List<String> getKeys() {
     return keysMap;
   }
 

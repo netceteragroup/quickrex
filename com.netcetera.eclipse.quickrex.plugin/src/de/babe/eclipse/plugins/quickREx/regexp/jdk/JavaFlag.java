@@ -21,7 +21,7 @@ import de.babe.eclipse.plugins.quickREx.regexp.Flag;
  * @version 1.0
  * @since 2.1
  */
-public final class JavaFlag extends Flag {
+final class JavaFlag extends Flag {
 
   static final Flag JDK_CANON_EQ = new JavaFlag(
       "de.babe.eclipse.plugins.quickREx.regexp.jdk.CANON_EQ", Pattern.CANON_EQ, Messages.getString("regexp.jdk.JavaFlag.canon_eq"), //$NON-NLS-1$ //$NON-NLS-2$
