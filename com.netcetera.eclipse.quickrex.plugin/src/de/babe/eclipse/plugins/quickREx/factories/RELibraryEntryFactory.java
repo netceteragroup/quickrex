@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -26,7 +26,7 @@ import de.babe.eclipse.plugins.quickREx.objects.RELibraryEntryPersistable;
  */
 public class RELibraryEntryFactory implements IElementFactory {
 
-  public final static String ID = "de.babe.eclipse.plugins.quickREx.factories.RELibraryEntryFactory"; //$NON-NLS-1$
+  public static final String ID = "de.babe.eclipse.plugins.quickREx.factories.RELibraryEntryFactory"; //$NON-NLS-1$
 
   /* (non-Javadoc)
    * @see org.eclipse.ui.IElementFactory#createElement(org.eclipse.ui.IMemento)

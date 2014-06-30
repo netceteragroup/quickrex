@@ -18,8 +18,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
-
 /**
  * @author bastian.bergerhoff, georg.sendt
  */
@@ -40,7 +38,7 @@ public class RegularExpressionHits {
    *          the Matcher to use for initialization
    */
   public void init(String p_RegExp, String p_testText, Collection<Flag> flags) {
-    MatchSet matches = MatchSetFactory.createMatchSet(QuickRExPlugin.getDefault().getREFlavour(), p_RegExp, p_testText, flags);
+    MatchSet matches = MatchSetFactory.createMatchSet(p_RegExp, p_testText, flags);
     matchData = new ArrayList<>();
     while (matches.nextMatch()) {
       Match match = new Match(matches.start(), matches.end(), matches.groupContents(0));

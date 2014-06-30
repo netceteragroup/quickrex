@@ -42,11 +42,11 @@ import de.babe.eclipse.plugins.quickREx.objects.NamedText;
  */
 public class OrganizeTestTextDialog extends Dialog {
 
-  public final static int TYPE_LOAD = 0;
+  public static final int TYPE_LOAD = 0;
 
-  public final static int TYPE_SAVE = 1;
+  public static final int TYPE_SAVE = 1;
 
-  public final static int TYPE_ORGANIZE = 2;
+  public static final int TYPE_ORGANIZE = 2;
 
   private boolean okPressed;
 
@@ -306,7 +306,7 @@ public class OrganizeTestTextDialog extends Dialog {
   }
 
   private void handleNameTextModified() {
-    getButton(IDialogConstants.OK_ID).setEnabled((nameText.getText() != null && nameText.getText().trim().length() > 0));
+    getButton(IDialogConstants.OK_ID).setEnabled(nameText.getText() != null && nameText.getText().trim().length() > 0);
     if (QuickRExPlugin.getDefault().testTextNameExists(nameText.getText())) {
       messageLabel.setText(Messages.getString("dialogs.OrganizeTestTextDialog.messageLabel.text3")); //$NON-NLS-1$
     } else if (nameText.getText() == null || nameText.getText().trim().length() == 0) {
@@ -429,7 +429,7 @@ public class OrganizeTestTextDialog extends Dialog {
 
   /**
    * Returns the NamedText (name and contents of a piece of text) to be saved or <code>null</code> if a button other than 'ok' was pressed or the
-   * dialog is not in 'SAVE'-mode
+   * dialog is not in 'SAVE'-mode.
    *
    * @return the NamedText to be saved or <code>null</code>
    */

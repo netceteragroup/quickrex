@@ -50,9 +50,9 @@ public class QuickRExPreferencesPage extends FieldEditorPreferencePage implement
    */
   @Override
   public void createFieldEditors() {
-    timeoutCheck = new BooleanFieldEditor(P_DO_TIMEOUT,Messages.getString("preferences.QuickRExPreferencesPage.field.timeOutActive.label"),getFieldEditorParent());  //$NON-NLS-1$
+    timeoutCheck = new BooleanFieldEditor(P_DO_TIMEOUT, Messages.getString("preferences.QuickRExPreferencesPage.field.timeOutActive.label"), getFieldEditorParent());  //$NON-NLS-1$
     addField(timeoutCheck);
-    timeoutValue = new StringFieldEditor(P_TIMEOUT,Messages.getString("preferences.QuickRExPreferencesPage.field.timeOutValue.label"),getFieldEditorParent()); //$NON-NLS-1$
+    timeoutValue = new StringFieldEditor(P_TIMEOUT, Messages.getString("preferences.QuickRExPreferencesPage.field.timeOutValue.label"), getFieldEditorParent()); //$NON-NLS-1$
     addField(timeoutValue);
     adjustGridLayout();
   }

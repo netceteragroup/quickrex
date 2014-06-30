@@ -11,6 +11,7 @@ package de.babe.eclipse.plugins.quickREx.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -36,7 +37,9 @@ public class SearchREAction extends Action {
   @Override
   public void run() {
     try {
-      ((RELibraryView)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(RELibraryView.ID)).performSearchRE();
+      IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+      RELibraryView reLibraryView = (RELibraryView) activePage.showView(RELibraryView.ID);
+      reLibraryView.performSearchRE();
     } catch (PartInitException e) {
       // Bad luck...
     }

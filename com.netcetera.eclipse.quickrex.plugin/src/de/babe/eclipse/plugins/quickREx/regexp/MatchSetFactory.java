@@ -11,9 +11,9 @@
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 import de.babe.eclipse.plugins.quickREx.regexp.jdk.JavaMatchSet;
 
@@ -26,20 +26,18 @@ public final class MatchSetFactory {
 
   /**
    * Factory-Method to create a MatchSet for the passed details.
-   *
-   * @param flavour
-   *          one of the Flavour-Flags defined in this class
    * @param regExp
    *          the regular expression
    * @param text
    *          the text to match against the reg.exp.
    * @param flags
    *          a Collection of flags to pass to the Compiler. This may contain more flags than are applicable to the requested flavour. In this case,
-   *          only those flags wich are applicable are taken into account when creating the MatchSet
+   *          only those flags which are applicable are taken into account when creating the MatchSet
+   *
    * @return a MatchSet as requested
    */
-  public static MatchSet createMatchSet(int flavour, String regExp, String text, Collection flags) {
-    Vector flavourFlags = new Vector(flags);
+  public static MatchSet createMatchSet(String regExp, String text, Collection<Flag> flags) {
+    List<Flag> flavourFlags = new ArrayList<>(flags);
     flavourFlags.retainAll(MatchSetFactory.getAllFlags());
     return new JavaMatchSet(regExp, text, flavourFlags);
   }

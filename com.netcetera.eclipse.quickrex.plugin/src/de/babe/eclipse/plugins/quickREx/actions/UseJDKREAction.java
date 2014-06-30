@@ -11,6 +11,7 @@ package de.babe.eclipse.plugins.quickREx.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -38,7 +39,9 @@ public class UseJDKREAction extends Action {
   public void run() {
     if (isChecked()) {
       try {
-        ((QuickRExView)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(QuickRExView.ID)).setUseJavaRE();
+        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        QuickRExView quickRExView = (QuickRExView) activePage.showView(QuickRExView.ID);
+        quickRExView.setUseJavaRE();
       } catch (PartInitException e) {
         // Bad luck...
       }

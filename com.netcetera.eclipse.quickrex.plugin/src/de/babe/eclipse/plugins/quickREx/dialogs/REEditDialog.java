@@ -56,9 +56,8 @@ public class REEditDialog extends Dialog {
    *
    * @param view
    * @param shell
-   * @param flavour
    */
-  public REEditDialog(QuickRExView view, Shell shell, int flavour) {
+  public REEditDialog(QuickRExView view, Shell shell) {
     super(shell);
     this.view = view;
     categories = QuickRExPlugin.getDefault().getRECategories();
@@ -131,7 +130,7 @@ public class REEditDialog extends Dialog {
           if (catCombo.getSelectionIndex() >= 0) {
             additionalREInfoLabel.setText(expressions.get(catName).get(catCombo.getSelectionIndex()).getAdditionalInfo());
           }
-        }});
+        } });
       catCombo.addFocusListener(new FocusListener() {
 
         @Override
@@ -145,7 +144,7 @@ public class REEditDialog extends Dialog {
 
         @Override
         public void focusLost(FocusEvent e) {
-        }});
+        } });
       gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
       gd.grabExcessHorizontalSpace = true;
       catCombo.setLayoutData(gd);
@@ -164,10 +163,10 @@ public class REEditDialog extends Dialog {
         public void widgetSelected(SelectionEvent e) {
           if (catCombo.getSelectionIndex() >= 0) {
             text.insert(expressions.get(catName).get(catCombo.getSelectionIndex()).getInsertString());
-            text.setSelection(text.getSelection().x+expressions.get(catName).get(catCombo.getSelectionIndex()).getInsertString().length());
+            text.setSelection(text.getSelection().x + expressions.get(catName).get(catCombo.getSelectionIndex()).getInsertString().length());
             additionalREInfoLabel.setText(expressions.get(catName).get(catCombo.getSelectionIndex()).getAdditionalInfo());
           }
-        }});
+        } });
     }
 
     if (!categories.isEmpty()) {
@@ -235,7 +234,7 @@ public class REEditDialog extends Dialog {
           StyleRange range = new StyleRange(i, 1, getShell().getDisplay().getSystemColor(colorCounter), getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE), SWT.BOLD);
           ranges.add(range);
           bStack.push(colorCounter);
-          colorCounter+=2;
+          colorCounter += 2;
           if (colorCounter == 15) { // avoid shades of grey...
             colorCounter = 3;
           }
@@ -244,13 +243,13 @@ public class REEditDialog extends Dialog {
           }
         } else if (currentChar == ')') {
           try {
-            int openingColor = ((Integer)bStack.pop()).intValue();
+            int openingColor = ((Integer) bStack.pop()).intValue();
             StyleRange range = new StyleRange(i, 1, getShell().getDisplay().getSystemColor(openingColor), getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE), SWT.BOLD);
             ranges.add(range);
           } catch (Exception e) { // no matching opening bracket was found...
             StyleRange range = new StyleRange(i, 1, getShell().getDisplay().getSystemColor(colorCounter), getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE), SWT.BOLD);
             ranges.add(range);
-            colorCounter+=2;
+            colorCounter += 2;
             if (colorCounter == 15) { // avoid shades of grey...
               colorCounter = 3;
             }

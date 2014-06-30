@@ -848,7 +848,7 @@ public class QuickRExView extends ViewPart {
   }
 
   private void edit() {
-    REEditDialog dlg = new REEditDialog(this, getSite().getShell(), QuickRExPlugin.getDefault().getREFlavour());
+    REEditDialog dlg = new REEditDialog(this, getSite().getShell());
     dlg.open();
     if (dlg.getSelectedText() != null) {
       regExpCombo.setText(dlg.getSelectedText());

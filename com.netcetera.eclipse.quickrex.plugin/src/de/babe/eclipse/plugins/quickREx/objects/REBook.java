@@ -136,20 +136,18 @@ public class REBook {
   }
 
   /**
-   * Writes the xml-file with the serialized representation of this book
+   * Writes the xml-file with the serialized representation of this book.
    *
    * @param monitor the progress-monitor
    */
   public void writeFile(IProgressMonitor monitor) {
     File reFile = new File(getPath());
-    try {
-      FileOutputStream fos = new FileOutputStream(reFile);
+    try (FileOutputStream fos = new FileOutputStream(reFile);) {
       fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<regularExpressionLibrary>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       for (int i = 0; i < getContents().size(); i++) {
         fos.write(getContents().get(i).toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       fos.write("</regularExpressionLibrary>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      fos.close();
     } catch (Exception e) {
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 31, Messages.getString("objects.REBook.error.message1"), e); //$NON-NLS-1$
       QuickRExPlugin.getDefault().getLog().log(status);

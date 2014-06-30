@@ -100,7 +100,7 @@ public class RECategoriesXMLHandler extends DefaultHandler {
         receivingNameInformation = true;
       } else if (RELibraryEntry.INSTANCE_QNAME.equals(qName)) {
         receivingREEntryInformation = true;
-        libEntryHandler = new RELibraryEntriesXMLHandler(new ArrayList());
+        libEntryHandler = new RELibraryEntriesXMLHandler(new ArrayList<RELibraryEntry>());
         libEntryHandler.startElement(uri, localName, qName, attributes);
       }
     }

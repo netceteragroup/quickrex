@@ -3,11 +3,13 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.objects;
+
+import java.util.Objects;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
@@ -26,7 +28,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /**
    * The constructor
-   * 
+   *
    * @param entry
    * @param readOnly
    */
@@ -38,7 +40,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /**
    * Returns <code>true</code> if and only if this EditorInput is read-only
-   * 
+   *
    * @return <code>true</code> if and only if this EditorInput is read-only
    */
   public boolean isReadOnly() {
@@ -47,7 +49,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IEditorInput#exists()
    */
   @Override
@@ -57,7 +59,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IEditorInput#getImageDescriptor()
    */
   @Override
@@ -67,7 +69,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IEditorInput#getName()
    */
   @Override
@@ -77,7 +79,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IEditorInput#getPersistable()
    */
   @Override
@@ -87,7 +89,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.ui.IEditorInput#getToolTipText()
    */
   @Override
@@ -97,7 +99,7 @@ public class RELibraryEntryEditorInput implements IEditorInput {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
    */
   @Override
@@ -109,21 +111,25 @@ public class RELibraryEntryEditorInput implements IEditorInput {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object other) {
-    try {
-      if (((RELibraryEntryEditorInput)other).getRELibraryEntry() == getRELibraryEntry()) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (Exception e) {
+  public boolean equals(Object obj) {
+    if (obj == this) {
+      return true;
+    }
+    if (!(obj instanceof RELibraryEntryEditorInput)) {
       return false;
     }
+    RELibraryEntryEditorInput other = (RELibraryEntryEditorInput) obj;
+    return other.getRELibraryEntry() == getRELibraryEntry();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getRELibraryEntry());
   }
 
   /**
-   * Returns the RELibraryEntry which is represented by this EditorInput
-   * 
+   * Returns the RELibraryEntry which is represented by this EditorInput.
+   *
    * @return the RELibraryEntry which is represented by this EditorInput
    */
   public RELibraryEntry getRELibraryEntry() {
