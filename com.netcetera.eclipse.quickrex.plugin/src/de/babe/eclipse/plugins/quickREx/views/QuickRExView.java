@@ -15,7 +15,6 @@ package de.babe.eclipse.plugins.quickREx.views;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -291,10 +290,8 @@ public class QuickRExView extends ViewPart {
   private void createFlagFlavourSection(FormToolkit tk, Composite client, GridLayout layout, GridData gd, String text, int flavour) {
     Label l = tk.createLabel(client, text);
     int nButtons = 1;
-    Collection jdkFlags = MatchSetFactory.getAllFlags();
-    for (Iterator iter = jdkFlags.iterator(); iter.hasNext();) {
+    for (final Flag element : MatchSetFactory.getAllFlags()) {
       nButtons++;
-      final Flag element = (Flag)iter.next();
       final Button checkButton = tk.createButton(client, element.getName(), SWT.CHECK);
       gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING | GridData.HORIZONTAL_ALIGN_FILL);
       gd.grabExcessHorizontalSpace = false;
@@ -676,7 +673,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * The handle-method for organizing saved Test-texts
+   * The handle-method for organizing saved Test-texts.
    */
   public void handleOrganizeTexts() {
     OrganizeTestTextDialog dlg = new OrganizeTestTextDialog(getSite().getShell(), OrganizeTestTextDialog.TYPE_ORGANIZE);
@@ -684,7 +681,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * The handle-method for grepping
+   * The handle-method for grepping.
    */
   public void handleGrepButtonPressed() {
     SimpleTextDialog dlg = new SimpleTextDialog(getSite().getShell(), Messages.getString("views.QuickRExView.dlg.title"), hits.grep()); //$NON-NLS-1$
@@ -692,7 +689,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * The handle-method for copying to the current editor (escaping for Java)
+   * The handle-method for copying to the current editor (escaping for Java).
    */
   public void handleCopyButtonPressed() {
     copyToEditor(StringUtils.escapeForJava(regExpCombo.getText()));
@@ -710,7 +707,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * The handle-method for loading test-texts
+   * The handle-method for loading test-texts.
    */
   public void handleLoadTextButtonPressed() {
     OrganizeTestTextDialog dlg = new OrganizeTestTextDialog(getSite().getShell(), OrganizeTestTextDialog.TYPE_LOAD);
@@ -721,7 +718,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * The handle-method for saving test-texts
+   * The handle-method for saving test-texts.
    */
   public void handleSaveTextButtonPressed() {
     OrganizeTestTextDialog dlg = new OrganizeTestTextDialog(getSite().getShell(), OrganizeTestTextDialog.TYPE_SAVE);
@@ -998,19 +995,19 @@ public class QuickRExView extends ViewPart {
 
   private String fetchGroupID() {
     int index = hits.getCurrentMatch().getCurrentGroup().getIndex();
-    String ret = ""+index; //$NON-NLS-1$
+    StringBuilder buffer = new StringBuilder(); //$NON-NLS-1$
+    buffer.append(index);
 
     String groupID = hits.getCurrentMatch().getCurrentGroup().getID();
-    if(groupID != null)
-     {
-      ret +=" - {" + groupID + "}"; //$NON-NLS-1$ //$NON-NLS-2$
+    if (groupID != null) {
+      buffer.append(" - {").append(groupID).append("}"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    return ret;
+    return buffer.toString();
   }
 
   /**
-   * The handle-method for keeping the current expression
+   * The handle-method for keeping the current expression.
    */
   public void handleKeepButtonPressed() {
     regExpCombo.add(regExpCombo.getText(), 0);
@@ -1047,7 +1044,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * Set the current test-text to the passed String
+   * Set the current test-text to the passed String.
    *
    * @param text the String to use
    */
@@ -1056,7 +1053,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * Returns the current RE
+   * Returns the current RE.
    *
    * @return the current RE
    */
@@ -1065,7 +1062,7 @@ public class QuickRExView extends ViewPart {
   }
 
   /**
-   * Returns the last selection in the RE-Combo
+   * Returns the last selection in the RE-Combo.
    *
    * @return the last selection
    */

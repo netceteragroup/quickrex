@@ -10,7 +10,6 @@
 package de.babe.eclipse.plugins.quickREx.search;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -34,11 +33,11 @@ public class RESearchResult extends AbstractTextSearchResult {
 
   private RESearchQuery query;
 
-  private ArrayList matches = new ArrayList();
+  private List<RELibraryEntry> matches = new ArrayList<>();
 
-  private ArrayList booksWithMatches = new ArrayList();
+  private List<REBook> booksWithMatches = new ArrayList<>();
 
-  private ArrayList categoriesWithMatches = new ArrayList();
+  private List<RECategory> categoriesWithMatches = new ArrayList<>();
 
   /**
    * The constructor.
@@ -98,7 +97,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   }
 
   /**
-   * Add the passed entry to the ones matching this objects' query
+   * Add the passed entry to the ones matching this objects' query.
    *
    * @param entry the entry to be added
    */
@@ -116,10 +115,10 @@ public class RESearchResult extends AbstractTextSearchResult {
    * Rebuilds the collections of books and categories containing matches
    */
   private void rebuildBooksAndCategories() {
-    booksWithMatches = new ArrayList();
-    categoriesWithMatches = new ArrayList();
-    for (Iterator iter = matches.iterator(); iter.hasNext();) {
-      RELibraryEntry entry = (RELibraryEntry)iter.next();
+    booksWithMatches = new ArrayList<>();
+    categoriesWithMatches = new ArrayList<>();
+    for (Object element : matches) {
+      RELibraryEntry entry = (RELibraryEntry) element;
       if (!booksWithMatches.contains(entry.getCategory().getBook())) {
         booksWithMatches.add(entry.getCategory().getBook());
       }
@@ -130,7 +129,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   }
 
   /**
-   * Removes the passed entry from the matches
+   * Removes the passed entry from the matches.
    *
    * @param entry the entry to remove
    */
@@ -144,7 +143,7 @@ public class RESearchResult extends AbstractTextSearchResult {
    * @return an array of REBooks containing matches
    */
   public REBook[] getBooksWithMatches() {
-    return (REBook[])booksWithMatches.toArray(new REBook[booksWithMatches.size()]);
+    return booksWithMatches.toArray(new REBook[booksWithMatches.size()]);
   }
 
   /**
@@ -154,7 +153,7 @@ public class RESearchResult extends AbstractTextSearchResult {
    * @return an array of RECategories
    */
   public RECategory[] getMatchingCategoriesInBook(REBook book) {
-    List<RECategory> retList = new ArrayList<RECategory>();
+    List<RECategory> retList = new ArrayList<>();
     for (RECategory cat : book.getContents()) {
       if (categoriesWithMatches.contains(cat)) {
         retList.add(cat);
@@ -170,14 +169,14 @@ public class RESearchResult extends AbstractTextSearchResult {
    * @return an array or RELibraryEntries
    */
   public RELibraryEntry[] getMatchesInCategory(RECategory category) {
-    ArrayList retList = new ArrayList();
+    List<RELibraryEntry> retList = new ArrayList<>();
     RELibraryEntry[] entriesInCat = category.getCategoryContents();
     for (RELibraryEntry element : entriesInCat) {
       if (matches.contains(element)) {
         retList.add(element);
       }
     }
-    return (RELibraryEntry[])retList.toArray(new RELibraryEntry[retList.size()]);
+    return retList.toArray(new RELibraryEntry[retList.size()]);
   }
 
   /* (non-Javadoc)
@@ -186,7 +185,7 @@ public class RESearchResult extends AbstractTextSearchResult {
   @Override
   public void removeMatch(Match match) {
     super.removeMatch(match);
-    RELibraryEntry entry = (RELibraryEntry)match.getElement();
+    RELibraryEntry entry = (RELibraryEntry) match.getElement();
     removeEntry(entry);
     rebuildBooksAndCategories();
   }
@@ -198,17 +197,17 @@ public class RESearchResult extends AbstractTextSearchResult {
   public void removeMatches(Match[] matches) {
     super.removeMatches(matches);
     for (Match matche : matches) {
-      RELibraryEntry entry = (RELibraryEntry)matche.getElement();
+      RELibraryEntry entry = (RELibraryEntry) matche.getElement();
       removeEntry(entry);
     }
     rebuildBooksAndCategories();
   }
 
   /**
-   * Remove all matches and rebuild the collections for the books and categories holding matches
+   * Remove all matches and rebuild the collections for the books and categories holding matches.
    */
   public void doRemoveAll() {
-    matches = new ArrayList();
+    matches = new ArrayList<>();
     rebuildBooksAndCategories();
   }
 }

@@ -48,7 +48,7 @@ public class RELibraryEntry {
   private transient List<IPropertyChangeListener> listeners;
 
   /**
-   * The constructor
+   * The constructor.
    *
    * @param p_title
    * @param p_re
@@ -62,11 +62,11 @@ public class RELibraryEntry {
     this.description = p_description;
     this.testtext = p_testtext;
     this.source = p_source;
-    this.listeners = new ArrayList();
+    this.listeners = new ArrayList<>();
   }
 
   /**
-   * Sets the category that this entry belongs to
+   * Sets the category that this entry belongs to.
    *
    * @param category the category
    */
@@ -75,7 +75,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Sets the description for this entry
+   * Sets the description for this entry.
    *
    * @param description the description
    */
@@ -84,7 +84,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Sets the regular expression for this entry
+   * Sets the regular expression for this entry.
    *
    * @param re the regular expression
    */
@@ -93,7 +93,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Sets the source for this entry
+   * Sets the source for this entry.
    *
    * @param source the source
    */
@@ -102,7 +102,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Sets the test-text for this entry
+   * Sets the test-text for this entry.
    *
    * @param testtext the test-text
    */
@@ -129,7 +129,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Returns the category that this entry belongs to
+   * Returns the category that this entry belongs to.
    *
    * @return the category
    */
@@ -138,7 +138,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Returns the description for this entry
+   * Returns the description for this entry.
    *
    * @return the description
    */
@@ -147,7 +147,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Returns the regular expression in this entry
+   * Returns the regular expression in this entry.
    *
    * @return the regular expression
    */
@@ -156,7 +156,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Returns the source for this entry
+   * Returns the source for this entry.
    *
    * @return the source
    */
@@ -165,7 +165,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Returns the test-text for this entry
+   * Returns the test-text for this entry.
    *
    * @return the test-text
    */
@@ -174,7 +174,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Returns the title of this entry
+   * Returns the title of this entry.
    *
    * @return the title
    */
@@ -184,7 +184,7 @@ public class RELibraryEntry {
 
   /**
    * Adds the passed listener to the listeners which are informed when the
-   * title of this entry is changed
+   * title of this entry is changed.
    *
    * @param listener the listener to add
    */
@@ -196,7 +196,7 @@ public class RELibraryEntry {
 
   /**
    * Removes the passed listener from the list of listeners registered for
-   * changes of the title of this entry
+   * changes of the title of this entry.
    *
    * @param listener the listener to remove
    */
@@ -207,7 +207,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Returns an XML-representation of this object, using the passed String as a prefix for each line
+   * Returns an XML-representation of this object, using the passed String as a prefix for each line.
    *
    * @param p_prefix
    *          the prefix for the line
@@ -240,7 +240,7 @@ public class RELibraryEntry {
   }
 
   /**
-   * Persists this entry by writing the file for the containing book
+   * Persists this entry by writing the file for the containing book.
    *
    * @param monitor the progress-monitor
    */

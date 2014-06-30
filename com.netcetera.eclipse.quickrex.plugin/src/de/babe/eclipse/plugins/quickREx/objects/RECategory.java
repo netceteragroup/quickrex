@@ -50,7 +50,7 @@ public class RECategory {
   }
 
   /**
-   * Sets the name for this category
+   * Sets the name for this category.
    *
    * @param p_name the name to set
    */
@@ -59,7 +59,7 @@ public class RECategory {
   }
 
   /**
-   * Returns the book that this category belongs to
+   * Returns the book that this category belongs to.
    *
    * @return the book that this category belongs to
    */
@@ -68,7 +68,7 @@ public class RECategory {
   }
 
   /**
-   * Returns the name of this category
+   * Returns the name of this category.
    *
    * @return the name of this category
    */
