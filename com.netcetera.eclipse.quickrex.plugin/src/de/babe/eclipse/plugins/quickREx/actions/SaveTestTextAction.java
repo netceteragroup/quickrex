@@ -27,8 +27,8 @@ public class SaveTestTextAction extends Action {
     super(""); //$NON-NLS-1$
     this.setText(Messages.getString("views.QuickRExView.saveTextAction.text")); //$NON-NLS-1$
     this.setToolTipText(Messages.getString("views.QuickRExView.saveTextAction.tooltip")); //$NON-NLS-1$
-    this.setImageDescriptor(((PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry())
-        .getImageDescriptor(PluginImageRegistry.IMG_SAVE_TT));
+    PluginImageRegistry imageRegistry = (PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry();
+    this.setImageDescriptor(imageRegistry.getDescriptor(PluginImageRegistry.IMG_SAVE_TT));
     this.setId("de.babe.eclipse.plugins.quickREx.actions.SaveTestTextAction"); //$NON-NLS-1$
   }
 

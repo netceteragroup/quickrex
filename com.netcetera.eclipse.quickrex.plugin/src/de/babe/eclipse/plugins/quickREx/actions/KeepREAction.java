@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -26,11 +26,9 @@ public class KeepREAction extends Action {
   public KeepREAction() {
     super(""); //$NON-NLS-1$
     this.setText(Messages.getString("views.QuickRExView.keepREAction.text")); //$NON-NLS-1$
-    this.setToolTipText(Messages
-        .getString("views.QuickRExView.keepREAction.tooltip")); //$NON-NLS-1$
-    this.setImageDescriptor(((PluginImageRegistry) QuickRExPlugin.getDefault()
-        .getImageRegistry())
-        .getImageDescriptor(PluginImageRegistry.IMG_KEEP_RE));
+    this.setToolTipText(Messages.getString("views.QuickRExView.keepREAction.tooltip")); //$NON-NLS-1$
+    PluginImageRegistry imageRegistry = (PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry();
+    this.setImageDescriptor(imageRegistry.getDescriptor(PluginImageRegistry.IMG_KEEP_RE));
     this.setId("de.babe.eclipse.plugins.quickREx.actions.KeepREAction"); //$NON-NLS-1$
   }
 

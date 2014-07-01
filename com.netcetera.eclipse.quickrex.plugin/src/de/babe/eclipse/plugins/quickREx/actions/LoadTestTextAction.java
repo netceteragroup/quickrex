@@ -27,8 +27,8 @@ public class LoadTestTextAction extends Action {
     super(""); //$NON-NLS-1$
     this.setText(Messages.getString("views.QuickRExView.loadTextAction.text")); //$NON-NLS-1$
     this.setToolTipText(Messages.getString("views.QuickRExView.loadTextAction.tooltip")); //$NON-NLS-1$
-    this.setImageDescriptor(((PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry())
-        .getImageDescriptor(PluginImageRegistry.IMG_LOAD_TT));
+    PluginImageRegistry imageRegistry = (PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry();
+    this.setImageDescriptor(imageRegistry.getDescriptor(PluginImageRegistry.IMG_LOAD_TT));
     this.setId("de.babe.eclipse.plugins.quickREx.actions.LoadTestTextAction"); //$NON-NLS-1$
   }
 
