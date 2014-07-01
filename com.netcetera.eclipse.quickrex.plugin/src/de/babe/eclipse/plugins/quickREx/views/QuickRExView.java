@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.contentassist.ComboContentAssistSubjectAdapter;
 import org.eclipse.jface.contentassist.SubjectControlContentAssistant;
@@ -67,8 +66,6 @@ import de.babe.eclipse.plugins.quickREx.Messages;
 import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
 import de.babe.eclipse.plugins.quickREx.StringUtils;
 import de.babe.eclipse.plugins.quickREx.actions.JCopyAction;
-import de.babe.eclipse.plugins.quickREx.dialogs.REEditDialog;
-import de.babe.eclipse.plugins.quickREx.dialogs.SimpleTextDialog;
 import de.babe.eclipse.plugins.quickREx.regexp.Flag;
 import de.babe.eclipse.plugins.quickREx.regexp.Match;
 import de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory;
@@ -118,11 +115,7 @@ public class QuickRExView extends ViewPart {
 
   private Collection<Flag> currentFlags = new ArrayList<>();
 
-  private String msg = ""; //$NON-NLS-1$
-
   private Action jcopyAction;
-
-  private Button editButton;
 
   private Point lastRESelection = new Point(0, 0);
 
@@ -288,6 +281,7 @@ public class QuickRExView extends ViewPart {
     Label groupsLabel = tk.createLabel(client, Messages.getString("views.QuickRExView.fifthrow.label")); //$NON-NLS-1$
     gd = new GridData();
     gd.grabExcessHorizontalSpace = false;
+    gd.horizontalAlignment = SWT.END;
     groupsLabel.setLayoutData(gd);
     previousGroupButton = tk.createButton(client, Messages.getString("views.QuickRExView.fifthrow.prev"), SWT.PUSH); //$NON-NLS-1$
     gd = new GridData();
@@ -331,6 +325,7 @@ public class QuickRExView extends ViewPart {
     Label regExpResult = tk.createLabel(client, Messages.getString("views.QuickRExView.fourthrow.label")); //$NON-NLS-1$
     gd = new GridData();
     gd.grabExcessHorizontalSpace = false;
+    gd.horizontalAlignment = SWT.END;
     regExpResult.setLayoutData(gd);
     previousButton = tk.createButton(client, Messages.getString("views.QuickRExView.fourthrow.prev"), SWT.PUSH); //$NON-NLS-1$
     gd = new GridData();
@@ -382,7 +377,7 @@ public class QuickRExView extends ViewPart {
     GridData gd;
     // Second row
     Label testTextEnter = tk.createLabel(form.getBody(), Messages.getString("views.QuickRExView.secondrow.label")); //$NON-NLS-1$
-    gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+    gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING | GridData.HORIZONTAL_ALIGN_END);
     gd.grabExcessHorizontalSpace = false;
     testTextEnter.setLayoutData(gd);
     testText = new StyledText(form.getBody(), SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -407,14 +402,14 @@ public class QuickRExView extends ViewPart {
     // First row...
     Label regExpEnter = tk.createLabel(form.getBody(), Messages.getString("views.QuickRExView.firstrow.label")); //$NON-NLS-1$
     gd = new GridData();
-    gd.horizontalAlignment = GridData.BEGINNING;
+    gd.horizontalAlignment = GridData.END;
     gd.grabExcessHorizontalSpace = false;
     regExpEnter.setLayoutData(gd);
     regExpCombo = new Combo(form.getBody(), SWT.DROP_DOWN);
     regExpCombo.setItems(new String[0]);
     regExpCombo.setFont(JFaceResources.getFont(EDITOR_FONT_KEY));
     gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
-    gd.horizontalSpan = 2;
+    gd.horizontalSpan = 3;
     gd.grabExcessHorizontalSpace = true;
     regExpCombo.setLayoutData(gd);
     regExpCombo.addModifyListener(new ModifyListener() {
@@ -463,22 +458,6 @@ public class QuickRExView extends ViewPart {
       } });
     tk.adapt(regExpCombo, true, true);
 
-    editButton = tk.createButton(form.getBody(), Messages.getString("views.QuickRExView.button.edit.label"), SWT.PUSH); //$NON-NLS-1$
-    gd = new GridData(GridData.HORIZONTAL_ALIGN_END);
-    gd.grabExcessHorizontalSpace = false;
-    editButton.setLayoutData(gd);
-    editButton.addSelectionListener(new SelectionListener() {
-      @Override
-      public void widgetSelected(SelectionEvent p_e) {
-        edit();
-      }
-
-      @Override
-      public void widgetDefaultSelected(SelectionEvent p_e) {
-      }
-    });
-    editButton.setEnabled(true);
-
     createRegExpContentAssist();
   }
 
@@ -508,16 +487,11 @@ public class QuickRExView extends ViewPart {
 
   private void contributeToActionBars() {
     IActionBars bars = getViewSite().getActionBars();
-    fillLocalPullDown(bars.getMenuManager());
     IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
     fillToolBar(toolbar);
   }
 
   private void fillToolBar(IToolBarManager manager) {
-    manager.add(jcopyAction);
-  }
-
-  private void fillLocalPullDown(IMenuManager manager) {
     manager.add(jcopyAction);
   }
 
@@ -539,14 +513,6 @@ public class QuickRExView extends ViewPart {
     } else {
       return null;
     }
-  }
-
-  /**
-   * The handle-method for grepping.
-   */
-  public void handleGrepButtonPressed() {
-    SimpleTextDialog dlg = new SimpleTextDialog(getSite().getShell(), Messages.getString("views.QuickRExView.dlg.title"), hits.grep()); //$NON-NLS-1$
-    dlg.open();
   }
 
   /**
@@ -672,15 +638,6 @@ public class QuickRExView extends ViewPart {
     Point selection = regExpCombo.getSelection();
     evaluate();
     regExpCombo.setSelection(selection);
-  }
-
-  private void edit() {
-    REEditDialog dlg = new REEditDialog(this, getSite().getShell());
-    dlg.open();
-    if (dlg.getSelectedText() != null) {
-      regExpCombo.setText(dlg.getSelectedText());
-      evaluate();
-    }
   }
 
   private void evaluate() {

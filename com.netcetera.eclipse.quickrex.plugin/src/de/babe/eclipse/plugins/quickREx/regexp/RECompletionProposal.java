@@ -16,12 +16,12 @@ import java.util.Vector;
  */
 public class RECompletionProposal {
 
-  public static final String INSTANCE_QNAME = "proposal";  //$NON-NLS-1$
-  public static final String KEY_ATTRIBUTE_QNAME = "key"; //$NON-NLS-1$
-  public static final String PLAIN_VALUE_ATTRIBUTE_QNAME = "value"; //$NON-NLS-1$
-  public static final String ALLOW_PLAIN_ATTRIBUTE_QNAME = "allowPlain"; //$NON-NLS-1$
-  public static final String DISPLAY_STRING_ATTRIBUTE_QNAME = "displayString"; //$NON-NLS-1$
-  public static final String ADD_INFO_ATTRIBUTE_QNAME = "additionalInfo"; //$NON-NLS-1$
+  static final String INSTANCE_QNAME = "proposal";  //$NON-NLS-1$
+  static final String KEY_ATTRIBUTE_QNAME = "key"; //$NON-NLS-1$
+  static final String PLAIN_VALUE_ATTRIBUTE_QNAME = "value"; //$NON-NLS-1$
+  static final String ALLOW_PLAIN_ATTRIBUTE_QNAME = "allowPlain"; //$NON-NLS-1$
+  static final String DISPLAY_STRING_ATTRIBUTE_QNAME = "displayString"; //$NON-NLS-1$
+  static final String ADD_INFO_ATTRIBUTE_QNAME = "additionalInfo"; //$NON-NLS-1$
 
   private final String key;
   private final String plainProposal;
@@ -30,10 +30,6 @@ public class RECompletionProposal {
   private String text;
   private String displayString;
   private String additionalInfo;
-
-  public RECompletionProposal(String p_proposalKey, String p_plainProposal) {
-    this(p_proposalKey, p_plainProposal, true);
-  }
 
   public RECompletionProposal(String p_proposalKey, String p_plainProposal, boolean p_allowPlain) {
     this.key = p_proposalKey;
@@ -94,39 +90,12 @@ public class RECompletionProposal {
     return this.plainProposal;
   }
 
-  public String getInsertString(String p_text) {
-    if (p_text == null || p_text.length() == 0) {
-      return this.plainProposal;
-    }
-    for (CompletionTrigger trigger : triggers) {
-      if (trigger.isMatchFor(p_text)) {
-        return trigger.getInsertString(p_text);
-      }
-    }
-    return this.plainProposal;
-  }
-
   public boolean isMatch() {
     if (this.text == null || this.text.length() == 0) {
       return this.allowPlain;
     } else {
       for (CompletionTrigger trigger : triggers) {
         if (trigger.isMatchFor(this.text)) {
-          // Found a matching trigger
-          return true;
-        }
-      }
-      // Found no matching trigger, but may nevertheless be ok
-      return this.allowPlain;
-    }
-  }
-
-  public boolean isMatchFor(String p_text) {
-    if (p_text == null || p_text.length() == 0) {
-      return this.allowPlain;
-    } else {
-      for (CompletionTrigger trigger : triggers) {
-        if (trigger.isMatchFor(p_text)) {
           // Found a matching trigger
           return true;
         }

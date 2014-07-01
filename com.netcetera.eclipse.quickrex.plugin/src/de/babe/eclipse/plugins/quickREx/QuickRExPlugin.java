@@ -129,18 +129,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Returns the string from the plugin's resource bundle, or 'key' if not found.
-   */
-  public static String getResourceString(String p_key) {
-    ResourceBundle bundle = QuickRExPlugin.getDefault().getResourceBundle();
-    try {
-      return (bundle != null) ? bundle.getString(p_key) : p_key;
-    } catch (MissingResourceException e) {
-      return p_key;
-    }
-  }
-
-  /**
    * Returns the plugin's resource bundle.
    */
   public ResourceBundle getResourceBundle() {
