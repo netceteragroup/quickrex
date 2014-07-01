@@ -3,7 +3,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution.
- * 
+ *
  * Contributors:
  *     Bastian Bergerhoff - initial API and implementation
  *******************************************************************************/
@@ -49,8 +49,8 @@ public class CompletionTriggerWord extends CompletionTrigger {
    */
   @Override
   public boolean isMatchFor(String text) {
-    for (int i=0; i<this.word.length(); i++) {
-      if (text.endsWith(this.word.substring(0,this.word.length()-i))) {
+    for (int i = 0; i < this.word.length(); i++) {
+      if (text.endsWith(this.word.substring(0, this.word.length() - i))) {
         return true;
       }
     }
@@ -63,13 +63,13 @@ public class CompletionTriggerWord extends CompletionTrigger {
   @Override
   public String getInsertString(String text) {
     String wordRemainder = null;
-    for (int i=0; i<this.word.length(); i++) {
-      if (text.endsWith(this.word.substring(0,this.word.length()-i))) {
-        wordRemainder = this.word.substring(this.word.length()-i);
+    for (int i = 0; i < this.word.length(); i++) {
+      if (text.endsWith(this.word.substring(0, this.word.length() - i))) {
+        wordRemainder = this.word.substring(this.word.length() - i);
         break;
       }
     }
-    return wordRemainder+this.extension;
+    return wordRemainder + this.extension;
   }
 
   /* (non-Javadoc)
@@ -87,7 +87,11 @@ public class CompletionTriggerWord extends CompletionTrigger {
   public int compareTo(CompletionTrigger p_other) {
     // Always prefer WordCompletions unless the standard proposal starts with a \ and only wants to add one character
     if (p_other instanceof CompletionTriggerExpression) {
-      if ((p_other.getPlainProposal().startsWith(("\\")) || p_other.getPlainProposal().startsWith(("(")) || p_other.getPlainProposal().startsWith(("[")))&& p_other.getInsertString().length() == 1) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      String otherPlainProposal = p_other.getPlainProposal();
+      if ((otherPlainProposal.startsWith("\\") //$NON-NLS-1$
+            || otherPlainProposal.startsWith("(") //$NON-NLS-1$
+            || otherPlainProposal.startsWith("[")) //$NON-NLS-1$
+          && p_other.getInsertString().length() == 1) {
         return +1;
       } else {
         return -1;
