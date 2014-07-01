@@ -30,17 +30,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.babe.eclipse.plugins.quickREx.objects.NamedText;
 import de.babe.eclipse.plugins.quickREx.objects.NamedTextXMLHandler;
-import de.babe.eclipse.plugins.quickREx.objects.REBook;
-import de.babe.eclipse.plugins.quickREx.objects.REBooksXMLHandler;
-import de.babe.eclipse.plugins.quickREx.objects.RECategoriesXMLHandler;
-import de.babe.eclipse.plugins.quickREx.objects.RECategory;
 import de.babe.eclipse.plugins.quickREx.objects.RegularExpression;
 import de.babe.eclipse.plugins.quickREx.objects.RegularExpressionsXMLHandler;
 import de.babe.eclipse.plugins.quickREx.regexp.CompletionProposalXMLHandler;
@@ -64,10 +58,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private List<NamedText> testTexts;
 
-  private List<REBook> reBooks;
-
-  private List<IPropertyChangeListener> listeners;
-
   private Map<String, List<RECompletionProposal>> jdkCatMappings;
 
   private List<String> jdkCategories;
@@ -76,17 +66,11 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private static final String RE_FILE_NAME = "regularExpressions.xml"; //$NON-NLS-1$
 
-  private static final String RE_LIB_FILE_NAME = "$nl$/reLibrary.xml"; //$NON-NLS-1$
-
-  private static final String RE_BOOKS_FILE_NAME = "reBooks.xml"; //$NON-NLS-1$
-
   private static final String TEST_TEXT_FILE_NAME = "testTexts.xml"; //$NON-NLS-1$
 
   public static final String ID = "de.babe.eclipse.plugins.quickREx.QuickRExPlugin"; //$NON-NLS-1$
 
   public static final String EXPAND_NAVIGATION_SECTION = "de.babe.eclipse.plugins.quickREx.QuickRExPlugin.ExpandNavigationSection"; //$NON-NLS-1$
-
-  private static final String RE_FLAVOUR = "de.babe.eclipse.plugins.quickREx.QuickRExPlugin.REFlavour"; //$NON-NLS-1$
 
   private static final String LAST_SEARCH_SCOPE = "de.babe.eclipse.plugins.quickREx.QuickRExPlugin.LastSearchScope"; //$NON-NLS-1$
 
@@ -102,7 +86,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   public QuickRExPlugin() {
     super();
     plugin = this;
-    listeners = new ArrayList<>();
     try {
       resourceBundle = ResourceBundle.getBundle("de.babe.eclipse.plugins.quickREx.QuickRExPluginResources"); //$NON-NLS-1$
     } catch (MissingResourceException x) {
@@ -128,7 +111,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     super.start(p_context);
     regularExpressions = initREsFromFile();
     testTexts = initTestTextsFromFile();
-    reBooks = initREBooksFromFile();
     initProposals();
     prepareRegexpCategories();
   }
@@ -164,7 +146,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     super.stop(p_context);
     writeREsToFile();
     writeTestTextsToFile(testTexts);
-    writeREBooksToFile(reBooks);
   }
 
   /**
@@ -242,38 +223,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Adds the passed REBook to the list of books currently kept in the Reg. Exp. Library.
-   *
-   * @param p_book The REBook to add
-   */
-  public void addREBook(REBook p_book) {
-    reBooks.add(p_book);
-    if (listeners.size() > 0) {
-      PropertyChangeEvent event = new PropertyChangeEvent(this, "reBooks", this.reBooks, null); //$NON-NLS-1$
-      for (Object element : listeners) {
-        IPropertyChangeListener listener = (IPropertyChangeListener) element;
-        listener.propertyChange(event);
-      }
-    }
-  }
-
-  /**
-   * Removes the passed REBook from the list of books currently kept in the Reg. Exp. Library.
-   *
-   * @param p_book The REBook to remove
-   */
-  public void removeREBook(REBook p_book) {
-    reBooks.remove(p_book);
-    if (listeners.size() > 0) {
-      PropertyChangeEvent event = new PropertyChangeEvent(this, "reBooks", this.reBooks, null); //$NON-NLS-1$
-      for (Object element : listeners) {
-        IPropertyChangeListener listener = (IPropertyChangeListener) element;
-        listener.propertyChange(event);
-      }
-    }
-  }
-
-  /**
    * Returns the NamedText with the passed name, if existing. If no such Text exists, <code>null</code> is returned.
    *
    * @param p_name
@@ -335,16 +284,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  /**
-   * Returns an array of all REBooks currently in the list of books in the Reg. Exp. Library.
-   * Since there always is the default book, this array is never empty.
-   *
-   * @return an array of all books from the library
-   */
-  public REBook[] getREBooks() {
-    return reBooks.toArray(new REBook[reBooks.size()]);
-  }
-
   private List<RegularExpression> initREsFromFile() {
     IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
     File reFile = reFilePath.toFile();
@@ -395,73 +334,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  private List<REBook> initREBooksFromFile() {
-    IPath reBooksFilePath = getStateLocation().append(RE_BOOKS_FILE_NAME);
-    File reBooksFile = reBooksFilePath.toFile();
-    List<REBook> res = new ArrayList<>();
-    REBook standardBook = new REBook(REBook.DEFAULT_BOOK_NAME, (new Path(RE_LIB_FILE_NAME)).makeAbsolute().toString());
-    standardBook.setContents(readStandardRELibraryFromFile());
-    if (reBooksFile.exists() && reBooksFile.canRead()) {
-      try {
-        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-        parser.parse(reBooksFile, new REBooksXMLHandler(res));
-      } catch (Exception ex) {
-        // nop, to be save
-        IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 5, Messages.getString("QuickRExPlugin.error.message10"), ex); //$NON-NLS-1$
-        getLog().log(status);
-      }
-      for (Object element2 : res) {
-        REBook element = (REBook) element2;
-        element.setContents(readRELibraryFromFile(element.getPath()));
-      }
-      res.add(0, standardBook);
-      return res;
-    } else {
-      try {
-        reBooksFile.createNewFile();
-      } catch (IOException e) {
-        IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 5, Messages.getString("QuickRExPlugin.error.message11"), null); //$NON-NLS-1$
-        getLog().log(status);
-      }
-      res.add(0, standardBook);
-      return res;
-    }
-  }
-
-  private List<RECategory> readStandardRELibraryFromFile() {
-    List<RECategory> res = new ArrayList<>();
-    try (InputStream libFileStream = openStream(new Path(RE_LIB_FILE_NAME), true)) {
-      SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-      parser.parse(libFileStream, new RECategoriesXMLHandler(res));
-    } catch (Exception ex) {
-      // nop, to be save
-      IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 4, Messages.getString("QuickRExPlugin.error.message12"), ex); //$NON-NLS-1$
-      getLog().log(status);
-    }
-    return res;
-  }
-
-  private List<RECategory> readRELibraryFromFile(String p_path) {
-    IPath reLibFilePath = new Path(p_path);
-    File reLibFile = reLibFilePath.toFile();
-    if (reLibFile.exists() && reLibFile.canRead()) {
-      List<RECategory> res = new ArrayList<>();
-      try {
-        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-        parser.parse(reLibFile, new RECategoriesXMLHandler(res));
-      } catch (Exception ex) {
-        // nop, to be save
-        IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 6, Messages.getString("QuickRExPlugin.error.message13", new Object[] {p_path}), ex); //$NON-NLS-1$ //$NON-NLS-2$
-        getLog().log(status);
-      }
-      return res;
-    } else {
-      IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 6, Messages.getString("QuickRExPlugin.error.message14", new Object[] {p_path}), null); //$NON-NLS-1$ //$NON-NLS-2$
-      getLog().log(status);
-      return new ArrayList<>();
-    }
-  }
-
   private void writeREsToFile() {
     IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
     File reFile = reFilePath.toFile();
@@ -488,39 +360,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
       fos.write("</testTexts>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
     } catch (Exception e) {
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message6"), e); //$NON-NLS-1$
-      getLog().log(status);
-    }
-  }
-
-  private void writeREBooksToFile(List<REBook> p_reBooks) {
-    IPath reBooksFilePath = getStateLocation().append(RE_BOOKS_FILE_NAME);
-    File reBooksFile = reBooksFilePath.toFile();
-    try (FileOutputStream fos = new FileOutputStream(reBooksFile);) {
-      fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<reBooks>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      for (REBook book : p_reBooks) {
-        if (!REBook.DEFAULT_BOOK_NAME.equals(book.getName())) {
-          writeBookContentsToFile(book);
-          fos.write(book.toXMLString("\t", 1).getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-      }
-      fos.write("</reBooks>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-    } catch (Exception e) {
-      IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 4, Messages.getString("QuickRExPlugin.error.message15"), e); //$NON-NLS-1$
-      getLog().log(status);
-    }
-  }
-
-  private void writeBookContentsToFile(REBook p_book) {
-    IPath bookFilePath = new Path(p_book.getPath());
-    File bookFile = bookFilePath.toFile();
-    try (FileOutputStream fos = new FileOutputStream(bookFile)) {
-      fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<regularExpressionLibrary>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      for (RECategory category : p_book.getContents()) {
-        fos.write(category.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      }
-      fos.write("</regularExpressionLibrary>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-    } catch (Exception e) {
-      IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 5, Messages.getString("QuickRExPlugin.error.message16"), e); //$NON-NLS-1$
       getLog().log(status);
     }
   }
@@ -662,58 +501,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    */
   public void setLastSearchScope(int p_scope) {
     getPreferenceStore().setValue(LAST_SEARCH_SCOPE, p_scope);
-  }
-
-  /**
-   * Adds the passed listened to the list of listeners which get informed when the RE-Library
-   * changes (structurally, i.e. when books are added or removed)
-   *
-   * @param p_listener the listener to add
-   */
-  public void addRELibraryListener(IPropertyChangeListener p_listener) {
-    if (!listeners.contains(p_listener)) {
-      this.listeners.add(p_listener);
-    }
-  }
-
-  /**
-   * Removes the passed listened from the list of listeners which get informed when the RE-Library
-   * changes (structurally, i.e. when books are added or removed)
-   *
-   * @param p_listener the listener to remove
-   */
-  public void removeRELibraryListener(IPropertyChangeListener p_listener) {
-    if (listeners.contains(p_listener)) {
-      this.listeners.remove(p_listener);
-    }
-  }
-
-  /**
-   * Returns <code>true</code> if and only if a book with the passed name already exists in the
-   * list of books in teh Reg. Exp. Library
-   *
-   * @param p_bookName The name to check for
-   * @return <code>true</code> if and only if a book with the passed name exists
-   */
-  public boolean reBookWithNameExists(String p_bookName) {
-    return getReBookWithName(p_bookName) != null;
-  }
-
-  /**
-   * Returns the REBook with the passed name from the Reg. Exp. Library (if no book with
-   * the name exists, <code>null</code> is returned).
-   *
-   * @param p_bookName The name of the book to return
-   * @return the REBook with the passed name or <code>null</code>
-   */
-  public REBook getReBookWithName(String p_bookName) {
-    for (Object element : reBooks) {
-      REBook book = (REBook)element;
-      if (book.getName().equals(p_bookName)) {
-        return book;
-      }
-    }
-    return null;
   }
 
   /**
