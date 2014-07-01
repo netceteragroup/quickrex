@@ -51,7 +51,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.contentassist.ContentAssistHandler;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
@@ -109,7 +108,7 @@ public class QuickRExView extends ViewPart {
 
   private static final String NOT_EVALUATED_BG_COLOR_KEY = "de.babe.eclipse.plugins.QuickREx.notEvaluatedBgColor"; //$NON-NLS-1$
 
-  public static final String EDITOR_FONT_KEY = "de.babe.eclipse.plugins.QuickREx.textfontDefinition"; //$NON-NLS-1$
+  private static final String EDITOR_FONT_KEY = "de.babe.eclipse.plugins.QuickREx.textfontDefinition"; //$NON-NLS-1$
 
   private SubjectControlContentAssistant regExpContentAssistant;
 
@@ -486,7 +485,6 @@ public class QuickRExView extends ViewPart {
   }
 
   private void contributeToActionBars() {
-    IActionBars bars = getViewSite().getActionBars();
     IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
     fillToolBar(toolbar);
   }

@@ -88,8 +88,8 @@ public class Group {
   }
 
   /**
-   * Returns (a one-line represenation of) the textual contents of this group
-   * where line-breaks and tabs are represented by their escape-sequences
+   * Returns (a one-line representation of) the textual contents of this group
+   * where line-breaks and tabs are represented by their escape-sequences.
    *
    * @return the textual contents
    */

@@ -56,7 +56,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
    */
   @Override
   public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int documentOffset) {
-    return computeCompletionProposals((IContentAssistSubjectControl)null, documentOffset);
+    return computeCompletionProposals((IContentAssistSubjectControl) null, documentOffset);
   }
 
   /*
@@ -64,7 +64,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
    */
   @Override
   public IContextInformation[] computeContextInformation(ITextViewer viewer, int documentOffset) {
-    return computeContextInformation((IContentAssistSubjectControl)null, documentOffset);
+    return computeContextInformation((IContentAssistSubjectControl) null, documentOffset);
   }
 
   /*
@@ -113,10 +113,9 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
 
     for (RECompletionProposal proposal : results) {
 
-      String proposalKey = proposal.getKey();
       String displayString = proposal.getDisplayString();
       String additionalInfo = proposal.getAdditionalInfo();
-      IContextInformation info = createContextInformation(proposalKey);
+      IContextInformation info = createContextInformation();
 
       int relativeOffset = proposal.getInsertString().length();
 
@@ -152,7 +151,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
     }
   }
 
-  private IContextInformation createContextInformation(String proposalKey) {
+  private IContextInformation createContextInformation() {
     return new ContextInformation(null, "contextDisplayString", "informationDisplayString"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }
