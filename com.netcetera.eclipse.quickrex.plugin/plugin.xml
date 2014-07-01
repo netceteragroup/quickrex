@@ -23,12 +23,6 @@
             category="de.babe.eclipse.plugins.QuickREx"
             name="%de.babe.eclipse.plugins.quickREx.views.QuickRExView"
             id="de.babe.eclipse.plugins.quickREx.views.QuickRExView"/>
-      <view
-            class="de.babe.eclipse.plugins.quickREx.views.RELibraryView"
-            icon="icons/plugin.gif"
-            category="de.babe.eclipse.plugins.QuickREx"
-            name="%de.babe.eclipse.plugins.quickREx.views.RELibraryView"
-            id="de.babe.eclipse.plugins.quickREx.views.RELibraryView"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -114,43 +108,10 @@
       </themeElementCategory>
    </extension>
    <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="de.babe.eclipse.plugins.quickREx.editors.RELibraryEntryEditor"
-            icon="icons/regExp.gif"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            name="%de.babe.eclipse.plugins.quickREx.editors.RELibraryEntryEditor"
-            id="de.babe.eclipse.plugins.quickREx.editors.RELibraryEntryEditor"
-            extensions="rex"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <category
-            id="de.babe.eclipse.plugins.quickREx.wizardCategory"
-            name="%de.babe.eclipse.plugins.quickREx.wizardCategory"/>
-      <wizard
-            category="de.babe.eclipse.plugins.quickREx.wizardCategory"
-            class="de.babe.eclipse.plugins.quickREx.wizards.NewREBookWizard"
-            icon="icons/book.gif"
-            id="de.babe.eclipse.plugins.quickREx.wizards.NewREBookWizard"
-            name="%de.babe.eclipse.plugins.quickREx.wizards.NewREBookWizard">
-         <description>
-         	%de.babe.eclipse.plugins.quickREx.wizards.NewREBookWizard.description
-         </description>
-      </wizard>
-   </extension>
-   <extension
          point="org.eclipse.ui.elementFactories">
       <factory
             class="de.babe.eclipse.plugins.quickREx.factories.RELibraryEntryFactory"
             id="de.babe.eclipse.plugins.quickREx.factories.RELibraryEntryFactory"/>
-   </extension>
-   <extension
-         point="org.eclipse.search.searchResultViewPages">
-      <viewPage
-            class="de.babe.eclipse.plugins.quickREx.search.RESearchResultViewPage"
-            id="de.babe.eclipse.plugins.quickREx.search.RESearchResultViewPage"
-            searchResultClass="de.babe.eclipse.plugins.quickREx.search.RESearchResult"/>
    </extension>
 
 </plugin>
