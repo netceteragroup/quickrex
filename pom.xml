@@ -45,7 +45,7 @@
     <repository>
       <id>kepler</id>
       <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/kepler</url>
+      <url>http://download.eclipse.org/releases/luna</url>
     </repository>
   </repositories>
   <distributionManagement>
@@ -131,6 +131,11 @@
         </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-packaging-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-maven-plugin</artifactId>
           <version>${tycho-version}</version>
         </plugin>
@@ -149,7 +154,7 @@
   </build>
   <properties>
     <nca.project.id>nca-302-0</nca.project.id>
-    <tycho-version>0.19.0</tycho-version>
+    <tycho-version>0.20.0</tycho-version>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
     <source.version>1.7</source.version>
