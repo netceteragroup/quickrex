@@ -13,6 +13,7 @@ package de.babe.eclipse.plugins.quickREx;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -24,19 +25,7 @@ public class PluginImageRegistry extends ImageRegistry {
 
   private static URL iconBaseURL = null;
 
-  public final static String IMG_ORGANIZE_RES = "IMG_ORGANIZE_RES"; //$NON-NLS-1$
-
-  public final static String IMG_ORGANIZE_TEXTS = "IMG_ORGANIZE_TEXTS"; //$NON-NLS-1$
-
-  public static final String IMG_KEEP_RE = "IMG_KEEP_RE"; //$NON-NLS-1$
-
-  public static final String IMG_SAVE_TT = "IMG_SAVE_TT"; //$NON-NLS-1$
-
-  public static final String IMG_LOAD_TT = "IMG_LOAD_TT"; //$NON-NLS-1$
-
   public static final String IMG_JCOPY = "IMG_JCOPY"; //$NON-NLS-1$
-
-  public static final String IMG_GREP = "IMG_GREP"; //$NON-NLS-1$
 
   /**
    * The constructor.
@@ -47,15 +36,9 @@ public class PluginImageRegistry extends ImageRegistry {
     super();
     try {
       if (iconBaseURL == null) {
-        iconBaseURL = p_plugin.find(new Path("/icons/")); //$NON-NLS-1$
+        iconBaseURL = FileLocator.find(p_plugin.getBundle(), new Path("/icons/"), null); //$NON-NLS-1$
       }
-      put(IMG_ORGANIZE_RES, ImageDescriptor.createFromURL(new URL(iconBaseURL, "orgREs.gif"))); //$NON-NLS-1$
-      put(IMG_ORGANIZE_TEXTS, ImageDescriptor.createFromURL(new URL(iconBaseURL, "orgTestTexts.gif"))); //$NON-NLS-1$
-      put(IMG_KEEP_RE, ImageDescriptor.createFromURL(new URL(iconBaseURL, "saveRE.gif"))); //$NON-NLS-1$
-      put(IMG_SAVE_TT, ImageDescriptor.createFromURL(new URL(iconBaseURL, "saveText.gif"))); //$NON-NLS-1$
-      put(IMG_LOAD_TT, ImageDescriptor.createFromURL(new URL(iconBaseURL, "loadText.gif"))); //$NON-NLS-1$
       put(IMG_JCOPY, ImageDescriptor.createFromURL(new URL(iconBaseURL, "jcopy.gif"))); //$NON-NLS-1$
-      put(IMG_GREP, ImageDescriptor.createFromURL(new URL(iconBaseURL, "grep.gif"))); //$NON-NLS-1$
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }

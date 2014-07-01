@@ -46,8 +46,7 @@ public abstract class StringUtils {
    * @return the first line of the passed String in case p_text is null return empty String
    */
   public static String firstLine(String p_text) {
-    if(p_text == null)
-     {
+    if(p_text == null) {
       return ""; //$NON-NLS-1$
     }
 

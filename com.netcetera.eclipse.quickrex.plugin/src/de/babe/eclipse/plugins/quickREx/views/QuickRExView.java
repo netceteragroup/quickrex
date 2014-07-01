@@ -19,7 +19,6 @@ import java.util.regex.PatternSyntaxException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.contentassist.ComboContentAssistSubjectAdapter;
 import org.eclipse.jface.contentassist.SubjectControlContentAssistant;
 import org.eclipse.jface.resource.JFaceResources;
@@ -67,18 +66,9 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import de.babe.eclipse.plugins.quickREx.Messages;
 import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
 import de.babe.eclipse.plugins.quickREx.StringUtils;
-import de.babe.eclipse.plugins.quickREx.actions.GrepAction;
 import de.babe.eclipse.plugins.quickREx.actions.JCopyAction;
-import de.babe.eclipse.plugins.quickREx.actions.KeepREAction;
-import de.babe.eclipse.plugins.quickREx.actions.LoadTestTextAction;
-import de.babe.eclipse.plugins.quickREx.actions.OrganizeREsAction;
-import de.babe.eclipse.plugins.quickREx.actions.OrganizeTestTextsAction;
-import de.babe.eclipse.plugins.quickREx.actions.SaveTestTextAction;
-import de.babe.eclipse.plugins.quickREx.dialogs.OrganizeREsDialog;
-import de.babe.eclipse.plugins.quickREx.dialogs.OrganizeTestTextDialog;
 import de.babe.eclipse.plugins.quickREx.dialogs.REEditDialog;
 import de.babe.eclipse.plugins.quickREx.dialogs.SimpleTextDialog;
-import de.babe.eclipse.plugins.quickREx.objects.RegularExpression;
 import de.babe.eclipse.plugins.quickREx.regexp.Flag;
 import de.babe.eclipse.plugins.quickREx.regexp.Match;
 import de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory;
@@ -112,10 +102,6 @@ public class QuickRExView extends ViewPart {
 
   private RegularExpressionHits hits = new RegularExpressionHits();
 
-  private Action organizeREsAction;
-
-  private Action organizeTestTextsAction;
-
   private static final String MATCH_BG_COLOR_KEY = "de.babe.eclipse.plugins.QuickREx.matchBgColor"; //$NON-NLS-1$
 
   private static final String MATCH_FG_COLOR_KEY = "de.babe.eclipse.plugins.QuickREx.matchFgColor"; //$NON-NLS-1$
@@ -134,15 +120,7 @@ public class QuickRExView extends ViewPart {
 
   private String msg = ""; //$NON-NLS-1$
 
-  private Action keepREAction;
-
-  private Action saveTextAction;
-
-  private Action loadTextAction;
-
   private Action jcopyAction;
-
-  private Action grepAction;
 
   private Button editButton;
 
@@ -244,7 +222,6 @@ public class QuickRExView extends ViewPart {
     section.setLayoutData(gd);
     section.setText(Messages.getString("views.QuickRExView.global.flags")); //$NON-NLS-1$
     tk.createCompositeSeparator(section);
-    section.setDescription(Messages.getString("views.QuickRExView.global.flags.description") + msg); //$NON-NLS-1$
     section.addExpansionListener(new ExpansionAdapter() {
       @Override
       public void expansionStateChanged(ExpansionEvent e) {
@@ -260,25 +237,25 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = true;
     client.setLayoutData(gd);
 
-    createFlagFlavourSection(tk, client, layout, gd, Messages.getString("views.QuickRExView.jdk.flags")); //$NON-NLS-1$
+    createFlagFlavourSection(tk, client, layout); //$NON-NLS-1$
 
     section.setClient(client);
   }
 
-  /*
-   * Creates a line of flags. This is a helper for the Method createFlagSection. @param tk The FormToolkit to use @param client The Composite Client
-   * @param layout The GridLayout to use. @param gd The GridData to fill. @param text The text for the labe at the beginning. @param flavour The
-   * Flavour to use from MatchSetFactory
+  /**
+   * Creates a line of flags. This is a helper for the Method createFlagSection.
+   * @param tk The FormToolkit to use
+   * @param client The Composite Client
+   * @param layout The GridLayout to use
    *
    * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory
    */
-  private void createFlagFlavourSection(FormToolkit tk, Composite client, GridLayout layout, GridData gd, String text) {
-    Label l = tk.createLabel(client, text);
+  private void createFlagFlavourSection(FormToolkit tk, Composite client, GridLayout layout) {
     int nButtons = 1;
     for (final Flag element : MatchSetFactory.getAllFlags()) {
       nButtons++;
       final Button checkButton = tk.createButton(client, element.getName(), SWT.CHECK);
-      gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING | GridData.HORIZONTAL_ALIGN_FILL);
+      GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING | GridData.HORIZONTAL_ALIGN_FILL);
       gd.grabExcessHorizontalSpace = false;
       checkButton.setLayoutData(gd);
       checkButton.setToolTipText(element.getDescription());
@@ -434,7 +411,7 @@ public class QuickRExView extends ViewPart {
     gd.grabExcessHorizontalSpace = false;
     regExpEnter.setLayoutData(gd);
     regExpCombo = new Combo(form.getBody(), SWT.DROP_DOWN);
-    regExpCombo.setItems(QuickRExPlugin.getDefault().getRegularExpressions());
+    regExpCombo.setItems(new String[0]);
     regExpCombo.setFont(JFaceResources.getFont(EDITOR_FONT_KEY));
     gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
     gd.horizontalSpan = 2;
@@ -526,19 +503,7 @@ public class QuickRExView extends ViewPart {
   }
 
   private void makeActions() {
-    organizeREsAction = new OrganizeREsAction();
-
-    organizeTestTextsAction = new OrganizeTestTextsAction();
-
-    keepREAction = new KeepREAction();
-
-    saveTextAction = new SaveTestTextAction();
-
-    loadTextAction = new LoadTestTextAction();
-
     jcopyAction = new JCopyAction();
-
-    grepAction = new GrepAction();
   }
 
   private void contributeToActionBars() {
@@ -550,23 +515,10 @@ public class QuickRExView extends ViewPart {
 
   private void fillToolBar(IToolBarManager manager) {
     manager.add(jcopyAction);
-    manager.add(grepAction);
-    manager.add(new Separator("StoreHandleSeparator1")); //$NON-NLS-1$
-    manager.add(keepREAction);
-    manager.add(saveTextAction);
-    manager.add(loadTextAction);
   }
 
   private void fillLocalPullDown(IMenuManager manager) {
     manager.add(jcopyAction);
-    manager.add(grepAction);
-    manager.add(new Separator("StoreHandleSeparator1")); //$NON-NLS-1$
-    manager.add(keepREAction);
-    manager.add(saveTextAction);
-    manager.add(loadTextAction);
-    manager.add(new Separator("StoreHandleSeparator2")); //$NON-NLS-1$
-    manager.add(organizeREsAction);
-    manager.add(organizeTestTextsAction);
   }
 
   private void redrawFourthLine() {
@@ -587,24 +539,6 @@ public class QuickRExView extends ViewPart {
     } else {
       return null;
     }
-  }
-
-
-  /**
-   * The handle-method for organizing saved RegExps.
-   */
-  public void handleOrganizeREs() {
-    OrganizeREsDialog dlg = new OrganizeREsDialog(getSite().getShell());
-    dlg.open();
-    regExpCombo.setItems(QuickRExPlugin.getDefault().getRegularExpressions());
-  }
-
-  /**
-   * The handle-method for organizing saved Test-texts.
-   */
-  public void handleOrganizeTexts() {
-    OrganizeTestTextDialog dlg = new OrganizeTestTextDialog(getSite().getShell(), OrganizeTestTextDialog.TYPE_ORGANIZE);
-    dlg.open();
   }
 
   /**
@@ -630,29 +564,6 @@ public class QuickRExView extends ViewPart {
       getActiveEditor().getSelectionProvider().setSelection(new TextSelection(currentOffset, string.length()));
     } catch (Throwable t) {
       // nop...
-    }
-  }
-
-  /**
-   * The handle-method for loading test-texts.
-   */
-  public void handleLoadTextButtonPressed() {
-    OrganizeTestTextDialog dlg = new OrganizeTestTextDialog(getSite().getShell(), OrganizeTestTextDialog.TYPE_LOAD);
-    dlg.open();
-    if (dlg.getSelectedText() != null) {
-      testText.setText(dlg.getSelectedText().getText());
-    }
-  }
-
-  /**
-   * The handle-method for saving test-texts.
-   */
-  public void handleSaveTextButtonPressed() {
-    OrganizeTestTextDialog dlg = new OrganizeTestTextDialog(getSite().getShell(), OrganizeTestTextDialog.TYPE_SAVE);
-    dlg.setTextToSave(testText.getText());
-    dlg.open();
-    if (dlg.getSaveInformation() != null) {
-      QuickRExPlugin.getDefault().addTestText(dlg.getSaveInformation());
     }
   }
 
@@ -855,14 +766,6 @@ public class QuickRExView extends ViewPart {
     }
 
     return buffer.toString();
-  }
-
-  /**
-   * The handle-method for keeping the current expression.
-   */
-  public void handleKeepButtonPressed() {
-    regExpCombo.add(regExpCombo.getText(), 0);
-    QuickRExPlugin.getDefault().addRegularExpression(new RegularExpression(regExpCombo.getText()));
   }
 
   /*

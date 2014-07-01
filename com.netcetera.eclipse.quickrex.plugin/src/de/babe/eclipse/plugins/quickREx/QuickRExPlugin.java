@@ -10,9 +10,6 @@
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +22,7 @@ import java.util.ResourceBundle;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
@@ -33,10 +30,6 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.babe.eclipse.plugins.quickREx.objects.NamedText;
-import de.babe.eclipse.plugins.quickREx.objects.NamedTextXMLHandler;
-import de.babe.eclipse.plugins.quickREx.objects.RegularExpression;
-import de.babe.eclipse.plugins.quickREx.objects.RegularExpressionsXMLHandler;
 import de.babe.eclipse.plugins.quickREx.regexp.CompletionProposalXMLHandler;
 import de.babe.eclipse.plugins.quickREx.regexp.CompletionProposals;
 import de.babe.eclipse.plugins.quickREx.regexp.EditorCategoryMappingXMLHandler;
@@ -54,19 +47,11 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   private ResourceBundle resourceBundle;
 
-  private List<RegularExpression> regularExpressions;
-
-  private List<NamedText> testTexts;
-
   private Map<String, List<RECompletionProposal>> jdkCatMappings;
 
   private List<String> jdkCategories;
 
   private CompletionProposals proposals;
-
-  private static final String RE_FILE_NAME = "regularExpressions.xml"; //$NON-NLS-1$
-
-  private static final String TEST_TEXT_FILE_NAME = "testTexts.xml"; //$NON-NLS-1$
 
   public static final String ID = "de.babe.eclipse.plugins.quickREx.QuickRExPlugin"; //$NON-NLS-1$
 
@@ -109,8 +94,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   @Override
   public void start(BundleContext p_context) throws Exception {
     super.start(p_context);
-    regularExpressions = initREsFromFile();
-    testTexts = initTestTextsFromFile();
     initProposals();
     prepareRegexpCategories();
   }
@@ -139,16 +122,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * This method is called when the plug-in is stopped.
-   */
-  @Override
-  public void stop(BundleContext p_context) throws Exception {
-    super.stop(p_context);
-    writeREsToFile();
-    writeTestTextsToFile(testTexts);
-  }
-
-  /**
    * Returns the shared instance.
    */
   public static QuickRExPlugin getDefault() {
@@ -172,224 +145,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    */
   public ResourceBundle getResourceBundle() {
     return resourceBundle;
-  }
-
-  /**
-   * Returns the currently kept regular expressions (as Strings-array) or an empty array. Regular Expressions are persisted to a file and loaded from
-   * there on plug-in activation.
-   *
-   * @return the currently kept regular expressions (as Strings-array) or an empty array
-   */
-  public String[] getRegularExpressions() {
-    String[] retArray = new String[regularExpressions.size()];
-    for (int i = 0; i < retArray.length; i++) {
-      retArray[i] = regularExpressions.get(i).getString();
-    }
-    return retArray;
-  }
-
-  /**
-   * Adds the passed Regular Expression to the list of Reg. Exp.s kept with the plugin and persisted to a file on plugin-dectivation.
-   *
-   * @param p_expression
-   *          The RegularExpression to be saved
-   */
-  public void addRegularExpression(RegularExpression p_expression) {
-    regularExpressions.add(0, p_expression);
-  }
-
-  /**
-   * Returns the currently kept test-texts (as NamedTexts-array) or an empty array. Test Texts are persisted to a file and loaded from there on
-   * plug-in activation.
-   *
-   * @return the currently kept test-texts (as NamedTexts-array) or an empty array
-   */
-  public NamedText[] getTestTexts() {
-    return testTexts.toArray(new NamedText[testTexts.size()]);
-  }
-
-  /**
-   * Adds the passed NamedText to the list of Test-Texts kept with the plugin and persisted to a file on plugin-dectivation.
-   *
-   * @param p_text
-   *          The NamedText to be saved
-   */
-  public void addTestText(NamedText p_text) {
-    int i = getTestTextIndexByName(p_text.getName());
-    if (i > -1) {
-      testTexts.remove(i);
-    }
-    testTexts.add(0, p_text);
-  }
-
-  /**
-   * Returns the NamedText with the passed name, if existing. If no such Text exists, <code>null</code> is returned.
-   *
-   * @param p_name
-   *          the name of the text to return
-   * @return the NamedText or null
-   */
-  public NamedText getTestTextByName(String p_name) {
-    for (Object element2 : testTexts) {
-      NamedText element = (NamedText)element2;
-      if (p_name.equals(element.getName())) {
-        return element;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Returns <code>true</code> if and only if a NamedText with the passed name is among the texts currently held with the plugin.
-   *
-   * @param p_name
-   *          the name of the text which should be looked for
-   * @return <code>true</code> if a text with the passed name exists
-   */
-  public boolean testTextNameExists(String p_name) {
-    return getTestTextIndexByName(p_name) > -1;
-  }
-
-  /**
-   * Returns a String-array with all names of saved texts.
-   *
-   * @return an array with test-text names (or an empty array if no test-texts are saved)
-   */
-  public String[] getTestTextNames() {
-    String[] retArray = new String[testTexts.size()];
-    for (int i = 0; i < retArray.length; i++) {
-      retArray[i] = testTexts.get(i).getName();
-    }
-    return retArray;
-  }
-
-  /**
-   * Deletes the test-text with the passed name from the list of test-texts saved. param p_name the name of the text which should be deleted
-   */
-  public void deleteTestTextByName(String p_name) {
-    int index = getTestTextIndexByName(p_name);
-    testTexts.remove(index);
-  }
-
-  /**
-   * Deletes all RegularExpressions with String-values among the Strings passed in the array from the list of Regular-Expressions saved with the
-   * plugin.
-   *
-   * @param p_regExps
-   *          the String-representations of Reg. Exp.s to be removed from memory
-   */
-  public void deleteRegularExpressions(String[] p_regExps) {
-    for (String p_regExp : p_regExps) {
-      deleteRegularExpression(p_regExp);
-    }
-  }
-
-  private List<RegularExpression> initREsFromFile() {
-    IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
-    File reFile = reFilePath.toFile();
-    if (reFile.exists() && reFile.canRead()) {
-      List<RegularExpression> res = new ArrayList<>();
-      try {
-        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-        parser.parse(reFile, new RegularExpressionsXMLHandler(res));
-      } catch (Exception ex) {
-        // nop, to be save
-        IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message1"), ex); //$NON-NLS-1$
-        getLog().log(status);
-      }
-      return res;
-    } else {
-      try {
-        reFile.createNewFile();
-      } catch (IOException e) {
-        IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message2"), null); //$NON-NLS-1$
-        getLog().log(status);
-      }
-      return new ArrayList<>();
-    }
-  }
-
-  private List<NamedText> initTestTextsFromFile() {
-    IPath ttFilePath = getStateLocation().append(TEST_TEXT_FILE_NAME);
-    File ttFile = ttFilePath.toFile();
-    if (ttFile.exists() && ttFile.canRead()) {
-      List<NamedText> res = new ArrayList<>();
-      try {
-        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-        parser.parse(ttFile, new NamedTextXMLHandler(res));
-      } catch (Exception ex) {
-        // nop, to be save
-        IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message3"), ex); //$NON-NLS-1$
-        getLog().log(status);
-      }
-      return res;
-    } else {
-      try {
-        ttFile.createNewFile();
-      } catch (IOException e) {
-        IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message4"), null); //$NON-NLS-1$
-        getLog().log(status);
-      }
-      return new ArrayList<>();
-    }
-  }
-
-  private void writeREsToFile() {
-    IPath reFilePath = getStateLocation().append(RE_FILE_NAME);
-    File reFile = reFilePath.toFile();
-    try (FileOutputStream fos = new FileOutputStream(reFile)) {
-      fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<regularExpressions>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      for (RegularExpression each : regularExpressions) {
-        fos.write(each.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      }
-      fos.write("</regularExpressions>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-    } catch (Exception e) {
-      IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message5"), e); //$NON-NLS-1$
-      getLog().log(status);
-    }
-  }
-
-  private void writeTestTextsToFile(List<NamedText> p_testTexts) {
-    IPath ttFilePath = getStateLocation().append(TEST_TEXT_FILE_NAME);
-    File reFile = ttFilePath.toFile();
-    try (FileOutputStream fos = new FileOutputStream(reFile)) {
-      fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<testTexts>\r\n".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      for (NamedText each : p_testTexts) {
-        fos.write(each.toXMLString("\t").getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-      }
-      fos.write("</testTexts>".getBytes("UTF8")); //$NON-NLS-1$ //$NON-NLS-2$
-    } catch (Exception e) {
-      IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString("QuickRExPlugin.error.message6"), e); //$NON-NLS-1$
-      getLog().log(status);
-    }
-  }
-
-  private int getTestTextIndexByName(String p_name) {
-    int i = 0;
-    for (Object element2 : testTexts) {
-      NamedText element = (NamedText) element2;
-      if (p_name.equals(element.getName())) {
-        return i;
-      }
-      i++;
-    }
-    return -1;
-  }
-
-  private void deleteRegularExpression(String p_string) {
-    int index = getRegularExpressionIndexByString(p_string);
-    regularExpressions.remove(index);
-  }
-
-  private int getRegularExpressionIndexByString(String p_string) {
-    int i = 0;
-    for (RegularExpression element : regularExpressions) {
-      if (p_string.equals(element.getString())) {
-        return i;
-      }
-      i++;
-    }
-    return -1;
   }
 
   /**
@@ -438,7 +193,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   private void initCompletionsFromFile(Map<String, RECompletionProposal> p_proposals, List<String> p_keys) {
     String filepath = JDK_PROPOSAL_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.message7"; //$NON-NLS-1$
-    try (InputStream propFileStream = openStream(new Path(filepath), true)) {
+    try (InputStream propFileStream = FileLocator.openStream(getBundle(), new Path(filepath), true)) {
       SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
       parser.parse(propFileStream, new CompletionProposalXMLHandler(p_proposals, p_keys));
     } catch (Exception ex) {
@@ -451,7 +206,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   public void initCategoriesFromFile(Map<String, List<REEditorCategoryMapping>> p_mappings, List<String> p_categories) {
     String filepath = JDK_CATEGORIES_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.readerror.jdk.categories"; //$NON-NLS-1$
-    try (InputStream propFileStream = openStream(new Path(filepath), true)) {
+    try (InputStream propFileStream = FileLocator.openStream(getBundle(), new Path(filepath), true)) {
       SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
       parser.parse(propFileStream, new EditorCategoryMappingXMLHandler(p_mappings, p_categories));
     } catch (Exception ex) {
@@ -468,7 +223,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * @param p_flags
    *          a Collection holding the actually set flags
    */
-  public void saveSelectedFlagValues(Collection p_flags) {
+  public void saveSelectedFlagValues(Collection<? extends Flag> p_flags) {
     for (Flag element : MatchSetFactory.getAllSupportedFlags()) {
       getPreferenceStore().setValue(element.getCode(), p_flags.contains(element));
     }
