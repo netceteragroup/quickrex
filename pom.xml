@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.netcetera.eclipse.quickrex</groupId>
   <artifactId>quickrex-parent</artifactId>
-  <version>4.1.0-SNAPSHOT</version>
+  <version>4.1.0</version>
   <name>QuickREx Parent</name>
   <description>A fork of the QuickREx Plugin</description>
   <inceptionYear>2014</inceptionYear>
@@ -18,9 +18,9 @@
   </modules>
   
   <scm>
-    <connection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</connection>
-    <developerConnection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</developerConnection>
-    <url>https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</url>
+    <connection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/tags/quickrex-parent-4.1.0</connection>
+    <developerConnection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/tags/quickrex-parent-4.1.0</developerConnection>
+    <url>https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/tags/quickrex-parent-4.1.0</url>
   </scm>
   
   <developers>
