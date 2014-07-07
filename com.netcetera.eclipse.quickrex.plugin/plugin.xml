@@ -31,10 +31,6 @@
                relationship="stack"
                relative="org.eclipse.ui.views.TaskList"
                id="de.babe.eclipse.plugins.quickREx.views.QuickRExView"/>
-         <view
-               relationship="stack"
-               relative="org.eclipse.ui.views.ResourceNavigator"
-               id="de.babe.eclipse.plugins.quickREx.views.RELibraryView"/>
       </perspectiveExtension>
    </extension>
    <extension
@@ -106,12 +102,6 @@
             %de.babe.eclipse.plugins.QuickREx.themeElementCategory.description
          </description>
       </themeElementCategory>
-   </extension>
-   <extension
-         point="org.eclipse.ui.elementFactories">
-      <factory
-            class="de.babe.eclipse.plugins.quickREx.factories.RELibraryEntryFactory"
-            id="de.babe.eclipse.plugins.quickREx.factories.RELibraryEntryFactory"/>
    </extension>
 
 </plugin>
