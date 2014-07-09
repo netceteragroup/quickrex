@@ -2,12 +2,12 @@
 <feature
       id="com.netcetera.eclipse.quickrex.feature"
       label="QuickREx Feature"
-      version="4.1.1"
+      version="4.1.1.qualifier"
       provider-name="Netcetera"
       plugin="com.netcetera.eclipse.quickrex.plugin">
 
    <description>
-      A clean room implementation of the Copy as Path plugin under EPL.
+      A for of the original QuickRex plugin.
    </description>
 
    <copyright>
