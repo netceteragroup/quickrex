@@ -50,8 +50,9 @@ public abstract class StringUtils {
       return ""; //$NON-NLS-1$
     }
 
-    if (text.indexOf("\r") >= 0) { //$NON-NLS-1$
-      return text.substring(0, text.indexOf("\r")); //$NON-NLS-1$
+    int carriageReturnIndex = text.indexOf("\r"); //$NON-NLS-1$
+    if (carriageReturnIndex >= 0) {
+      return text.substring(0, carriageReturnIndex);
     } else {
       return text;
     }
