@@ -124,11 +124,6 @@ public class QuickRExView extends ViewPart {
   public QuickRExView() {
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
-   */
   @Override
   public void createPartControl(Composite parent) {
     createViewContents(parent);
@@ -723,20 +718,10 @@ public class QuickRExView extends ViewPart {
     return buffer.toString();
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-   */
   @Override
   public void setFocus() {
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.eclipse.ui.IWorkbenchPart#dispose()
-   */
   @Override
   public void dispose() {
     QuickRExPlugin.getDefault().saveSelectedFlagValues(currentFlags);

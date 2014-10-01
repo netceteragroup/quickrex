@@ -14,8 +14,8 @@ package de.babe.eclipse.plugins.quickREx.regexp;
  */
 public class CompletionTriggerWord extends CompletionTrigger {
 
-  public final static String INSTANCE_QNAME = "wordtrigger";  //$NON-NLS-1$
-  public final static String WORD_ATTRIBUTE_QNAME = "word"; //$NON-NLS-1$
+  public static final String INSTANCE_QNAME = "wordtrigger";  //$NON-NLS-1$
+  public static final String WORD_ATTRIBUTE_QNAME = "word"; //$NON-NLS-1$
 
   private final String word;
   private final String extension;
@@ -44,9 +44,6 @@ public class CompletionTriggerWord extends CompletionTrigger {
     return this.extension;
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#isMatchFor(java.lang.String)
-   */
   @Override
   public boolean isMatchFor(String text) {
     for (int i = 0; i < this.word.length(); i++) {
@@ -57,9 +54,6 @@ public class CompletionTriggerWord extends CompletionTrigger {
     return false;
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#getInsertString(java.lang.String)
-   */
   @Override
   public String getInsertString(String text) {
     String wordRemainder = null;
@@ -72,26 +66,20 @@ public class CompletionTriggerWord extends CompletionTrigger {
     return wordRemainder + this.extension;
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#getInsertString()
-   */
   @Override
   public String getInsertString() {
     return this.getInsertString(this.text);
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#compareTo(de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger)
-   */
   @Override
-  public int compareTo(CompletionTrigger p_other) {
+  public int compareTo(CompletionTrigger other) {
     // Always prefer WordCompletions unless the standard proposal starts with a \ and only wants to add one character
-    if (p_other instanceof CompletionTriggerExpression) {
-      String otherPlainProposal = p_other.getPlainProposal();
+    if (other instanceof CompletionTriggerExpression) {
+      String otherPlainProposal = other.getPlainProposal();
       if ((otherPlainProposal.startsWith("\\") //$NON-NLS-1$
             || otherPlainProposal.startsWith("(") //$NON-NLS-1$
             || otherPlainProposal.startsWith("[")) //$NON-NLS-1$
-          && p_other.getInsertString().length() == 1) {
+          && other.getInsertString().length() == 1) {
         return +1;
       } else {
         return -1;
@@ -99,7 +87,7 @@ public class CompletionTriggerWord extends CompletionTrigger {
     }
     // The shorter the String to insert, the better...
     int thisLength = this.getInsertString().length();
-    int otherLength = p_other.getInsertString().length();
+    int otherLength = other.getInsertString().length();
     if (thisLength < otherLength) {
       return -1;
     } else {

@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
  */
 class CompletionTriggerExpression extends CompletionTrigger {
 
-  public final static String INSTANCE_QNAME = "retrigger";  //$NON-NLS-1$
-  public final static String REG_EXP_ATTRIBUTE_QNAME = "re"; //$NON-NLS-1$
+  public static final String INSTANCE_QNAME = "retrigger";  //$NON-NLS-1$
+  public static final String REG_EXP_ATTRIBUTE_QNAME = "re"; //$NON-NLS-1$
 
   private final String regExp;
   private final Pattern pattern;
@@ -25,14 +25,14 @@ class CompletionTriggerExpression extends CompletionTrigger {
   private final String plainProposal;
 
   /**
-   * @param p_regExp
-   * @param p_proposal
+   * @param regExp
+   * @param proposal
    */
-  CompletionTriggerExpression(String p_regExp, String p_proposal, String p_plainProposal) {
-    this.regExp = p_regExp;
-    this.proposal = p_proposal;
+  CompletionTriggerExpression(String regExp, String proposal, String plainProposal) {
+    this.regExp = regExp;
+    this.proposal = proposal;
     this.pattern = Pattern.compile(this.regExp);
-    this.plainProposal = p_plainProposal;
+    this.plainProposal = plainProposal;
   }
 
   /*package*/ String getRegExp() {
@@ -48,37 +48,25 @@ class CompletionTriggerExpression extends CompletionTrigger {
     return this.proposal;
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#isMatchFor(java.lang.String)
-   */
   @Override
   public boolean isMatchFor(String text) {
     return this.pattern.matcher(text).matches();
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#getInsertString(java.lang.String)
-   */
   @Override
   public String getInsertString(String text) {
     return this.proposal;
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#getInsertString()
-   */
   @Override
   public String getInsertString() {
     return this.getInsertString(this.text);
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger#compareTo(de.babe.eclipse.plugins.quickREx.regexp.CompletionTrigger)
-   */
   @Override
-  public int compareTo(CompletionTrigger p_other) {
+  public int compareTo(CompletionTrigger other) {
     // Always prefer WordCompletions
-    if (p_other instanceof CompletionTriggerWord) {
+    if (other instanceof CompletionTriggerWord) {
       if ((this.getPlainProposal().startsWith("\\") //$NON-NLS-1$
             || this.getPlainProposal().startsWith("[") //$NON-NLS-1$
             || this.getPlainProposal().startsWith("("))
@@ -90,7 +78,7 @@ class CompletionTriggerExpression extends CompletionTrigger {
     }
     // The shorter the String to insert, the better...
     int thisLength = this.getInsertString().length();
-    int otherLength = p_other.getInsertString().length();
+    int otherLength = other.getInsertString().length();
     if (thisLength < otherLength) {
       return -1;
     } else {

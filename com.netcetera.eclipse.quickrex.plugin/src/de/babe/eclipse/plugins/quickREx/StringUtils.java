@@ -21,12 +21,12 @@ public abstract class StringUtils {
    * Returns the passed String with any occurrence of " replaced by \"
    * and any occurrence of \ replaced by \\.
    *
-   * @param p_text the String to escape
+   * @param text the String to escape
    * @return the escaped String or "" if null was passed.
    */
-  public static String escapeForJava(String p_text) {
+  public static String escapeForJava(String text) {
     StringBuilder retBuffer = new StringBuilder();
-    StringCharacterIterator it = new StringCharacterIterator(p_text);
+    StringCharacterIterator it = new StringCharacterIterator(text);
     for (char c = it.first(); c != StringCharacterIterator.DONE; c = it.next()) {
       if (c == '\\') {
         retBuffer.append("\\\\"); //$NON-NLS-1$
@@ -42,18 +42,18 @@ public abstract class StringUtils {
   /**
    * Returns the first line of the passed String.
    *
-   * @param p_text the String to return the first line from
+   * @param text the String to return the first line from
    * @return the first line of the passed String in case p_text is null return empty String
    */
-  public static String firstLine(String p_text) {
-    if(p_text == null) {
+  public static String firstLine(String text) {
+    if (text == null) {
       return ""; //$NON-NLS-1$
     }
 
-    if (p_text.indexOf("\r") >= 0) { //$NON-NLS-1$
-      return p_text.substring(0, p_text.indexOf("\r")); //$NON-NLS-1$
+    if (text.indexOf("\r") >= 0) { //$NON-NLS-1$
+      return text.substring(0, text.indexOf("\r")); //$NON-NLS-1$
     } else {
-      return p_text;
+      return text;
     }
   }
 }

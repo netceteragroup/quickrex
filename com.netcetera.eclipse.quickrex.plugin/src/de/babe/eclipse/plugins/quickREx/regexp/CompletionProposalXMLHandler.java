@@ -39,15 +39,12 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
     this.keys = p_keys;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
-   */
   @Override
   public void endElement(String uri, String localName, String qName) {
     if (CompletionTriggerExpression.INSTANCE_QNAME.equals(qName)) {
-      currentProposal.addTriggerExpression(currentTriggerExpression.getRegExp(), currentTriggerExpression.getProposal());
+      String regExp = currentTriggerExpression.getRegExp();
+      String proposal = currentTriggerExpression.getProposal();
+      currentProposal.addTriggerExpression(regExp, proposal);
       currentTriggerExpression = null;
     } else if (CompletionTriggerWord.INSTANCE_QNAME.equals(qName)) {
       currentProposal.addTriggerWord(currentTriggerWord.getWord(), currentTriggerWord.getExtension());
@@ -58,11 +55,6 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
     }
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
-   */
   @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) {
     if (RECompletionProposal.INSTANCE_QNAME.equals(qName)) {

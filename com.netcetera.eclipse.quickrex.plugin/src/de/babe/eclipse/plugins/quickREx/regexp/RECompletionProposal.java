@@ -38,12 +38,12 @@ public class RECompletionProposal {
     this.allowPlain = p_allowPlain;
   }
 
-  public void addTriggerExpression(String p_regExp, String p_proposal) {
-    this.triggers.add(0, new CompletionTriggerExpression(p_regExp, p_proposal, this.plainProposal));
+  public void addTriggerExpression(String regExp, String proposal) {
+    this.triggers.add(0, new CompletionTriggerExpression(regExp, proposal, this.plainProposal));
   }
 
-  public void addTriggerWord(String p_word, String p_extendWith) {
-    this.triggers.add(0, new CompletionTriggerWord(p_word, p_extendWith, this.plainProposal));
+  public void addTriggerWord(String word, String extendWith) {
+    this.triggers.add(0, new CompletionTriggerWord(word, extendWith, this.plainProposal));
   }
 
   /**

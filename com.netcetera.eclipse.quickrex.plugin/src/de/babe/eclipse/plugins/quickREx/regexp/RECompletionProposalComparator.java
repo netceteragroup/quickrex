@@ -16,9 +16,6 @@ import java.util.Comparator;
  */
 public class RECompletionProposalComparator implements Comparator<RECompletionProposal> {
 
-  /* (non-Javadoc)
-   * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-   */
   @Override
   public int compare(RECompletionProposal prop1, RECompletionProposal prop2) {
     return prop1.compareTo(prop2);

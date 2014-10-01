@@ -71,57 +71,36 @@ public class JavaMatchSet implements MatchSet {
     matcher = pattern.matcher(text);
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSet#nextMatch()
-   */
   @Override
   public boolean nextMatch() {
     return matcher.find();
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSet#start()
-   */
   @Override
   public int start() {
     return matcher.start();
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSet#end()
-   */
   @Override
   public int end() {
     return matcher.end();
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSet#groupCount()
-   */
   @Override
   public int groupCount() {
     return matcher.groupCount();
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSet#groupContents(int)
-   */
   @Override
   public String groupContents(int groupIndex) {
     return matcher.group(groupIndex);
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSet#groupStart(int)
-   */
   @Override
   public int groupStart(int groupIndex) {
     return matcher.start(groupIndex);
   }
 
-  /* (non-Javadoc)
-   * @see de.babe.eclipse.plugins.quickREx.regexp.MatchSet#groupEnd(int)
-   */
   @Override
   public int groupEnd(int groupIndex) {
     return matcher.end(groupIndex);

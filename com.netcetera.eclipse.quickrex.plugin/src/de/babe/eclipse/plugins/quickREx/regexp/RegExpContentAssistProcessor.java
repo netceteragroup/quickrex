@@ -34,16 +34,16 @@ import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
 public class RegExpContentAssistProcessor implements ISubjectControlContentAssistProcessor {
 
   /**
-   * The available proposals.
+   * The available PROPOSALS.
    */
-  private final static CompletionProposals proposals = new CompletionProposals();
+  private final static CompletionProposals PROPOSALS = new CompletionProposals();
 
   static {
     initializeProposals();
   }
 
   private static void initializeProposals() {
-    QuickRExPlugin.getDefault().initCompletionProposals(proposals);
+    QuickRExPlugin.getDefault().initCompletionProposals(PROPOSALS);
   }
 
   /**
@@ -105,7 +105,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
   @Override
   public ICompletionProposal[] computeCompletionProposals(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
     Set<RECompletionProposal> results = new TreeSet<>(new RECompletionProposalComparator());
-    for (String proposalKey : proposals.getKeys()) {
+    for (String proposalKey : PROPOSALS.getKeys()) {
       addProposal(proposalKey, contentAssistSubjectControl, documentOffset, results);
     }
 
@@ -135,7 +135,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
   }
 
   private void addProposal(String proposalKey, IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset, Set<RECompletionProposal> results) {
-    RECompletionProposal proposal = proposals.getProposal(proposalKey);
+    RECompletionProposal proposal = PROPOSALS.getProposal(proposalKey);
 
     try {
       String text = null;

@@ -47,11 +47,6 @@ public class SimpleTextDialog extends Dialog {
     this.contents = p_contents;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-   */
   @Override
   protected Control createDialogArea(Composite parent) {
     getShell().setText(title);
@@ -79,11 +74,6 @@ public class SimpleTextDialog extends Dialog {
     return composite;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
-   */
   @Override
   protected void createButtonsForButtonBar(Composite parent) {
     createButton(parent, IDialogConstants.CANCEL_ID, Messages.getString("dialogs.SimpleTextDialog.button.close"), true); //$NON-NLS-1$

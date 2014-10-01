@@ -29,9 +29,9 @@ abstract class CompletionTrigger {
   abstract String getPlainProposal();
 
   /**
-   * @param p_text
+   * @param text
    */
-  public void setText(String p_text) {
-    this.text = p_text;
+  public void setText(String text) {
+    this.text = text;
   }
 }

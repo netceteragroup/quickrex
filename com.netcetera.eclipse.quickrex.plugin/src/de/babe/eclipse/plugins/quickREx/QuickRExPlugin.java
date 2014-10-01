@@ -78,11 +78,6 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see org.eclipse.ui.plugin.AbstractUIPlugin#createImageRegistry()
-   */
   @Override
   protected ImageRegistry createImageRegistry() {
     return new PluginImageRegistry(this);
