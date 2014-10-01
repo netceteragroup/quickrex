@@ -87,8 +87,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * This method is called upon plug-in activation.
    */
   @Override
-  public void start(BundleContext p_context) throws Exception {
-    super.start(p_context);
+  public void start(BundleContext context) throws Exception {
+    super.start(context);
     initProposals();
     prepareRegexpCategories();
   }
@@ -102,10 +102,10 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   }
 
-  private Map<String, List<RECompletionProposal>> addProposalsToMappings(List<String> p_categories, Map<String, List<REEditorCategoryMapping>> p_catMappings) {
-    Map<String, List<RECompletionProposal>> result = new HashMap<>(p_catMappings.size());
-    for (String category : p_categories) {
-      List<REEditorCategoryMapping> proposalKeys = p_catMappings.get(category);
+  private Map<String, List<RECompletionProposal>> addProposalsToMappings(List<String> categories, Map<String, List<REEditorCategoryMapping>> catMappings) {
+    Map<String, List<RECompletionProposal>> result = new HashMap<>(catMappings.size());
+    for (String category : categories) {
+      List<REEditorCategoryMapping> proposalKeys = catMappings.get(category);
       List<RECompletionProposal> proposalsForCat = new ArrayList<>();
       for (REEditorCategoryMapping element : proposalKeys) {
         String currentKey = element.getProposalKey();
@@ -142,10 +142,10 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Set (and store) the flag governing if the Reg. Exp. Lib.-View is linked with the RE-Entry-editor.
    *
-   * @param p_flag the state of the flag to set and store
+   * @param flag the state of the flag to set and store
    */
-  public void setLinkRELibViewWithEditor(boolean p_flag) {
-    getPreferenceStore().setValue(LINK_RE_LIB_VIEW_WITH_EDITOR, p_flag);
+  public void setLinkRELibViewWithEditor(boolean flag) {
+    getPreferenceStore().setValue(LINK_RE_LIB_VIEW_WITH_EDITOR, flag);
   }
 
 
@@ -154,13 +154,13 @@ public class QuickRExPlugin extends AbstractUIPlugin {
    * In case the files have already been parsed, the information is only copied to the
    * passed instance. If the files were not parsed yet, this is done now...
    *
-   * @param p_proposals the structure to initialize
+   * @param proposals the structure to initialize
    */
-  public void initCompletionProposals(CompletionProposals p_proposals) {
+  public void initCompletionProposals(CompletionProposals proposals) {
     if (this.proposals == null) {
       initProposals();
     }
-    proposals.copyValuesTo(p_proposals);
+    this.proposals.copyValuesTo(proposals);
   }
 
   private synchronized void initProposals() {
@@ -173,12 +173,12 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     proposals.setProposals(jdkProposals);
   }
 
-  private void initCompletionsFromFile(Map<String, RECompletionProposal> p_proposals, List<String> p_keys) {
+  private void initCompletionsFromFile(Map<String, RECompletionProposal> proposals, List<String> keys) {
     String filepath = JDK_PROPOSAL_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.message7"; //$NON-NLS-1$
     try (InputStream propFileStream = FileLocator.openStream(getBundle(), new Path(filepath), true)) {
       SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-      parser.parse(propFileStream, new CompletionProposalXMLHandler(p_proposals, p_keys));
+      parser.parse(propFileStream, new CompletionProposalXMLHandler(proposals, keys));
     } catch (Exception ex) {
       // nop, to be save
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString(errorMsgKey), ex); //$NON-NLS-1$
@@ -200,15 +200,16 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   }
 
   /**
-   * Saves the values of all flags to the PreferenceStore, where any flag contained in the passed collection is saved as 'set', any flag known to the
-   * MatchSetFactory but not contained in the passed Collection is saved as 'not set'.
+   * Saves the values of all flags to the PreferenceStore, where any flag contained in
+   * the passed collection is saved as 'set', any flag known to the
+   * {@link MatchSetFactory} but not contained in the passed Collection is saved as 'not set'.
    *
-   * @param p_flags
+   * @param flags
    *          a Collection holding the actually set flags
    */
-  public void saveSelectedFlagValues(Collection<? extends Flag> p_flags) {
+  public void saveSelectedFlagValues(Collection<? extends Flag> flags) {
     for (Flag element : MatchSetFactory.getAllSupportedFlags()) {
-      getPreferenceStore().setValue(element.getCode(), p_flags.contains(element));
+      getPreferenceStore().setValue(element.getCode(), flags.contains(element));
     }
   }
 

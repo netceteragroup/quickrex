@@ -249,7 +249,7 @@ public class QuickRExView extends ViewPart {
       checkButton.setSelection(QuickRExPlugin.getDefault().isFlagSaved(element));
       checkButton.addSelectionListener(new SelectionListener() {
         @Override
-        public void widgetSelected(SelectionEvent p_e) {
+        public void widgetSelected(SelectionEvent event) {
           if (checkButton.getSelection()) {
             currentFlags.add(element);
           } else {
@@ -259,7 +259,7 @@ public class QuickRExView extends ViewPart {
         }
 
         @Override
-        public void widgetDefaultSelected(SelectionEvent p_e) {
+        public void widgetDefaultSelected(SelectionEvent event) {
         }
       });
     }
@@ -283,12 +283,12 @@ public class QuickRExView extends ViewPart {
     previousGroupButton.setLayoutData(gd);
     previousGroupButton.addSelectionListener(new SelectionListener() {
       @Override
-      public void widgetSelected(SelectionEvent p_e) {
+      public void widgetSelected(SelectionEvent event) {
         handlePreviousGroupButtonPressed();
       }
 
       @Override
-      public void widgetDefaultSelected(SelectionEvent p_e) {
+      public void widgetDefaultSelected(SelectionEvent event) {
       }
     });
     previousGroupButton.setEnabled(false);
@@ -298,12 +298,12 @@ public class QuickRExView extends ViewPart {
     nextGroupButton.setLayoutData(gd);
     nextGroupButton.addSelectionListener(new SelectionListener() {
       @Override
-      public void widgetSelected(SelectionEvent p_e) {
+      public void widgetSelected(SelectionEvent event) {
         handleNextGroupButtonPressed();
       }
 
       @Override
-      public void widgetDefaultSelected(SelectionEvent p_e) {
+      public void widgetDefaultSelected(SelectionEvent event) {
       }
     });
     nextGroupButton.setEnabled(false);
@@ -327,12 +327,12 @@ public class QuickRExView extends ViewPart {
     previousButton.setLayoutData(gd);
     previousButton.addSelectionListener(new SelectionListener() {
       @Override
-      public void widgetSelected(SelectionEvent p_e) {
+      public void widgetSelected(SelectionEvent event) {
         handlePreviousButtonPressed();
       }
 
       @Override
-      public void widgetDefaultSelected(SelectionEvent p_e) {
+      public void widgetDefaultSelected(SelectionEvent event) {
       }
     });
     previousButton.setEnabled(false);
@@ -342,12 +342,12 @@ public class QuickRExView extends ViewPart {
     nextButton.setLayoutData(gd);
     nextButton.addSelectionListener(new SelectionListener() {
       @Override
-      public void widgetSelected(SelectionEvent p_e) {
+      public void widgetSelected(SelectionEvent event) {
         handleNextButtonPressed();
       }
 
       @Override
-      public void widgetDefaultSelected(SelectionEvent p_e) {
+      public void widgetDefaultSelected(SelectionEvent event) {
       }
     });
     nextButton.setEnabled(false);
@@ -384,7 +384,7 @@ public class QuickRExView extends ViewPart {
     testText.setLayoutData(gd);
     testText.addModifyListener(new ModifyListener() {
       @Override
-      public void modifyText(ModifyEvent p_e) {
+      public void modifyText(ModifyEvent event) {
         handleTestTextModified();
       }
     });
@@ -408,20 +408,20 @@ public class QuickRExView extends ViewPart {
     regExpCombo.setLayoutData(gd);
     regExpCombo.addModifyListener(new ModifyListener() {
       @Override
-      public void modifyText(ModifyEvent p_e) {
+      public void modifyText(ModifyEvent event) {
         handleRegExpModified();
       }
     });
     regExpCombo.addFocusListener(new FocusListener() {
       @Override
-      public void focusGained(FocusEvent p_e) {
+      public void focusGained(FocusEvent event) {
         // This is a hack to keep the Previous- and Next-Buttons from generating
         // selections in the component...
         regExpCombo.clearSelection();
       }
 
       @Override
-      public void focusLost(FocusEvent p_e) {
+      public void focusLost(FocusEvent event) {
         // This is a hack to keep the Previous- and Next-Buttons from generating
         // selections in the component...
         regExpCombo.clearSelection();
