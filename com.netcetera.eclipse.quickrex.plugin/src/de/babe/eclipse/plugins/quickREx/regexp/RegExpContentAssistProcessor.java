@@ -36,7 +36,7 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
   /**
    * The available PROPOSALS.
    */
-  private final static CompletionProposals PROPOSALS = new CompletionProposals();
+  private static final CompletionProposals PROPOSALS = new CompletionProposals();
 
   static {
     initializeProposals();
@@ -51,57 +51,36 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
    */
   private IContextInformationValidator fValidator = new SubjectControlContextInformationValidator(this);
 
-  /*
-   * @see IContentAssistProcessor#computeCompletionProposals(ITextViewer, int)
-   */
   @Override
   public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int documentOffset) {
     return computeCompletionProposals((IContentAssistSubjectControl) null, documentOffset);
   }
 
-  /*
-   * @see IContentAssistProcessor#computeContextInformation(ITextViewer, int)
-   */
   @Override
   public IContextInformation[] computeContextInformation(ITextViewer viewer, int documentOffset) {
     return computeContextInformation((IContentAssistSubjectControl) null, documentOffset);
   }
 
-  /*
-   * @see IContentAssistProcessor#getCompletionProposalAutoActivationCharacters()
-   */
   @Override
   public char[] getCompletionProposalAutoActivationCharacters() {
     return new char[] { '\\', '[', '(' };
   }
 
-  /*
-   * @see IContentAssistProcessor#getContextInformationAutoActivationCharacters()
-   */
   @Override
   public char[] getContextInformationAutoActivationCharacters() {
     return new char[] {};
   }
 
-  /*
-   * @see IContentAssistProcessor#getContextInformationValidator()
-   */
   @Override
   public IContextInformationValidator getContextInformationValidator() {
     return fValidator;
   }
 
-  /*
-   * @see IContentAssistProcessor#getErrorMessage()
-   */
   @Override
   public String getErrorMessage() {
     return null;
   }
 
-  /*
-   * @see ISubjectControlContentAssistProcessor#computeCompletionProposals(IContentAssistSubjectControl, int)
-   */
   @Override
   public ICompletionProposal[] computeCompletionProposals(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
     Set<RECompletionProposal> results = new TreeSet<>(new RECompletionProposalComparator());
@@ -119,16 +98,14 @@ public class RegExpContentAssistProcessor implements ISubjectControlContentAssis
 
       int relativeOffset = proposal.getInsertString().length();
 
-      proposals.add(new CompletionProposal(proposal.getInsertString(), documentOffset, 0, Math.max(0, relativeOffset), null, displayString, info,
-          additionalInfo));
+      CompletionProposal completionProposal = new CompletionProposal(
+          proposal.getInsertString(), documentOffset, 0, Math.max(0, relativeOffset), null, displayString, info, additionalInfo);
+      proposals.add(completionProposal);
     }
 
     return proposals.toArray(new ICompletionProposal[results.size()]);
   }
 
-  /*
-   * @see ISubjectControlContentAssistProcessor#computeContextInformation(IContentAssistSubjectControl, int)
-   */
   @Override
   public IContextInformation[] computeContextInformation(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
     return null;

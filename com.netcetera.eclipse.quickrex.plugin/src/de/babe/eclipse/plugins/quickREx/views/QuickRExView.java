@@ -463,9 +463,6 @@ public class QuickRExView extends ViewPart {
     regExpContentAssistant.setContextInformationPopupOrientation(IContentAssistant.CONTEXT_INFO_ABOVE);
     regExpContentAssistant.setRestoreCompletionProposalSize(QuickRExPlugin.getDefault().getDialogSettings()); //$NON-NLS-1$
     regExpContentAssistant.setInformationControlCreator(new IInformationControlCreator() {
-      /*
-       * @see org.eclipse.jface.text.IInformationControlCreator#createInformationControl(org.eclipse.swt.widgets.Shell)
-       */
       @Override
       public IInformationControl createInformationControl(Shell parent) {
         return new DefaultInformationControl(parent);
