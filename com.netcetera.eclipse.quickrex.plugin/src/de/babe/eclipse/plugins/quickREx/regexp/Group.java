@@ -30,7 +30,7 @@ public class Group {
    * @param p_start the start-index of this group
    * @param p_end the end-index of this group
    */
-  public Group(int p_index, String p_id, String p_text, int p_start, int p_end) {
+  Group(int p_index, String p_id, String p_text, int p_start, int p_end) {
     this.index = p_index;
     this.id = p_id;
     this.text = p_text;
@@ -46,7 +46,7 @@ public class Group {
    * @param p_start the start-index of this group
    * @param p_end the end-index of this group
    */
-  public Group(int p_index, String p_text, int p_start, int p_end) {
+  Group(int p_index, String p_text, int p_start, int p_end) {
     this(p_index, null, p_text, p_start, p_end);
   }
 
@@ -94,10 +94,12 @@ public class Group {
    * @return the textual contents
    */
   public String getText() {
-    try {
-      return this.text.replaceAll("\r", "\\\u005C\\u0072").replaceAll("\n", "\\\u005C\\u006E").replaceAll("\t", "\\\u005C\\u0074"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-    } catch (NullPointerException npe) {
+    if (this.text == null) {
       return null;
     }
+    return this.text
+        .replaceAll("\r", "\\\u005C\\u0072") //$NON-NLS-1$ //$NON-NLS-2$
+        .replaceAll("\n", "\\\u005C\\u006E") //$NON-NLS-1$ //$NON-NLS-2$
+        .replaceAll("\t", "\\\u005C\\u0074"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

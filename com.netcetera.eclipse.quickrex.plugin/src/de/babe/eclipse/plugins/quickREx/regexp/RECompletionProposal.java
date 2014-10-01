@@ -14,7 +14,7 @@ import java.util.Vector;
 /**
  * @author bastian.bergerhoff
  */
-public class RECompletionProposal {
+public class RECompletionProposal implements Comparable<RECompletionProposal> {
 
   static final String INSTANCE_QNAME = "proposal";  //$NON-NLS-1$
   static final String KEY_ATTRIBUTE_QNAME = "key"; //$NON-NLS-1$
@@ -31,18 +31,18 @@ public class RECompletionProposal {
   private String displayString;
   private String additionalInfo;
 
-  public RECompletionProposal(String p_proposalKey, String p_plainProposal, boolean p_allowPlain) {
+  RECompletionProposal(String p_proposalKey, String p_plainProposal, boolean p_allowPlain) {
     this.key = p_proposalKey;
     this.plainProposal = p_plainProposal;
     this.triggers = new Vector<>();
     this.allowPlain = p_allowPlain;
   }
 
-  public void addTriggerExpression(String regExp, String proposal) {
+  void addTriggerExpression(String regExp, String proposal) {
     this.triggers.add(0, new CompletionTriggerExpression(regExp, proposal, this.plainProposal));
   }
 
-  public void addTriggerWord(String word, String extendWith) {
+  void addTriggerWord(String word, String extendWith) {
     this.triggers.add(0, new CompletionTriggerWord(word, extendWith, this.plainProposal));
   }
 
@@ -121,10 +121,11 @@ public class RECompletionProposal {
    * Returns -1 if this proposal is preferrable to the passed proposal, 0 if they are equal
    * and +1 if the passed proposal is preferrable to this one.
    *
-   * @param p_other the RECompletionProposal this should be compared to
+   * @param other the RECompletionProposal this should be compared to
    * @return -1, 0 or +1 depending on the passed proposal
    */
-  public int compareTo(RECompletionProposal p_other) {
+  @Override
+  public int compareTo(RECompletionProposal other) {
     // Always prefer anything to a plain proposal
     if (this.text == null || this.text.length() == 0) {
       return +1;
@@ -134,11 +135,11 @@ public class RECompletionProposal {
       return +1;
     }
     // If this is a match but the other is not or is a plain match (not an actual one), prefer this one
-    if (!p_other.isMatch() || p_other.isPlainMatch()) {
+    if (!other.isMatch() || other.isPlainMatch()) {
       return -1;
     }
     // Both match, let the triggers decide
-    return this.getMatchingTrigger().compareTo(p_other.getMatchingTrigger());
+    return this.getMatchingTrigger().compareTo(other.getMatchingTrigger());
   }
 
 

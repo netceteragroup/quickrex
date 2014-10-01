@@ -14,7 +14,7 @@ import java.util.Comparator;
 /**
  * @author bastian.bergerhoff
  */
-public class RECompletionProposalComparator implements Comparator<RECompletionProposal> {
+class RECompletionProposalComparator implements Comparator<RECompletionProposal> {
 
   @Override
   public int compare(RECompletionProposal prop1, RECompletionProposal prop2) {

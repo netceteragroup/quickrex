@@ -24,31 +24,38 @@ import de.babe.eclipse.plugins.quickREx.regexp.Flag;
 final class JavaFlag extends Flag {
 
   static final Flag JDK_CANON_EQ = new JavaFlag(
-      "de.babe.eclipse.plugins.quickREx.regexp.jdk.CANON_EQ", Pattern.CANON_EQ, Messages.getString("regexp.jdk.JavaFlag.canon_eq"), //$NON-NLS-1$ //$NON-NLS-2$
+      "de.babe.eclipse.plugins.quickREx.regexp.jdk.CANON_EQ", //$NON-NLS-1$
+      Pattern.CANON_EQ, Messages.getString("regexp.jdk.JavaFlag.canon_eq"), //$NON-NLS-1$
       Messages.getString("regexp.jdk.JavaFlag.canon_eq.description")); //$NON-NLS-1$
 
   static final Flag JDK_UNICODE_CASE = new JavaFlag(
-      "de.babe.eclipse.plugins.quickREx.regexp.jdk.UNICODE_CASE", Pattern.UNICODE_CASE, Messages.getString("regexp.jdk.JavaFlag.unicode_case"), //$NON-NLS-1$ //$NON-NLS-2$
+      "de.babe.eclipse.plugins.quickREx.regexp.jdk.UNICODE_CASE", //$NON-NLS-1$
+      Pattern.UNICODE_CASE, Messages.getString("regexp.jdk.JavaFlag.unicode_case"), //$NON-NLS-1$
       Messages.getString("regexp.jdk.JavaFlag.unicode_case.description")); //$NON-NLS-1$
 
   static final Flag JDK_DOTALL = new JavaFlag(
-      "de.babe.eclipse.plugins.quickREx.regexp.jdk.DOTALL", Pattern.DOTALL, Messages.getString("regexp.jdk.JavaFlag.dotall"), //$NON-NLS-1$ //$NON-NLS-2$
+      "de.babe.eclipse.plugins.quickREx.regexp.jdk.DOTALL", //$NON-NLS-1$
+      Pattern.DOTALL, Messages.getString("regexp.jdk.JavaFlag.dotall"), //$NON-NLS-1$
       Messages.getString("regexp.jdk.JavaFlag.dotall.description")); //$NON-NLS-1$
 
   static final Flag JDK_MULTILINE = new JavaFlag(
-      "de.babe.eclipse.plugins.quickREx.regexp.jdk.MULTILINE", Pattern.MULTILINE, Messages.getString("regexp.jdk.JavaFlag.multiline"), //$NON-NLS-1$ //$NON-NLS-2$
+      "de.babe.eclipse.plugins.quickREx.regexp.jdk.MULTILINE", //$NON-NLS-1$
+      Pattern.MULTILINE, Messages.getString("regexp.jdk.JavaFlag.multiline"), //$NON-NLS-1$
       Messages.getString("regexp.jdk.JavaFlag.multiline.description")); //$NON-NLS-1$
 
   static final Flag JDK_COMMENTS = new JavaFlag(
-      "de.babe.eclipse.plugins.quickREx.regexp.jdk.COMMENTS", Pattern.COMMENTS, Messages.getString("regexp.jdk.JavaFlag.comments"), //$NON-NLS-1$ //$NON-NLS-2$
+      "de.babe.eclipse.plugins.quickREx.regexp.jdk.COMMENTS", //$NON-NLS-1$
+      Pattern.COMMENTS, Messages.getString("regexp.jdk.JavaFlag.comments"), //$NON-NLS-1$
       Messages.getString("regexp.jdk.JavaFlag.comments.description")); //$NON-NLS-1$
 
   static final Flag JDK_CASE_INSENSITIVE = new JavaFlag(
-      "de.babe.eclipse.plugins.quickREx.regexp.jdk.CASE_INSENSITIVE", Pattern.CASE_INSENSITIVE, Messages.getString("regexp.jdk.JavaFlag.case_insensitive"), //$NON-NLS-1$ //$NON-NLS-2$
+      "de.babe.eclipse.plugins.quickREx.regexp.jdk.CASE_INSENSITIVE", //$NON-NLS-1$
+      Pattern.CASE_INSENSITIVE, Messages.getString("regexp.jdk.JavaFlag.case_insensitive"), //$NON-NLS-1$
       Messages.getString("regexp.jdk.JavaFlag.case_insensitive.description")); //$NON-NLS-1$
 
   static final Flag JDK_UNIX_LINES = new JavaFlag(
-      "de.babe.eclipse.plugins.quickREx.regexp.jdk.UNIX_LINES", Pattern.UNIX_LINES, Messages.getString("regexp.jdk.JavaFlag.unix_lines"), //$NON-NLS-1$ //$NON-NLS-2$
+      "de.babe.eclipse.plugins.quickREx.regexp.jdk.UNIX_LINES", //$NON-NLS-1$
+      Pattern.UNIX_LINES, Messages.getString("regexp.jdk.JavaFlag.unix_lines"), //$NON-NLS-1$
       Messages.getString("regexp.jdk.JavaFlag.unix_lines.description")); //$NON-NLS-1$
 
 

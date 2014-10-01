@@ -14,9 +14,9 @@ package de.babe.eclipse.plugins.quickREx.regexp;
  */
 public class REEditorCategoryMapping {
 
-  public static final String INSTANCE_QNAME = "categoryMapping";  //$NON-NLS-1$
-  public static final String PROPOSAL_KEY_ATTRIBUTE_QNAME = "proposalKey"; //$NON-NLS-1$
-  public static final String CATEGORY_ATTRIBUTE_QNAME = "category"; //$NON-NLS-1$
+  static final String INSTANCE_QNAME = "categoryMapping";  //$NON-NLS-1$
+  static final String PROPOSAL_KEY_ATTRIBUTE_QNAME = "proposalKey"; //$NON-NLS-1$
+  static final String CATEGORY_ATTRIBUTE_QNAME = "category"; //$NON-NLS-1$
 
   private final String proposalKey;
   private final String category;
@@ -24,12 +24,12 @@ public class REEditorCategoryMapping {
   /**
    * The constructor.
    *
-   * @param p_proposalKey
-   * @param p_category
+   * @param proposalKey
+   * @param category
    */
-  public REEditorCategoryMapping(String p_proposalKey, String p_category) {
-    this.proposalKey = p_proposalKey;
-    this.category = p_category;
+  REEditorCategoryMapping(String proposalKey, String category) {
+    this.proposalKey = proposalKey;
+    this.category = category;
   }
 
   /**

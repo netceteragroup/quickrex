@@ -30,12 +30,12 @@ public class EditorCategoryMappingXMLHandler extends DefaultHandler {
   /**
    * The constructor.
    *
-   * @param p_categoryMappings
-   * @param p_categories
+   * @param categoryMappings
+   * @param categories
    */
-  public EditorCategoryMappingXMLHandler(Map<String, List<REEditorCategoryMapping>> p_categoryMappings, List<String> p_categories) {
-    this.mappings = p_categoryMappings;
-    this.categories = p_categories;
+  public EditorCategoryMappingXMLHandler(Map<String, List<REEditorCategoryMapping>> categoryMappings, List<String> categories) {
+    this.mappings = categoryMappings;
+    this.categories = categories;
   }
 
   @Override

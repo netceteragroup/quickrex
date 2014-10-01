@@ -27,13 +27,13 @@ public class Match {
   /**
    * The constructor. Instances of this class are immutable.
    *
-   * @param p_start the start-index of this match
-   * @param p_end the end-index of this match
+   * @param start the start-index of this match
+   * @param end the end-index of this match
    */
-  public Match(int p_start, int p_end, String p_text) {
-    this.start = p_start;
-    this.end = p_end;
-    this.text = p_text;
+  Match(int start, int end, String text) {
+    this.start = start;
+    this.end = end;
+    this.text = text;
     this.groupData = new ArrayList<>();
   }
 
@@ -128,11 +128,11 @@ public class Match {
   /**
    * Adds the passed group to the list of @see Group s this match holds.
    *
-   * @param p_group the Group to be added
+   * @param group the Group to be added
    */
-  public void addGroup(Group p_group) {
-    if (p_group.getText() != null) {
-      this.groupData.add(p_group);
+  public void addGroup(Group group) {
+    if (group.getText() != null) {
+      this.groupData.add(group);
     }
   }
 }

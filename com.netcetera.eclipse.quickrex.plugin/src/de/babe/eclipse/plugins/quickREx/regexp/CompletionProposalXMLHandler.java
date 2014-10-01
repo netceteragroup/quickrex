@@ -31,12 +31,12 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
   private CompletionTriggerWord currentTriggerWord;
 
   /**
-   * @param p_proposals
-   * @param p_keys
+   * @param proposals
+   * @param keys
    */
-  public CompletionProposalXMLHandler(Map<String, RECompletionProposal> p_proposals, List<String> p_keys) {
-    this.proposals = p_proposals;
-    this.keys = p_keys;
+  public CompletionProposalXMLHandler(Map<String, RECompletionProposal> proposals, List<String> keys) {
+    this.proposals = proposals;
+    this.keys = keys;
   }
 
   @Override

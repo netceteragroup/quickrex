@@ -43,38 +43,38 @@ public class CompletionProposals {
   /**
    * Returns the proposal for the passed flavour with the passed key.
    *
-   * @param p_proposalKey the key for the proposal
+   * @param proposalKey the key for the proposal
    * @return the RECompletionProposal
    */
-  public RECompletionProposal getProposal(String p_proposalKey) {
-    return proposalsMap.get(p_proposalKey);
+  public RECompletionProposal getProposal(String proposalKey) {
+    return proposalsMap.get(proposalKey);
   }
 
   /**
    * Sets the keys-list (as passed) for the passed flavour.
    *
-   * @param p_keys the list of keys
+   * @param keys the list of keys
    */
-  public void setKeys(List<String> p_keys) {
-    keysMap = p_keys;
+  public void setKeys(List<String> keys) {
+    keysMap = keys;
   }
 
   /**
    * Sets the proposals-map (as passed) for the passed flavour.
    *
-   * @param p_proposals the HashMap with proposals (String-keys mapped to RECompletionProposal-instances)
+   * @param proposals the HashMap with proposals (String-keys mapped to RECompletionProposal-instances)
    */
-  public void setProposals(Map<String, RECompletionProposal> p_proposals) {
-    proposalsMap = p_proposals;
+  public void setProposals(Map<String, RECompletionProposal> proposals) {
+    proposalsMap = proposals;
   }
 
   /**
    * Copies key-lists and proposal-maps to the passed instance.
    *
-   * @param p_proposals the instance to initialize
+   * @param proposals the instance to initialize
    */
-  public void copyValuesTo(CompletionProposals p_proposals) {
-    p_proposals.keysMap = this.keysMap;
-    p_proposals.proposalsMap = this.proposalsMap;
+  public void copyValuesTo(CompletionProposals proposals) {
+    proposals.keysMap = this.keysMap;
+    proposals.proposalsMap = this.proposalsMap;
   }
 }

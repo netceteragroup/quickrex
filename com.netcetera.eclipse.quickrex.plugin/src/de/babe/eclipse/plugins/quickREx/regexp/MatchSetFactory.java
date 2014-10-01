@@ -22,6 +22,10 @@ import de.babe.eclipse.plugins.quickREx.regexp.jdk.JavaMatchSet;
  */
 public final class MatchSetFactory {
 
+  private MatchSetFactory() {
+    throw new AssertionError("not instantiable");
+  }
+
   /**
    * Factory-Method to create a MatchSet for the passed details.
    * @param regExp
@@ -29,7 +33,8 @@ public final class MatchSetFactory {
    * @param text
    *          the text to match against the reg.exp.
    * @param flags
-   *          a Collection of flags to pass to the Compiler. This may contain more flags than are applicable to the requested flavour. In this case,
+   *          a Collection of flags to pass to the Compiler. This may contain more flags than are
+   *          applicable to the requested flavour. In this case,
    *          only those flags which are applicable are taken into account when creating the MatchSet
    *
    * @return a MatchSet as requested
@@ -60,7 +65,8 @@ public final class MatchSetFactory {
   }
 
   /**
-   * Helper-Method to get the maximum number of flags supported by any of the regular-expression Compilers used by the plug-in.
+   * Helper-Method to get the maximum number of flags supported by any of the regular-expression Compilers used
+   * by the plug-in.
    *
    * @return the maximum number of flags
    */
