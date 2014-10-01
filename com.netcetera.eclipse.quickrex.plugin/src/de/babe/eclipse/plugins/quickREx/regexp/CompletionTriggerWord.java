@@ -12,10 +12,10 @@ package de.babe.eclipse.plugins.quickREx.regexp;
 /**
  * @author bastian.bergerhoff
  */
-public class CompletionTriggerWord extends CompletionTrigger {
+class CompletionTriggerWord extends CompletionTrigger {
 
-  public static final String INSTANCE_QNAME = "wordtrigger";  //$NON-NLS-1$
-  public static final String WORD_ATTRIBUTE_QNAME = "word"; //$NON-NLS-1$
+  static final String INSTANCE_QNAME = "wordtrigger";  //$NON-NLS-1$
+  static final String WORD_ATTRIBUTE_QNAME = "word"; //$NON-NLS-1$
 
   private final String word;
   private final String extension;
@@ -24,23 +24,23 @@ public class CompletionTriggerWord extends CompletionTrigger {
   /**
    * @param p_word
    */
-  public CompletionTriggerWord(String p_word, String p_extendWith, String p_plainProposal) {
+  CompletionTriggerWord(String p_word, String p_extendWith, String p_plainProposal) {
     this.word = p_word;
     this.extension = p_extendWith;
     this.plainProposal = p_plainProposal;
   }
 
 
-  /*package*/ String getWord() {
+  String getWord() {
     return this.word;
   }
 
-  /*package*/ @Override
+  @Override
   String getPlainProposal() {
     return this.plainProposal;
   }
 
-  /*package*/ String getExtension() {
+  String getExtension() {
     return this.extension;
   }
 

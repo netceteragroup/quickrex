@@ -113,7 +113,7 @@ public class RECompletionProposal {
     return this.key;
   }
 
-  /*package*/ String getPlainProposal() {
+  String getPlainProposal() {
     return this.plainProposal;
   }
 

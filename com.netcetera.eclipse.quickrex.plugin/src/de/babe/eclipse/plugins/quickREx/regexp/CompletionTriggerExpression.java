@@ -35,16 +35,16 @@ class CompletionTriggerExpression extends CompletionTrigger {
     this.plainProposal = plainProposal;
   }
 
-  /*package*/ String getRegExp() {
+  String getRegExp() {
     return this.regExp;
   }
 
-  /*package*/ @Override
+  @Override
   String getPlainProposal() {
     return this.plainProposal;
   }
 
-  /*package*/ String getProposal() {
+  String getProposal() {
     return this.proposal;
   }
 

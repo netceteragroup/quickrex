@@ -10,9 +10,6 @@
  *******************************************************************************/
 package de.babe.eclipse.plugins.quickREx.regexp;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -167,20 +164,4 @@ public class RegularExpressionHits {
     this.throwable = null;
   }
 
-  /**
-   * Returns all matches separated by CRs and LFs.
-   *
-   * @return all matches separated by CRs and LFs
-   */
-  public String grep() {
-    try (StringWriter sw = new StringWriter();
-      PrintWriter pw = new PrintWriter(sw)) {
-      for (Match element : matchData) {
-        pw.println(element.getText());
-      }
-      return sw.toString();
-    } catch (IOException | NullPointerException e) {
-      return ""; //$NON-NLS-1$
-    }
-  }
 }
