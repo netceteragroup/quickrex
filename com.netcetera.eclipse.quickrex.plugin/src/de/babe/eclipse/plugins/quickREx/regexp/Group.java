@@ -24,30 +24,30 @@ public class Group {
   /**
    * The constructor. Instances of this class are immutable.
    *
-   * @param p_index the index of this group
-   * @param p_id the ID of this group, can be null
-   * @param p_text the textual contents of this group
-   * @param p_start the start-index of this group
-   * @param p_end the end-index of this group
+   * @param index the index of this group
+   * @param id the ID of this group, can be null
+   * @param text the textual contents of this group
+   * @param start the start-index of this group
+   * @param end the end-index of this group
    */
-  Group(int p_index, String p_id, String p_text, int p_start, int p_end) {
-    this.index = p_index;
-    this.id = p_id;
-    this.text = p_text;
-    this.start = p_start;
-    this.end = p_end;
+  Group(int index, String id, String text, int start, int end) {
+    this.index = index;
+    this.id = id;
+    this.text = text;
+    this.start = start;
+    this.end = end;
   }
 
   /**
    * The constructor. Instances of this class are immutable.
    *
-   * @param p_index the index of this group
-   * @param p_text the textual contents of this group
-   * @param p_start the start-index of this group
-   * @param p_end the end-index of this group
+   * @param index the index of this group
+   * @param text the textual contents of this group
+   * @param start the start-index of this group
+   * @param end the end-index of this group
    */
-  Group(int p_index, String p_text, int p_start, int p_end) {
-    this(p_index, null, p_text, p_start, p_end);
+  Group(int index, String text, int start, int end) {
+    this(index, null, text, start, end);
   }
 
 

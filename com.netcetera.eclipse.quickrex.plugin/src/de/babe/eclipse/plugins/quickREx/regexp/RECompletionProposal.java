@@ -31,11 +31,11 @@ public class RECompletionProposal implements Comparable<RECompletionProposal> {
   private String displayString;
   private String additionalInfo;
 
-  RECompletionProposal(String p_proposalKey, String p_plainProposal, boolean p_allowPlain) {
-    this.key = p_proposalKey;
-    this.plainProposal = p_plainProposal;
+  RECompletionProposal(String proposalKey, String plainProposal, boolean allowPlain) {
+    this.key = proposalKey;
+    this.plainProposal = plainProposal;
     this.triggers = new Vector<>();
-    this.allowPlain = p_allowPlain;
+    this.allowPlain = allowPlain;
   }
 
   void addTriggerExpression(String regExp, String proposal) {
@@ -105,8 +105,8 @@ public class RECompletionProposal implements Comparable<RECompletionProposal> {
     }
   }
 
-  public void setText(String p_text) {
-    this.text = p_text;
+  public void setText(String text) {
+    this.text = text;
   }
 
   public String getKey() {

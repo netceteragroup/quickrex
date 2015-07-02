@@ -24,10 +24,10 @@ public class PluginImageRegistry extends ImageRegistry {
   /**
    * The constructor.
    *
-   * @param p_plugin
+   * @param plugin
    */
-  public PluginImageRegistry(QuickRExPlugin p_plugin) {
-    String pluginId = p_plugin.getBundle().getSymbolicName();
+  public PluginImageRegistry(QuickRExPlugin plugin) {
+    String pluginId = plugin.getBundle().getSymbolicName();
     ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, "icons/jcopy.gif");  //$NON-NLS-1$
     put(IMG_JCOPY, descriptor);
   }

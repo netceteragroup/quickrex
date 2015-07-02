@@ -18,13 +18,13 @@ abstract class CompletionTrigger {
 
   protected String text;
 
-  public abstract boolean isMatchFor(String p_text);
+  public abstract boolean isMatchFor(String text);
 
-  public abstract String getInsertString(String p_text);
+  public abstract String getInsertString(String text);
 
   public abstract String getInsertString();
 
-  public abstract int compareTo(CompletionTrigger p_other);
+  public abstract int compareTo(CompletionTrigger other);
 
   abstract String getPlainProposal();
 

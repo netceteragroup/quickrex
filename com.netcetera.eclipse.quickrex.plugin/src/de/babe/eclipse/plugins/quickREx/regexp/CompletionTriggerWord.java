@@ -22,12 +22,12 @@ class CompletionTriggerWord extends CompletionTrigger {
   private final String plainProposal;
 
   /**
-   * @param p_word
+   * @param word
    */
-  CompletionTriggerWord(String p_word, String p_extendWith, String p_plainProposal) {
-    this.word = p_word;
-    this.extension = p_extendWith;
-    this.plainProposal = p_plainProposal;
+  CompletionTriggerWord(String word, String extendWith, String plainProposal) {
+    this.word = word;
+    this.extension = extendWith;
+    this.plainProposal = plainProposal;
   }
 
 

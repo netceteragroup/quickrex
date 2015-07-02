@@ -29,14 +29,14 @@ public final class Messages {
    * Returns the (localized) string stored under the passed key or '!<key>!' if
    * the string was not found
    *
-   * @param p_key the key for the (localized) string
+   * @param key the key for the (localized) string
    * @return the (localized) string or '!<key>!'
    */
-  public static String getString(String p_key) {
+  public static String getString(String key) {
     try {
-      return RESOURCE_BUNDLE.getString(p_key);
+      return RESOURCE_BUNDLE.getString(key);
     } catch (MissingResourceException e) {
-      return '!' + p_key + '!';
+      return '!' + key + '!';
     }
   }
 
@@ -44,11 +44,11 @@ public final class Messages {
    * Returns the (localized) string stored under the passed key with placeholders
    * replaced by the passed Objects or '!<key>!' if the string was not found
    *
-   * @param p_key the key for the (localized) string
-   * @param p_params parameters for the message
+   * @param key the key for the (localized) string
+   * @param params parameters for the message
    * @return the (localized) string stored under the passed key
    */
-  public static String getString(String p_key, Object[] p_params) {
-    return MessageFormat.format(getString(p_key), p_params);
+  public static String getString(String key, Object[] params) {
+    return MessageFormat.format(getString(key), params);
   }
 }

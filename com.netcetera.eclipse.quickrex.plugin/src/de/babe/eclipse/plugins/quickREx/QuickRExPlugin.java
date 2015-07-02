@@ -186,12 +186,12 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  public void initCategoriesFromFile(Map<String, List<REEditorCategoryMapping>> p_mappings, List<String> p_categories) {
+  public void initCategoriesFromFile(Map<String, List<REEditorCategoryMapping>> mappings, List<String> categories) {
     String filepath = JDK_CATEGORIES_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.readerror.jdk.categories"; //$NON-NLS-1$
     try (InputStream propFileStream = FileLocator.openStream(getBundle(), new Path(filepath), true)) {
       SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-      parser.parse(propFileStream, new EditorCategoryMappingXMLHandler(p_mappings, p_categories));
+      parser.parse(propFileStream, new EditorCategoryMappingXMLHandler(mappings, categories));
     } catch (Exception ex) {
       // nop, to be save
       IStatus status = new Status(IStatus.WARNING, QuickRExPlugin.ID, 3, Messages.getString(errorMsgKey), ex); //$NON-NLS-1$
@@ -216,12 +216,12 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Returns <code>true</code> if and only if the passed Flag is saved as 'set' in the PreferenceStore.
    *
-   * @param p_flag
+   * @param flag
    *          the flag to check for
    * @return the state for the flag in the store (set: true, not set: false)
    */
-  public boolean isFlagSaved(Flag p_flag) {
-    return getPreferenceStore().getBoolean(p_flag.getCode());
+  public boolean isFlagSaved(Flag flag) {
+    return getPreferenceStore().getBoolean(flag.getCode());
   }
 
   /**
@@ -236,10 +236,10 @@ public class QuickRExPlugin extends AbstractUIPlugin {
   /**
    * Set (and store) the scope used for the last search of the Reg. Exp. Library.
    *
-   * @param p_scope the scope to set and store
+   * @param scope the scope to set and store
    */
-  public void setLastSearchScope(int p_scope) {
-    getPreferenceStore().setValue(LAST_SEARCH_SCOPE, p_scope);
+  public void setLastSearchScope(int scope) {
+    getPreferenceStore().setValue(LAST_SEARCH_SCOPE, scope);
   }
 
   /**

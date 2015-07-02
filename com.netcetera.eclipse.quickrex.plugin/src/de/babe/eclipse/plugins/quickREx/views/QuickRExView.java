@@ -612,11 +612,11 @@ public class QuickRExView extends ViewPart {
     }
   }
 
-  private StyleRange[] getStyleRanges(Match[] p_matches) {
-    StyleRange[] ranges = new StyleRange[p_matches.length];
-    for (int i = 0; i < p_matches.length; i++) {
-      int start = p_matches[i].getStart();
-      int length = p_matches[i].getEnd() - start;
+  private StyleRange[] getStyleRanges(Match[] matches) {
+    StyleRange[] ranges = new StyleRange[matches.length];
+    for (int i = 0; i < matches.length; i++) {
+      int start = matches[i].getStart();
+      int length = matches[i].getEnd() - start;
       Color foreground = JFaceResources.getColorRegistry().get(MATCH_FG_COLOR_KEY);
       Color background = JFaceResources.getColorRegistry().get(MATCH_BG_COLOR_KEY);
       ranges[i] = new StyleRange(start, length, foreground, background);

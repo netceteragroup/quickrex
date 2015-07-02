@@ -13,7 +13,6 @@ package de.babe.eclipse.plugins.quickREx.regexp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * @author bastian.bergerhoff, georg.sendt
@@ -34,8 +33,8 @@ public class RegularExpressionHits {
    * @param p_matcher
    *          the Matcher to use for initialization
    */
-  public void init(String p_RegExp, String p_testText, Collection<Flag> flags) {
-    MatchSet matches = MatchSetFactory.createMatchSet(p_RegExp, p_testText, flags);
+  public void init(String regExp, String testText, Collection<Flag> flags) {
+    MatchSet matches = MatchSetFactory.createMatchSet(regExp, testText, flags);
     matchData = new ArrayList<>();
     while (matches.nextMatch()) {
       Match match = new Match(matches.start(), matches.end(), matches.groupContents(0));
@@ -75,7 +74,7 @@ public class RegularExpressionHits {
    * Returns <code>true</code> if and only if the Matcher used when last
    * calling.
    *
-   * @see RegularExpressionHits#init(Matcher) found at least one match
+   * @see RegularExpressionHits#init(String, String, Collection) found at least one match
    *
    * @return <code>true</code> if this hit contains matches
    */
