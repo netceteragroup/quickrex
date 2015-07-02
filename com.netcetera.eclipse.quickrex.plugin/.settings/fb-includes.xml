@@ -295,8 +295,10 @@
     <Bug pattern="DMI_SCHEDULED_THREAD_POOL_EXECUTOR_WITH_ZERO_CORE_THREADS"></Bug>
   </Match>
   <Match>
-    <!-- Is currently ignored by Sonar: http://jira.codehaus.org/browse/SONAR-2005 -->
     <Bug pattern="DMI_VACUOUS_CALL_TO_EASYMOCK_METHOD"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="DMI_BIGDECIMAL_CONSTRUCTED_FROM_DOUBLE"></Bug>
   </Match>
   <Match>
     <Bug pattern="EC_ARRAY_AND_NONARRAY"></Bug>
@@ -751,6 +753,9 @@
     <Bug pattern="DM_BOXED_PRIMITIVE_TOSTRING"></Bug>
   </Match>
   <Match>
+    <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING"></Bug>
+  </Match>
+  <Match>
     <Bug pattern="DM_FP_NUMBER_CTOR"></Bug>
   </Match>
   <Match>
@@ -940,6 +945,12 @@
     <Bug pattern="NS_NON_SHORT_CIRCUIT"></Bug>
   </Match>
   <Match>
+    <Bug pattern="NP_METHOD_RETURN_RELAXING_ANNOTATION"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="NP_METHOD_PARAMETER_TIGHTENS_ANNOTATION"></Bug>
+  </Match>
+  <Match>
     <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS"></Bug>
   </Match>
   <Match>
@@ -1037,6 +1048,9 @@
     <Bug pattern="JML_JSR166_CALLING_WAIT_RATHER_THAN_AWAIT"></Bug>
   </Match>
   <Match>
+    <Bug pattern="OBL_UNSATISFIED_OBLIGATION"></Bug>
+  </Match>
+  <Match>
     <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"></Bug>
   </Match>
   <Match>
@@ -1057,5 +1071,53 @@
   </Match>
   <Match>
     <Bug pattern="VO_VOLATILE_INCREMENT"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="NP_OPTIONAL_RETURN_NULL"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="BSHIFT_WRONG_ADD_PRIORITY"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="DM_BOXED_PRIMITIVE_FOR_COMPARE"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="DC_PARTIALLY_CONSTRUCTED"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="DM_INVALID_MIN_MAX"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="ME_MUTABLE_ENUM_FIELD"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="ME_ENUM_FIELD_SETTER"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="MS_MUTABLE_COLLECTION_PKGPROTECT"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="RANGE_ARRAY_INDEX"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="RANGE_ARRAY_OFFSET"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="RANGE_ARRAY_LENGTH"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="RANGE_STRING_INDEX"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="UC_USELESS_CONDITION"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="UC_USELESS_CONDITION_TYPE"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="UC_USELESS_OBJECT"></Bug>
+  </Match>
+  <Match>
+    <Bug pattern="UC_USELESS_OBJECT_STACK"></Bug>
   </Match>
 </FindBugsFilter>
