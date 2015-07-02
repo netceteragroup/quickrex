@@ -704,15 +704,7 @@ public class QuickRExView extends ViewPart {
 
   private String fetchGroupID() {
     int index = hits.getCurrentMatch().getCurrentGroup().getIndex();
-    StringBuilder buffer = new StringBuilder(); //$NON-NLS-1$
-    buffer.append(index);
-
-    String groupID = hits.getCurrentMatch().getCurrentGroup().getID();
-    if (groupID != null) {
-      buffer.append(" - {").append(groupID).append("}"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    return buffer.toString();
+    return Integer.toString(index);
   }
 
   @Override

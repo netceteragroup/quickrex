@@ -130,7 +130,7 @@ public class Match {
    *
    * @param group the Group to be added
    */
-  public void addGroup(Group group) {
+  void addGroup(Group group) {
     if (group.getText() != null) {
       this.groupData.add(group);
     }

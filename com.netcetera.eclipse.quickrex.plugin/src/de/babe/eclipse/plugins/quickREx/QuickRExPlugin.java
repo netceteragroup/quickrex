@@ -186,7 +186,7 @@ public class QuickRExPlugin extends AbstractUIPlugin {
     }
   }
 
-  public void initCategoriesFromFile(Map<String, List<REEditorCategoryMapping>> mappings, List<String> categories) {
+  private void initCategoriesFromFile(Map<String, List<REEditorCategoryMapping>> mappings, List<String> categories) {
     String filepath = JDK_CATEGORIES_FILE_NAME;
     String errorMsgKey = "QuickRExPlugin.error.readerror.jdk.categories"; //$NON-NLS-1$
     try (InputStream propFileStream = FileLocator.openStream(getBundle(), new Path(filepath), true)) {

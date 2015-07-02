@@ -26,7 +26,7 @@ public class PluginImageRegistry extends ImageRegistry {
    *
    * @param plugin
    */
-  public PluginImageRegistry(QuickRExPlugin plugin) {
+  PluginImageRegistry(QuickRExPlugin plugin) {
     String pluginId = plugin.getBundle().getSymbolicName();
     ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, "icons/jcopy.gif");  //$NON-NLS-1$
     put(IMG_JCOPY, descriptor);

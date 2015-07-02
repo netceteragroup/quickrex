@@ -16,27 +16,10 @@ package de.babe.eclipse.plugins.quickREx.regexp;
 public class Group {
 
   private final int index;
-  private final String id;
   private final int start;
   private final int end;
   private final String text;
 
-  /**
-   * The constructor. Instances of this class are immutable.
-   *
-   * @param index the index of this group
-   * @param id the ID of this group, can be null
-   * @param text the textual contents of this group
-   * @param start the start-index of this group
-   * @param end the end-index of this group
-   */
-  Group(int index, String id, String text, int start, int end) {
-    this.index = index;
-    this.id = id;
-    this.text = text;
-    this.start = start;
-    this.end = end;
-  }
 
   /**
    * The constructor. Instances of this class are immutable.
@@ -47,7 +30,10 @@ public class Group {
    * @param end the end-index of this group
    */
   Group(int index, String text, int start, int end) {
-    this(index, null, text, start, end);
+    this.index = index;
+    this.text = text;
+    this.start = start;
+    this.end = end;
   }
 
 
@@ -58,15 +44,6 @@ public class Group {
    */
   public int getIndex() {
     return this.index;
-  }
-
-  /**
-   * Returns the ID of this group or null if the group has no ID.
-   *
-   * @return the ID
-   */
-  public String getID() {
-    return this.id;
   }
 
   /**
