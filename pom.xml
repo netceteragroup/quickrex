@@ -145,16 +145,50 @@
           <version>${tycho-version}</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-p2-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-p2-publisher-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-p2-repository-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.2.2</version>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.6.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.4</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.7</version>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
   <properties>
     <nca.project.id>nca-302-0</nca.project.id>
-    <tycho-version>0.20.0</tycho-version>
+    <tycho-version>0.23.0</tycho-version>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
     <source.version>1.7</source.version>
