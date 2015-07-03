@@ -8,9 +8,11 @@
   <description>A fork of the QuickREx Plugin</description>
   <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
+  <url>https://github.com/netceteragroup/quickrex</url>
   <prerequisites>
     <maven>3.0</maven>
   </prerequisites>
+
   <modules>
     <module>com.netcetera.eclipse.quickrex.plugin</module>
     <module>com.netcetera.eclipse.quickrex.feature</module>
@@ -18,9 +20,10 @@
   </modules>
   
   <scm>
-    <connection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</connection>
-    <developerConnection>scm:svn:https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</developerConnection>
-    <url>https://eclipse.extranet.netcetera.biz/nca-302-0/svn/plugins/quickrex/trunk</url>
+    <connection>scm:git:https://github.com/netceteragroup/quickrex.git</connection>
+    <developerConnection>scm:git:https://github.com/netceteragroup/quickrex.git</developerConnection>
+    <url>${project.url}</url>
+    <tag>HEAD</tag>
   </scm>
   
   <developers>
@@ -187,7 +190,6 @@
     </pluginManagement>
   </build>
   <properties>
-    <nca.project.id>nca-302-0</nca.project.id>
     <tycho-version>0.23.0</tycho-version>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
