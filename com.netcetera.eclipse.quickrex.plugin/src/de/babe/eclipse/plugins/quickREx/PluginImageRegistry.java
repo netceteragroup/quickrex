@@ -20,6 +20,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class PluginImageRegistry extends ImageRegistry {
 
   public static final String IMG_JCOPY = "IMG_JCOPY"; //$NON-NLS-1$
+  public static final String IMG_STOP = "IMG_STOP"; //$NON-NLS-1$
 
   /**
    * The constructor.
@@ -30,5 +31,8 @@ public class PluginImageRegistry extends ImageRegistry {
     String pluginId = plugin.getBundle().getSymbolicName();
     ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, "icons/jcopy.gif");  //$NON-NLS-1$
     put(IMG_JCOPY, descriptor);
+
+    descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, "icons/stop.gif");  //$NON-NLS-1$
+    put(IMG_STOP, descriptor);
   }
 }

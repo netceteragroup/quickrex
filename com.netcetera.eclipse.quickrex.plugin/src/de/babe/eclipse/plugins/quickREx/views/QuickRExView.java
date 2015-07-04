@@ -62,6 +62,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import de.babe.eclipse.plugins.quickREx.Messages;
+import de.babe.eclipse.plugins.quickREx.PluginImageRegistry;
 import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
 import de.babe.eclipse.plugins.quickREx.StringUtils;
 import de.babe.eclipse.plugins.quickREx.actions.JCopyAction;
@@ -403,7 +404,7 @@ public class QuickRExView extends ViewPart {
     regExpCombo.setItems(new String[0]);
     regExpCombo.setFont(JFaceResources.getFont(EDITOR_FONT_KEY));
     gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
-    gd.horizontalSpan = 3;
+    gd.horizontalSpan = 2;
     gd.grabExcessHorizontalSpace = true;
     regExpCombo.setLayoutData(gd);
     regExpCombo.addModifyListener(new ModifyListener() {
@@ -452,7 +453,31 @@ public class QuickRExView extends ViewPart {
       } });
     tk.adapt(regExpCombo, true, true);
 
+    Button stopButton = tk.createButton(form.getBody(), "", SWT.PUSH);
+    gd = new GridData();
+    gd.horizontalAlignment = GridData.END;
+    gd.horizontalSpan = 1;
+    gd.grabExcessHorizontalSpace = false;
+    stopButton.setLayoutData(gd);
+    PluginImageRegistry imageRegistry = (PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry();
+    stopButton.setImage(imageRegistry.getDescriptor(PluginImageRegistry.IMG_STOP).createImage());
+    stopButton.setToolTipText(Messages.getString("views.QuickRExView.stopButton.tooltip"));
+    stopButton.addSelectionListener(new SelectionListener() {
+
+      @Override
+      public void widgetSelected(SelectionEvent e) {
+        handleStopButtonPressed();
+      }
+
+      @Override
+      public void widgetDefaultSelected(SelectionEvent e) {}
+    });
+
     createRegExpContentAssist();
+  }
+
+  private void handleStopButtonPressed() {
+
   }
 
   private void createRegExpContentAssist() {
