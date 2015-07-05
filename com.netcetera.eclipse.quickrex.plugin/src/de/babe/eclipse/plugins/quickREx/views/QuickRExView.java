@@ -123,6 +123,8 @@ public class QuickRExView extends ViewPart {
 
   private Point lastRESelection = new Point(0, 0);
 
+  private EvaluationJob evaluationJob = new EvaluationJob();
+
   /**
    * The constructor.
    */
@@ -668,80 +670,72 @@ public class QuickRExView extends ViewPart {
       final String sRegExpCombo = regExpCombo.getText();
       final String sTestText = testText.getText();
 
-      new Job("QuickREx Evaluation") {
-        @Override
-        protected IStatus run(IProgressMonitor monitor) {
-          try {
-            hits.init(sRegExpCombo, sTestText, currentFlags);
-          } catch (Throwable throwable) {
-            hits.setException(throwable);
-          }
-
-
-          Display.getDefault().syncExec(new Runnable() {
-
-            @Override
-            public void run() {
-              // TODO Auto-generated method stub
-              if (hits.containsException()) {
-                Throwable t = hits.getException();
-                if (t instanceof PatternSyntaxException) {
-                  matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
-                } else {
-                  String msg = t.getMessage();
-                  if (msg == null) {
-                    msg = t.toString();
-                  }
-                  matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
-                }
-
-                matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
-                hits.reset();
-                updateMatchView(null);
-                regExpCombo.setFocus();
-                groups.setText(""); //$NON-NLS-1$
-                globalMatch.setText(""); //$NON-NLS-1$
-                nextButton.setEnabled(false);
-                previousButton.setEnabled(false);
-                nextGroupButton.setEnabled(false);
-                previousGroupButton.setEnabled(false);
-              } else if (hits.containsMatches()) {
-                Match match = hits.getCurrentMatch();
-                updateMatchView(match);
-                matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
-                    match.getStart(), match.getEnd() }));
-                globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
-                nextButton.setEnabled(hits.hasNextMatch());
-                previousButton.setEnabled(hits.hasPreviousMatch());
-                if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
-                  groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-                      fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
-                } else {
-                  groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
-                }
-                nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
-                previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
-              } else {
-                updateMatchView(null);
-                matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
-                groups.setText(""); //$NON-NLS-1$
-                globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
-                nextButton.setEnabled(false);
-                previousButton.setEnabled(false);
-                nextGroupButton.setEnabled(false);
-                previousGroupButton.setEnabled(false);
-              }
-            }
-          });
-
-          return Status.OK_STATUS;
-        }
-      }.schedule();
+      evaluationJob.init(sTestText, sRegExpCombo);
+      evaluationJob.schedule();
 
       redrawFourthLine();
       redrawFifthLine();
     }
   }
+
+  private void initHits(final String sRegExpCombo, final String sTestText) {
+    try {
+      hits.init(sRegExpCombo, sTestText, currentFlags);
+    } catch (Throwable throwable) {
+      hits.setException(throwable);
+    }
+  }
+
+  private void updateView() {
+        if (hits.containsException()) {
+          Throwable t = hits.getException();
+          if (t instanceof PatternSyntaxException) {
+            matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
+          } else {
+            String msg = t.getMessage();
+            if (msg == null) {
+              msg = t.toString();
+            }
+            matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
+          }
+
+          matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
+          hits.reset();
+          updateMatchView(null);
+          regExpCombo.setFocus();
+          groups.setText(""); //$NON-NLS-1$
+          globalMatch.setText(""); //$NON-NLS-1$
+          nextButton.setEnabled(false);
+          previousButton.setEnabled(false);
+          nextGroupButton.setEnabled(false);
+          previousGroupButton.setEnabled(false);
+        } else if (hits.containsMatches()) {
+          Match match = hits.getCurrentMatch();
+          updateMatchView(match);
+          matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
+              match.getStart(), match.getEnd() }));
+          globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+          nextButton.setEnabled(hits.hasNextMatch());
+          previousButton.setEnabled(hits.hasPreviousMatch());
+          if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
+            groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+                fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+          } else {
+            groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
+          }
+          nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
+          previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
+        } else {
+          updateMatchView(null);
+          matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
+          groups.setText(""); //$NON-NLS-1$
+          globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+          nextButton.setEnabled(false);
+          previousButton.setEnabled(false);
+          nextGroupButton.setEnabled(false);
+          previousGroupButton.setEnabled(false);
+        }
+      }
 
   private String escapeMnemonic(String string) {
     return string.replaceAll("&", "&&");
@@ -796,5 +790,38 @@ public class QuickRExView extends ViewPart {
    */
   public Point getLastComboSelection() {
     return lastRESelection;
+  }
+
+  private final class EvaluationJob extends Job {
+
+    private volatile String sTestText;
+    private volatile String sRegExp;
+
+    private EvaluationJob() {
+      super("QuickREx Evaluation");
+      this.sTestText = "";
+      this.sRegExp = "";
+    }
+
+    void init(String testText, String regexp) {
+      this.sTestText = testText;
+      this.sRegExp = regexp;
+    }
+
+    @Override
+    protected IStatus run(IProgressMonitor monitor) {
+      initHits(sRegExp, sTestText);
+
+
+      Display.getDefault().syncExec(new Runnable() {
+
+        @Override
+        public void run() {
+          updateView();
+        }
+      });
+
+      return Status.OK_STATUS;
+    }
   }
 }
