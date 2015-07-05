@@ -31,31 +31,17 @@ public class RegularExpressionHits {
    * (Re)Initializes this instance with data from the passed Matcher.
    */
   public synchronized void init(String regExp, CharSequence testText, Collection<Flag> flags) {
-    MatchSet matches = MatchSetFactory.createMatchSet(regExp, testText, flags);
-    matchData = new ArrayList<>();
-    while (matches.nextMatch()) {
-      Match match = new Match(matches.start(), matches.end(), matches.groupContents(0));
-      for (int g = 0; g < matches.groupCount(); g++) {
-        match.addGroup(new Group(g + 1, matches.groupContents(g + 1), matches.groupStart(g + 1), matches.groupEnd(g + 1)));
-      }
-      matchData.add(match);
-    }
-    if (matchData.size() > 0) {
-      this.matchIndex = 0;
-    } else {
-      this.matchIndex = -1;
-    }
     this.throwable = null;
-    this.globalMatch = matches.matches();
+
+    try {
+      doInit(regExp, testText, flags);
+    } catch (Throwable t) {
+      this.throwable = t;
+    }
   }
 
   public synchronized  boolean isGlobalMatch() {
     return this.globalMatch;
-  }
-
-
-  public synchronized void setException(Throwable throwable) {
-    this.throwable = throwable;
   }
 
   public synchronized Throwable getException() {
@@ -158,6 +144,24 @@ public class RegularExpressionHits {
     this.matchData = new ArrayList<>();
     this.matchIndex = -1;
     this.throwable = null;
+  }
+
+  private void doInit(String regExp, CharSequence testText, Collection<Flag> flags) {
+    MatchSet matches = MatchSetFactory.createMatchSet(regExp, testText, flags);
+    matchData = new ArrayList<>();
+    while (matches.nextMatch()) {
+      Match match = new Match(matches.start(), matches.end(), matches.groupContents(0));
+      for (int g = 0; g < matches.groupCount(); g++) {
+        match.addGroup(new Group(g + 1, matches.groupContents(g + 1), matches.groupStart(g + 1), matches.groupEnd(g + 1)));
+      }
+      matchData.add(match);
+    }
+    if (matchData.size() > 0) {
+      this.matchIndex = 0;
+    } else {
+      this.matchIndex = -1;
+    }
+    this.globalMatch = matches.matches();
   }
 
 }

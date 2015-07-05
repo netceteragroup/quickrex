@@ -48,12 +48,7 @@ final class EvaluationJob extends Job {
 
   @Override
   protected IStatus run(IProgressMonitor monitor) {
-    try {
-      hits.init(regexp, testText, flags);
-    } catch (Throwable throwable) {
-      hits.setException(throwable);
-    }
-
+    hits.init(regexp, testText, flags);
     Display.getDefault().syncExec(viewUpdateCallback);
 
     return Status.OK_STATUS;
