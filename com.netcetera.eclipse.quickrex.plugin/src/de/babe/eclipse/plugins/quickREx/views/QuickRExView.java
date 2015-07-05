@@ -86,6 +86,8 @@ public class QuickRExView extends ViewPart {
 
   private Combo regExpCombo;
 
+  private Button stopButton;
+
   private StyledText testText;
 
   private Label globalMatch;
@@ -460,7 +462,8 @@ public class QuickRExView extends ViewPart {
       } });
     tk.adapt(regExpCombo, true, true);
 
-    Button stopButton = tk.createButton(form.getBody(), "", SWT.PUSH);
+    stopButton = tk.createButton(form.getBody(), "", SWT.PUSH);
+    stopButton.setEnabled(false);
     gd = new GridData();
     gd.horizontalAlignment = GridData.END;
     gd.horizontalSpan = 1;
@@ -672,6 +675,7 @@ public class QuickRExView extends ViewPart {
       String sTestText = testText.getText();
 
       evaluationJob.reset(sTestText, sRegExpCombo);
+      stopButton.setEnabled(true);
       evaluationJob.schedule();
 
       redrawFourthLine();
@@ -688,6 +692,7 @@ public class QuickRExView extends ViewPart {
   }
 
   private void updateView() {
+    stopButton.setEnabled(false);
     if (hits.containsException()) {
       Throwable t = hits.getException();
       if (t instanceof PatternSyntaxException) {
