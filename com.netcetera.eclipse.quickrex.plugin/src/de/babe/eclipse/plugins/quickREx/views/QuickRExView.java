@@ -671,7 +671,7 @@ public class QuickRExView extends ViewPart {
       String sRegExpCombo = regExpCombo.getText();
       String sTestText = testText.getText();
 
-      evaluationJob.init(sTestText, sRegExpCombo);
+      evaluationJob.reset(sTestText, sRegExpCombo);
       evaluationJob.schedule();
 
       redrawFourthLine();
@@ -804,7 +804,14 @@ public class QuickRExView extends ViewPart {
       this.sRegExp = "";
     }
 
-    void init(String testText, String regexp) {
+    // This method must not be called within the thread executing this job
+    void reset(String testText, String regexp) {
+      cancel();
+      try {
+        join();
+      } catch (InterruptedException e) {
+        // NOP
+      }
       this.sTestText = CancellableCharSequence.wrap(testText);
       this.sRegExp = regexp;
     }
