@@ -29,11 +29,8 @@ public class RegularExpressionHits {
 
   /**
    * (Re)Initializes this instance with data from the passed Matcher.
-   *
-   * @param p_matcher
-   *          the Matcher to use for initialization
    */
-  public void init(String regExp, String testText, Collection<Flag> flags) {
+  public void init(String regExp, CharSequence testText, Collection<Flag> flags) {
     MatchSet matches = MatchSetFactory.createMatchSet(regExp, testText, flags);
     matchData = new ArrayList<>();
     while (matches.nextMatch()) {
@@ -74,7 +71,7 @@ public class RegularExpressionHits {
    * Returns <code>true</code> if and only if the Matcher used when last
    * calling.
    *
-   * @see RegularExpressionHits#init(String, String, Collection) found at least one match
+   * @see RegularExpressionHits#init(String, CharSequence, Collection) found at least one match
    *
    * @return <code>true</code> if this hit contains matches
    */
