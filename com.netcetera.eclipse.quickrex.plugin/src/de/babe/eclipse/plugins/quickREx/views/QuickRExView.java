@@ -669,6 +669,15 @@ public class QuickRExView extends ViewPart {
 
   private void evaluate() {
     if (regExpCombo.getText() != null && testText.getText() != null) {
+
+      // Cancel a previously started evaluation.
+      this.evaluationJob.cancel();
+      try {
+        this.evaluationJob.join();
+      } catch (InterruptedException e) {
+        // NOP
+      }
+
       matches.setForeground(null);
       matches.setText(""); //$NON-NLS-1$
       groups.setText(""); //$NON-NLS-1$

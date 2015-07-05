@@ -34,12 +34,6 @@ final class EvaluationJob extends Job {
 
   // This method must not be called within the thread executing this job
   void reset(String testText, String regexp, Collection<Flag> flags) {
-    cancel();
-    try {
-      join();
-    } catch (InterruptedException e) {
-      // NOP
-    }
     this.flags.clear();
     this.flags.addAll(flags);
     this.testText = CancellableCharSequence.wrap(testText);
