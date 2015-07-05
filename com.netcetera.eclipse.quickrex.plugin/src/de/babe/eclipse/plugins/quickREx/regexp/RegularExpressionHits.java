@@ -30,7 +30,7 @@ public class RegularExpressionHits {
   /**
    * (Re)Initializes this instance with data from the passed Matcher.
    */
-  public void init(String regExp, CharSequence testText, Collection<Flag> flags) {
+  public synchronized void init(String regExp, CharSequence testText, Collection<Flag> flags) {
     MatchSet matches = MatchSetFactory.createMatchSet(regExp, testText, flags);
     matchData = new ArrayList<>();
     while (matches.nextMatch()) {
@@ -49,20 +49,20 @@ public class RegularExpressionHits {
     this.globalMatch = matches.matches();
   }
 
-  public boolean isGlobalMatch() {
+  public synchronized  boolean isGlobalMatch() {
     return this.globalMatch;
   }
 
 
-  public void setException(Throwable throwable) {
+  public synchronized void setException(Throwable throwable) {
     this.throwable = throwable;
   }
 
-  public Throwable getException() {
+  public synchronized Throwable getException() {
     return this.throwable;
   }
 
-  public boolean containsException() {
+  public synchronized boolean containsException() {
     return this.throwable != null;
   }
 
@@ -75,7 +75,7 @@ public class RegularExpressionHits {
    *
    * @return <code>true</code> if this hit contains matches
    */
-  public boolean containsMatches() {
+  public synchronized boolean containsMatches() {
     return matchData != null && matchData.size() > 0;
   }
 
@@ -88,7 +88,7 @@ public class RegularExpressionHits {
    *
    * @return <code>true</code> if and only if this instance has a 'next match'
    */
-  public boolean hasNextMatch() {
+  public synchronized boolean hasNextMatch() {
     return (this.matchIndex + 1) < matchData.size();
   }
 
@@ -102,7 +102,7 @@ public class RegularExpressionHits {
    * @return <code>true</code> if and only if this instance has a 'previous
    *         match'
    */
-  public boolean hasPreviousMatch() {
+  public synchronized boolean hasPreviousMatch() {
     return this.matchIndex > 0;
   }
 
@@ -111,7 +111,7 @@ public class RegularExpressionHits {
    *
    * @return the number of matches defined for this hit
    */
-  public int getNumberOfMatches() {
+  public synchronized int getNumberOfMatches() {
     return matchData.size();
   }
 
@@ -120,7 +120,7 @@ public class RegularExpressionHits {
    *
    * @see RegularExpressionHits#hasNextMatch() returns <code>true</code>
    */
-  public void toNextMatch() {
+  public synchronized void toNextMatch() {
     this.matchIndex++;
   }
 
@@ -129,7 +129,7 @@ public class RegularExpressionHits {
    *
    * @see RegularExpressionHits#hasPreviousMatch() returns <code>true</code>
    */
-  public void toPreviousMatch() {
+  public synchronized void toPreviousMatch() {
     this.matchIndex--;
   }
 
@@ -138,7 +138,7 @@ public class RegularExpressionHits {
    *
    * @return the current match
    */
-  public Match getCurrentMatch() {
+  public synchronized Match getCurrentMatch() {
     return matchData.get(this.matchIndex);
   }
 
@@ -147,14 +147,14 @@ public class RegularExpressionHits {
    *
    * @return all Matches contained in this instance as array
    */
-  public Match[] getAllMatches() {
+  public synchronized Match[] getAllMatches() {
     return matchData.toArray(new Match[matchData.size()]);
   }
 
   /**
    * Resets this instance to an empty one containing no matches.
    */
-  public void reset() {
+  public synchronized void reset() {
     this.matchData = new ArrayList<>();
     this.matchIndex = -1;
     this.throwable = null;

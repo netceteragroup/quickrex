@@ -14,6 +14,7 @@ package de.babe.eclipse.plugins.quickREx.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -126,7 +127,7 @@ public class QuickRExView extends ViewPart {
 
   private Point lastRESelection = new Point(0, 0);
 
-  private EvaluationJob evaluationJob = new EvaluationJob();
+  private EvaluationJob evaluationJob = new EvaluationJob(hits);
 
   /**
    * The constructor.
@@ -674,7 +675,7 @@ public class QuickRExView extends ViewPart {
       String sRegExpCombo = regExpCombo.getText();
       String sTestText = testText.getText();
 
-      evaluationJob.reset(sTestText, sRegExpCombo);
+      evaluationJob.reset(sTestText, sRegExpCombo, currentFlags);
       stopButton.setEnabled(true);
       evaluationJob.schedule();
 
@@ -800,31 +801,42 @@ public class QuickRExView extends ViewPart {
 
   private final class EvaluationJob extends Job {
 
-    private volatile CancellableCharSequence sTestText;
-    private volatile String sRegExp;
+    private final RegularExpressionHits hits;
+    private final Collection<Flag> flags;
+    private volatile CancellableCharSequence testText;
+    private volatile String regexp;
 
-    private EvaluationJob() {
+    private EvaluationJob(RegularExpressionHits hits) {
       super("QuickREx Evaluation");
-      this.sTestText = CancellableCharSequence.wrap("");
-      this.sRegExp = "";
+      this.hits = hits;
+      this.testText = CancellableCharSequence.wrap("");
+      this.regexp = "";
+      this.flags = Collections.synchronizedList(new ArrayList<Flag>());
     }
 
     // This method must not be called within the thread executing this job
-    void reset(String testText, String regexp) {
+    void reset(String testText, String regexp, Collection<Flag> flags) {
       cancel();
       try {
         join();
       } catch (InterruptedException e) {
         // NOP
       }
-      this.sTestText = CancellableCharSequence.wrap(testText);
-      this.sRegExp = regexp;
+      this.flags.clear();
+      this.flags.addAll(flags);
+      this.testText = CancellableCharSequence.wrap(testText);
+      this.regexp = regexp;
     }
 
     @Override
     protected IStatus run(IProgressMonitor monitor) {
-      initHits(sRegExp, sTestText);
+      initHits(regexp, testText);
 
+      try {
+        hits.init(regexp, testText, flags);
+      } catch (Throwable throwable) {
+        hits.setException(throwable);
+      }
 
       Display.getDefault().syncExec(new Runnable() {
 
@@ -839,7 +851,7 @@ public class QuickRExView extends ViewPart {
 
     @Override
     protected void canceling() {
-      this.sTestText.cancel();
+      this.testText.cancel();
     }
   }
 }
