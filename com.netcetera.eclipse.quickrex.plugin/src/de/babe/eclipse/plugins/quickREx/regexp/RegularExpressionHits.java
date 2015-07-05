@@ -144,6 +144,7 @@ public class RegularExpressionHits {
     this.matchData = new ArrayList<>();
     this.matchIndex = -1;
     this.throwable = null;
+    this.globalMatch = false;
   }
 
   private void doInit(String regExp, CharSequence testText, Collection<Flag> flags) {
