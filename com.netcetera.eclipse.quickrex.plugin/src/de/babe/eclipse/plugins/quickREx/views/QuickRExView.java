@@ -75,6 +75,7 @@ import de.babe.eclipse.plugins.quickREx.regexp.Match;
 import de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory;
 import de.babe.eclipse.plugins.quickREx.regexp.RegExpContentAssistProcessor;
 import de.babe.eclipse.plugins.quickREx.regexp.RegularExpressionHits;
+import de.babe.eclipse.plugins.quickREx.regexp.jdk.CancellableCharSequence;
 
 /**
  * @author bastian.bergerhoff, andreas.studer, georg.sendt
@@ -483,7 +484,7 @@ public class QuickRExView extends ViewPart {
   }
 
   private void handleStopButtonPressed() {
-
+    this.evaluationJob.cancel();
   }
 
   private void createRegExpContentAssist() {
@@ -667,8 +668,8 @@ public class QuickRExView extends ViewPart {
       matches.setText(""); //$NON-NLS-1$
       groups.setText(""); //$NON-NLS-1$
 
-      final String sRegExpCombo = regExpCombo.getText();
-      final String sTestText = testText.getText();
+      String sRegExpCombo = regExpCombo.getText();
+      String sTestText = testText.getText();
 
       evaluationJob.init(sTestText, sRegExpCombo);
       evaluationJob.schedule();
@@ -678,7 +679,7 @@ public class QuickRExView extends ViewPart {
     }
   }
 
-  private void initHits(final String sRegExpCombo, final String sTestText) {
+  private void initHits(String sRegExpCombo, CharSequence sTestText) {
     try {
       hits.init(sRegExpCombo, sTestText, currentFlags);
     } catch (Throwable throwable) {
@@ -794,17 +795,17 @@ public class QuickRExView extends ViewPart {
 
   private final class EvaluationJob extends Job {
 
-    private volatile String sTestText;
+    private volatile CancellableCharSequence sTestText;
     private volatile String sRegExp;
 
     private EvaluationJob() {
       super("QuickREx Evaluation");
-      this.sTestText = "";
+      this.sTestText = CancellableCharSequence.wrap("");
       this.sRegExp = "";
     }
 
     void init(String testText, String regexp) {
-      this.sTestText = testText;
+      this.sTestText = CancellableCharSequence.wrap(testText);
       this.sRegExp = regexp;
     }
 
@@ -822,6 +823,11 @@ public class QuickRExView extends ViewPart {
       });
 
       return Status.OK_STATUS;
+    }
+
+    @Override
+    protected void canceling() {
+      this.sTestText.cancel();
     }
   }
 }
