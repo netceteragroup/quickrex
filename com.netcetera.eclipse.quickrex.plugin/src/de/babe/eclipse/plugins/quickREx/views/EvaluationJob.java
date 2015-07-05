@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 
+import de.babe.eclipse.plugins.quickREx.Messages;
 import de.babe.eclipse.plugins.quickREx.regexp.Flag;
 import de.babe.eclipse.plugins.quickREx.regexp.RegularExpressionHits;
 import de.babe.eclipse.plugins.quickREx.regexp.jdk.CancellableCharSequence;
@@ -23,7 +24,7 @@ final class EvaluationJob extends Job {
   private volatile String regexp;
 
   public EvaluationJob(RegularExpressionHits hits, Runnable viewUpdateCallback) {
-    super("QuickREx Evaluation");
+    super(Messages.getString("views.QuickRExView.evaluationJob.name"));
 
     this.hits = hits;
     this.viewUpdateCallback = viewUpdateCallback;
