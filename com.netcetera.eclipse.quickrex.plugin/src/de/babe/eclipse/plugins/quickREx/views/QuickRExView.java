@@ -702,12 +702,7 @@ public class QuickRExView extends ViewPart {
       matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
       hits.reset();
       updateMatchView(null);
-      groups.setText(""); //$NON-NLS-1$
-      globalMatch.setText(""); //$NON-NLS-1$
-      nextButton.setEnabled(false);
-      previousButton.setEnabled(false);
-      nextGroupButton.setEnabled(false);
-      previousGroupButton.setEnabled(false);
+      resetEvaluationDetails();
     } else if (hits.containsException()) {
       Throwable t = hits.getException();
       if (t instanceof PatternSyntaxException) {
@@ -724,12 +719,7 @@ public class QuickRExView extends ViewPart {
       hits.reset();
       updateMatchView(null);
       regExpCombo.setFocus();
-      groups.setText(""); //$NON-NLS-1$
-      globalMatch.setText(""); //$NON-NLS-1$
-      nextButton.setEnabled(false);
-      previousButton.setEnabled(false);
-      nextGroupButton.setEnabled(false);
-      previousGroupButton.setEnabled(false);
+      resetEvaluationDetails();
     } else if (hits.containsMatches()) {
       Match match = hits.getCurrentMatch();
       updateMatchView(match);
@@ -756,6 +746,15 @@ public class QuickRExView extends ViewPart {
       nextGroupButton.setEnabled(false);
       previousGroupButton.setEnabled(false);
     }
+  }
+
+  private void resetEvaluationDetails() {
+    groups.setText(""); //$NON-NLS-1$
+    globalMatch.setText(""); //$NON-NLS-1$
+    nextButton.setEnabled(false);
+    previousButton.setEnabled(false);
+    nextGroupButton.setEnabled(false);
+    previousGroupButton.setEnabled(false);
   }
 
   private String escapeMnemonic(String string) {
