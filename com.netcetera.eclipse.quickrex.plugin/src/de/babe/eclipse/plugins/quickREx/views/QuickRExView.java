@@ -14,13 +14,8 @@ package de.babe.eclipse.plugins.quickREx.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.regex.PatternSyntaxException;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.contentassist.ComboContentAssistSubjectAdapter;
@@ -76,7 +71,6 @@ import de.babe.eclipse.plugins.quickREx.regexp.Match;
 import de.babe.eclipse.plugins.quickREx.regexp.MatchSetFactory;
 import de.babe.eclipse.plugins.quickREx.regexp.RegExpContentAssistProcessor;
 import de.babe.eclipse.plugins.quickREx.regexp.RegularExpressionHits;
-import de.babe.eclipse.plugins.quickREx.regexp.jdk.CancellableCharSequence;
 
 /**
  * @author bastian.bergerhoff, andreas.studer, georg.sendt
@@ -127,12 +121,19 @@ public class QuickRExView extends ViewPart {
 
   private Point lastRESelection = new Point(0, 0);
 
-  private EvaluationJob evaluationJob = new EvaluationJob(hits);
+  private final EvaluationJob evaluationJob;
 
   /**
    * The constructor.
    */
   public QuickRExView() {
+    this.evaluationJob = new EvaluationJob(hits, new Runnable() {
+
+      @Override
+      public void run() {
+        updateView();
+      }
+    });
   }
 
   @Override
@@ -684,14 +685,6 @@ public class QuickRExView extends ViewPart {
     }
   }
 
-  private void initHits(String sRegExpCombo, CharSequence sTestText) {
-    try {
-      hits.init(sRegExpCombo, sTestText, currentFlags);
-    } catch (Throwable throwable) {
-      hits.setException(throwable);
-    }
-  }
-
   private void updateView() {
     stopButton.setEnabled(false);
     if (hits.containsException()) {
@@ -797,61 +790,5 @@ public class QuickRExView extends ViewPart {
    */
   public Point getLastComboSelection() {
     return lastRESelection;
-  }
-
-  private final class EvaluationJob extends Job {
-
-    private final RegularExpressionHits hits;
-    private final Collection<Flag> flags;
-    private volatile CancellableCharSequence testText;
-    private volatile String regexp;
-
-    private EvaluationJob(RegularExpressionHits hits) {
-      super("QuickREx Evaluation");
-      this.hits = hits;
-      this.testText = CancellableCharSequence.wrap("");
-      this.regexp = "";
-      this.flags = Collections.synchronizedList(new ArrayList<Flag>());
-    }
-
-    // This method must not be called within the thread executing this job
-    void reset(String testText, String regexp, Collection<Flag> flags) {
-      cancel();
-      try {
-        join();
-      } catch (InterruptedException e) {
-        // NOP
-      }
-      this.flags.clear();
-      this.flags.addAll(flags);
-      this.testText = CancellableCharSequence.wrap(testText);
-      this.regexp = regexp;
-    }
-
-    @Override
-    protected IStatus run(IProgressMonitor monitor) {
-      initHits(regexp, testText);
-
-      try {
-        hits.init(regexp, testText, flags);
-      } catch (Throwable throwable) {
-        hits.setException(throwable);
-      }
-
-      Display.getDefault().syncExec(new Runnable() {
-
-        @Override
-        public void run() {
-          updateView();
-        }
-      });
-
-      return Status.OK_STATUS;
-    }
-
-    @Override
-    protected void canceling() {
-      this.testText.cancel();
-    }
   }
 }
