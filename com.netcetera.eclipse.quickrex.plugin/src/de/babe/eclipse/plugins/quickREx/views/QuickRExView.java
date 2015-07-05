@@ -14,6 +14,7 @@ package de.babe.eclipse.plugins.quickREx.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.CancellationException;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.jface.action.Action;
@@ -691,6 +692,8 @@ public class QuickRExView extends ViewPart {
       Throwable t = hits.getException();
       if (t instanceof PatternSyntaxException) {
         matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
+      } else if (t instanceof CancellationException) {
+        matches.setText(Messages.getString("views.QuickRExView.result.match.evaluationCanceled"));
       } else {
         String msg = t.getMessage();
         if (msg == null) {
