@@ -688,55 +688,55 @@ public class QuickRExView extends ViewPart {
   }
 
   private void updateView() {
-        if (hits.containsException()) {
-          Throwable t = hits.getException();
-          if (t instanceof PatternSyntaxException) {
-            matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
-          } else {
-            String msg = t.getMessage();
-            if (msg == null) {
-              msg = t.toString();
-            }
-            matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
-          }
-
-          matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
-          hits.reset();
-          updateMatchView(null);
-          regExpCombo.setFocus();
-          groups.setText(""); //$NON-NLS-1$
-          globalMatch.setText(""); //$NON-NLS-1$
-          nextButton.setEnabled(false);
-          previousButton.setEnabled(false);
-          nextGroupButton.setEnabled(false);
-          previousGroupButton.setEnabled(false);
-        } else if (hits.containsMatches()) {
-          Match match = hits.getCurrentMatch();
-          updateMatchView(match);
-          matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
-              match.getStart(), match.getEnd() }));
-          globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
-          nextButton.setEnabled(hits.hasNextMatch());
-          previousButton.setEnabled(hits.hasPreviousMatch());
-          if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
-            groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-                fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
-          } else {
-            groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
-          }
-          nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
-          previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
-        } else {
-          updateMatchView(null);
-          matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
-          groups.setText(""); //$NON-NLS-1$
-          globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
-          nextButton.setEnabled(false);
-          previousButton.setEnabled(false);
-          nextGroupButton.setEnabled(false);
-          previousGroupButton.setEnabled(false);
+    if (hits.containsException()) {
+      Throwable t = hits.getException();
+      if (t instanceof PatternSyntaxException) {
+        matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
+      } else {
+        String msg = t.getMessage();
+        if (msg == null) {
+          msg = t.toString();
         }
+        matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
       }
+
+      matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
+      hits.reset();
+      updateMatchView(null);
+      regExpCombo.setFocus();
+      groups.setText(""); //$NON-NLS-1$
+      globalMatch.setText(""); //$NON-NLS-1$
+      nextButton.setEnabled(false);
+      previousButton.setEnabled(false);
+      nextGroupButton.setEnabled(false);
+      previousGroupButton.setEnabled(false);
+    } else if (hits.containsMatches()) {
+      Match match = hits.getCurrentMatch();
+      updateMatchView(match);
+      matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
+          match.getStart(), match.getEnd() }));
+      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+      nextButton.setEnabled(hits.hasNextMatch());
+      previousButton.setEnabled(hits.hasPreviousMatch());
+      if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
+        groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+            fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+      } else {
+        groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
+      }
+      nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
+      previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
+    } else {
+      updateMatchView(null);
+      matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
+      groups.setText(""); //$NON-NLS-1$
+      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+      nextButton.setEnabled(false);
+      previousButton.setEnabled(false);
+      nextGroupButton.setEnabled(false);
+      previousGroupButton.setEnabled(false);
+    }
+  }
 
   private String escapeMnemonic(String string) {
     return string.replaceAll("&", "&&");
