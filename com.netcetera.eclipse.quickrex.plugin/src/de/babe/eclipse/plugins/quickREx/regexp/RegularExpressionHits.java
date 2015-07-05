@@ -13,6 +13,7 @@ package de.babe.eclipse.plugins.quickREx.regexp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 /**
  * @author bastian.bergerhoff, georg.sendt
@@ -27,6 +28,8 @@ public class RegularExpressionHits {
 
   private boolean globalMatch;
 
+  private boolean canceled;
+
   /**
    * (Re)Initializes this instance with data from the passed Matcher.
    */
@@ -35,6 +38,8 @@ public class RegularExpressionHits {
 
     try {
       doInit(regExp, testText, flags);
+    } catch (CancellationException e) {
+      this.canceled = true;
     } catch (Throwable t) {
       this.throwable = t;
     }
@@ -52,6 +57,9 @@ public class RegularExpressionHits {
     return this.throwable != null;
   }
 
+  public synchronized boolean isCanceled() {
+    return this.canceled;
+  }
 
   /**
    * Returns <code>true</code> if and only if the Matcher used when last
@@ -145,6 +153,7 @@ public class RegularExpressionHits {
     this.matchIndex = -1;
     this.throwable = null;
     this.globalMatch = false;
+    this.canceled = false;
   }
 
   private void doInit(String regExp, CharSequence testText, Collection<Flag> flags) {

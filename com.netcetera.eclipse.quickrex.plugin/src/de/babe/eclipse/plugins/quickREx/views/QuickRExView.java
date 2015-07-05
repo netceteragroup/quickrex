@@ -14,7 +14,6 @@ package de.babe.eclipse.plugins.quickREx.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.CancellationException;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.jface.action.Action;
@@ -688,12 +687,22 @@ public class QuickRExView extends ViewPart {
 
   private void updateView() {
     stopButton.setEnabled(false);
-    if (hits.containsException()) {
+    if (hits.isCanceled()) {
+      matches.setText(Messages.getString("views.QuickRExView.result.match.evaluationCanceled"));
+
+      matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
+      hits.reset();
+      updateMatchView(null);
+      groups.setText(""); //$NON-NLS-1$
+      globalMatch.setText(""); //$NON-NLS-1$
+      nextButton.setEnabled(false);
+      previousButton.setEnabled(false);
+      nextGroupButton.setEnabled(false);
+      previousGroupButton.setEnabled(false);
+    } else if (hits.containsException()) {
       Throwable t = hits.getException();
       if (t instanceof PatternSyntaxException) {
         matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
-      } else if (t instanceof CancellationException) {
-        matches.setText(Messages.getString("views.QuickRExView.result.match.evaluationCanceled"));
       } else {
         String msg = t.getMessage();
         if (msg == null) {
