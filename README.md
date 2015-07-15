@@ -8,3 +8,7 @@ Only supports `java.util.regex` as a regular expression engine.
 Update Site
 -----------
 http://netceteragroup.github.io/quickrex/updatesite
+
+Eclipse Marketplace
+-------------------
+https://marketplace.eclipse.org/content/quickrex
