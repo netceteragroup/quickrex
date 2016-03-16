@@ -162,7 +162,11 @@ public class RegularExpressionHits {
     while (matches.nextMatch()) {
       Match match = new Match(matches.start(), matches.end(), matches.groupContents(0));
       for (int g = 0; g < matches.groupCount(); g++) {
-        match.addGroup(new Group(g + 1, matches.groupContents(g + 1), matches.groupStart(g + 1), matches.groupEnd(g + 1)));
+        int index = g + 1;
+        String text = matches.groupContents(index);
+        int start = matches.groupStart(index);
+        int end = matches.groupEnd(index);
+        match.addGroup(new Group(index, text, start, end));
       }
       matchData.add(match);
     }
