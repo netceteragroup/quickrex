@@ -39,7 +39,7 @@ public final class MatchSetFactory {
    *
    * @return a MatchSet as requested
    */
-  static MatchSet createMatchSet(String regExp, String text, Collection<Flag> flags) {
+  static MatchSet createMatchSet(String regExp, CharSequence text, Collection<Flag> flags) {
     List<Flag> flavourFlags = new ArrayList<>(flags);
     flavourFlags.retainAll(MatchSetFactory.getAllFlags());
     return new JavaMatchSet(regExp, text, flavourFlags);

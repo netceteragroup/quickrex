@@ -13,6 +13,7 @@ package de.babe.eclipse.plugins.quickREx.regexp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 /**
  * @author bastian.bergerhoff, georg.sendt
@@ -27,13 +28,135 @@ public class RegularExpressionHits {
 
   private boolean globalMatch;
 
+  private boolean canceled;
+
   /**
    * (Re)Initializes this instance with data from the passed Matcher.
-   *
-   * @param p_matcher
-   *          the Matcher to use for initialization
    */
-  public void init(String regExp, String testText, Collection<Flag> flags) {
+  public synchronized void init(String regExp, CharSequence testText, Collection<Flag> flags) {
+    this.throwable = null;
+
+    try {
+      doInit(regExp, testText, flags);
+    } catch (CancellationException e) {
+      this.canceled = true;
+    } catch (Throwable t) {
+      this.throwable = t;
+    }
+  }
+
+  public synchronized  boolean isGlobalMatch() {
+    return this.globalMatch;
+  }
+
+  public synchronized Throwable getException() {
+    return this.throwable;
+  }
+
+  public synchronized boolean containsException() {
+    return this.throwable != null;
+  }
+
+  public synchronized boolean isCanceled() {
+    return this.canceled;
+  }
+
+  /**
+   * Returns <code>true</code> if and only if the Matcher used when last
+   * calling.
+   *
+   * @see RegularExpressionHits#init(String, CharSequence, Collection) found at least one match
+   *
+   * @return <code>true</code> if this hit contains matches
+   */
+  public synchronized boolean containsMatches() {
+    return matchData != null && matchData.size() > 0;
+  }
+
+  /**
+   * Returns <code>true</code> if and only if this instance has a 'next
+   * match'. Matches may be navigated by calling
+   *
+   * @see RegularExpressionHits#toNextMatch() and
+   * @see RegularExpressionHits#toPreviousMatch()
+   *
+   * @return <code>true</code> if and only if this instance has a 'next match'
+   */
+  public synchronized boolean hasNextMatch() {
+    return (this.matchIndex + 1) < matchData.size();
+  }
+
+  /**
+   * Returns <code>true</code> if and only if this instance has a 'previous
+   * match'. Matches may be navigated by calling
+   *
+   * @see RegularExpressionHits#toNextMatch() and
+   * @see RegularExpressionHits#toPreviousMatch()
+   *
+   * @return <code>true</code> if and only if this instance has a 'previous
+   *         match'
+   */
+  public synchronized boolean hasPreviousMatch() {
+    return this.matchIndex > 0;
+  }
+
+  /**
+   * Returns the number of matches defined for this hit.
+   *
+   * @return the number of matches defined for this hit
+   */
+  public synchronized int getNumberOfMatches() {
+    return matchData.size();
+  }
+
+  /**
+   * Makes the next match the current one. Only call if
+   *
+   * @see RegularExpressionHits#hasNextMatch() returns <code>true</code>
+   */
+  public synchronized void toNextMatch() {
+    this.matchIndex++;
+  }
+
+  /**
+   * Makes the previous match the current one. Only call if
+   *
+   * @see RegularExpressionHits#hasPreviousMatch() returns <code>true</code>
+   */
+  public synchronized void toPreviousMatch() {
+    this.matchIndex--;
+  }
+
+  /**
+   * Returns the current match. Initially, the current match is the first one.
+   *
+   * @return the current match
+   */
+  public synchronized Match getCurrentMatch() {
+    return matchData.get(this.matchIndex);
+  }
+
+  /**
+   * Returns all Matches contained in this instance as array.
+   *
+   * @return all Matches contained in this instance as array
+   */
+  public synchronized Match[] getAllMatches() {
+    return matchData.toArray(new Match[matchData.size()]);
+  }
+
+  /**
+   * Resets this instance to an empty one containing no matches.
+   */
+  public synchronized void reset() {
+    this.matchData = new ArrayList<>();
+    this.matchIndex = -1;
+    this.throwable = null;
+    this.globalMatch = false;
+    this.canceled = false;
+  }
+
+  private void doInit(String regExp, CharSequence testText, Collection<Flag> flags) {
     MatchSet matches = MatchSetFactory.createMatchSet(regExp, testText, flags);
     matchData = new ArrayList<>();
     while (matches.nextMatch()) {
@@ -48,119 +171,7 @@ public class RegularExpressionHits {
     } else {
       this.matchIndex = -1;
     }
-    this.throwable = null;
     this.globalMatch = matches.matches();
-  }
-
-  public boolean isGlobalMatch() {
-    return this.globalMatch;
-  }
-
-
-  public void setException(Throwable throwable) {
-    this.throwable = throwable;
-  }
-
-  public Throwable getException() {
-    return this.throwable;
-  }
-
-  public boolean containsException() {
-    return this.throwable != null;
-  }
-
-
-  /**
-   * Returns <code>true</code> if and only if the Matcher used when last
-   * calling.
-   *
-   * @see RegularExpressionHits#init(String, String, Collection) found at least one match
-   *
-   * @return <code>true</code> if this hit contains matches
-   */
-  public boolean containsMatches() {
-    return matchData != null && matchData.size() > 0;
-  }
-
-  /**
-   * Returns <code>true</code> if and only if this instance has a 'next
-   * match'. Matches may be navigated by calling
-   *
-   * @see RegularExpressionHits#toNextMatch() and
-   * @see RegularExpressionHits#toPreviousMatch()
-   *
-   * @return <code>true</code> if and only if this instance has a 'next match'
-   */
-  public boolean hasNextMatch() {
-    return (this.matchIndex + 1) < matchData.size();
-  }
-
-  /**
-   * Returns <code>true</code> if and only if this instance has a 'previous
-   * match'. Matches may be navigated by calling
-   *
-   * @see RegularExpressionHits#toNextMatch() and
-   * @see RegularExpressionHits#toPreviousMatch()
-   *
-   * @return <code>true</code> if and only if this instance has a 'previous
-   *         match'
-   */
-  public boolean hasPreviousMatch() {
-    return this.matchIndex > 0;
-  }
-
-  /**
-   * Returns the number of matches defined for this hit.
-   *
-   * @return the number of matches defined for this hit
-   */
-  public int getNumberOfMatches() {
-    return matchData.size();
-  }
-
-  /**
-   * Makes the next match the current one. Only call if
-   *
-   * @see RegularExpressionHits#hasNextMatch() returns <code>true</code>
-   */
-  public void toNextMatch() {
-    this.matchIndex++;
-  }
-
-  /**
-   * Makes the previous match the current one. Only call if
-   *
-   * @see RegularExpressionHits#hasPreviousMatch() returns <code>true</code>
-   */
-  public void toPreviousMatch() {
-    this.matchIndex--;
-  }
-
-  /**
-   * Returns the current match. Initially, the current match is the first one.
-   *
-   * @return the current match
-   */
-  public Match getCurrentMatch() {
-    return matchData.get(this.matchIndex);
-  }
-
-  /**
-   * Returns all Matches contained in this instance as array.
-   *
-   * @return all Matches contained in this instance as array
-   */
-  public Match[] getAllMatches() {
-    return matchData.toArray(new Match[matchData.size()]);
-  }
-
-  /**
-   * Resets this instance to an empty one containing no matches.
-   */
-  public void reset() {
-    this.matchData = new ArrayList<>();
-    this.matchIndex = -1;
-    this.throwable = null;
   }
 
 }
