@@ -26,11 +26,11 @@ public final class Messages {
   }
 
   /**
-   * Returns the (localized) string stored under the passed key or '!<key>!' if
-   * the string was not found
+   * Returns the (localized) string stored under the passed key or '!&lt;key&gt;!' if
+   * the string was not found.
    *
    * @param key the key for the (localized) string
-   * @return the (localized) string or '!<key>!'
+   * @return the (localized) string or '!&lt;key&gt;!'
    */
   public static String getString(String key) {
     try {
@@ -42,7 +42,7 @@ public final class Messages {
 
   /**
    * Returns the (localized) string stored under the passed key with placeholders
-   * replaced by the passed Objects or '!<key>!' if the string was not found
+   * replaced by the passed Objects or '!&lt;key&gt;!' if the string was not found.
    *
    * @param key the key for the (localized) string
    * @param params parameters for the message
