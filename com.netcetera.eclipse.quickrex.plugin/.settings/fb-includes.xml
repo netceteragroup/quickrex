@@ -1048,9 +1048,6 @@
     <Bug pattern="JML_JSR166_CALLING_WAIT_RATHER_THAN_AWAIT"></Bug>
   </Match>
   <Match>
-    <Bug pattern="OBL_UNSATISFIED_OBLIGATION"></Bug>
-  </Match>
-  <Match>
     <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"></Bug>
   </Match>
   <Match>

@@ -69,7 +69,9 @@
       <property name="tokens" value="RPAREN,TYPECAST" />
     </module>
     <module name="WhitespaceAfter"/>
-    <module name="WhitespaceAround"/>
+    <module name="WhitespaceAround">
+      <property name="allowEmptyLambdas" value="true"/>
+    </module>
     <module name="GenericWhitespace"/>
     <module name="ModifierOrder"/>
     <module name="RedundantModifier"/>
@@ -115,11 +117,6 @@
       <property name="format" value="(.*)\/\/\$NON-NLS-(.+)\$" />
       <property name="message" value="Netcetera: Do not use Eclipse's string externalisation" />
     </module>
-    <module name="RegexpSinglelineJava">
-      <property name="format" value="new\s+String\s*[(]\s*&quot;" />
-      <property name="message" value="Netcetera: Possible redundant String object" />
-      <property name="ignoreComments" value="true" />
-    </module>
     <module name="UnusedImports"/>
     <module name="OuterTypeNumber"/>
     <module name="ParameterAssignment"/>
@@ -150,13 +147,19 @@
     <module name="AnnotationLocation">
       <property name="allowSamelineSingleParameterlessAnnotation" value="false"/>
     </module>
-    <module name="SuppressWarningsHolder" />
+    <module name="SuppressWarningsHolder"/>
+    <module name="CommentsIndentation">
+      <property name="tokens" value="BLOCK_COMMENT_BEGIN"/>
+    </module>
   </module>
   <module name="FileLength">
     <property name="max" value="2000"/>
     <property name="fileExtensions" value="java" />
   </module>
   <module name="SuppressWarningsFilter" />
+  <module name="SuppressionFilter">
+    <property name="file" value="${config_loc}/suppressions.xml"/>
+  </module>
   <module name="SuppressionCommentFilter">
     <property name="checkC" value="false" />
   </module>
@@ -167,6 +170,6 @@
   <module name="RegexpSingleline">
     <property name="format" value="select[ ]*\*" />
     <property name="message" value="Netcetera: &quot;select *&quot; is considered harmful and must not be used" />
-    <property name="fileExtensions" value="java, xml, sql, js" />
+    <property name="fileExtensions" value="java, sql" />
   </module>
 </module>

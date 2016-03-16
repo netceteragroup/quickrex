@@ -39,6 +39,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -474,15 +475,13 @@ public class QuickRExView extends ViewPart {
     PluginImageRegistry imageRegistry = (PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry();
     stopButton.setImage(imageRegistry.getDescriptor(PluginImageRegistry.IMG_STOP).createImage());
     stopButton.setToolTipText(Messages.getString("views.QuickRExView.stopButton.tooltip"));
-    stopButton.addSelectionListener(new SelectionListener() {
+    stopButton.addSelectionListener(new SelectionAdapter() {
 
       @Override
       public void widgetSelected(SelectionEvent e) {
         handleStopButtonPressed();
       }
 
-      @Override
-      public void widgetDefaultSelected(SelectionEvent e) {}
     });
 
     createRegExpContentAssist();
