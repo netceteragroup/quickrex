@@ -118,6 +118,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns the shared instance.
+   *
+   * @return the shared instance
    */
   public static QuickRExPlugin getDefault() {
     return plugin;
@@ -125,6 +127,8 @@ public class QuickRExPlugin extends AbstractUIPlugin {
 
   /**
    * Returns the plugin's resource bundle.
+   *
+   * @return the plugin's resource bundle
    */
   public ResourceBundle getResourceBundle() {
     return resourceBundle;

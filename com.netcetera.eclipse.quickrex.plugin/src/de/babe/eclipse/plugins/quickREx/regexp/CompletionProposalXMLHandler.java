@@ -31,8 +31,8 @@ public class CompletionProposalXMLHandler extends DefaultHandler {
   private CompletionTriggerWord currentTriggerWord;
 
   /**
-   * @param proposals
-   * @param keys
+   * @param proposals the proposals
+   * @param keys the values to insert
    */
   public CompletionProposalXMLHandler(Map<String, RECompletionProposal> proposals, List<String> keys) {
     this.proposals = proposals;

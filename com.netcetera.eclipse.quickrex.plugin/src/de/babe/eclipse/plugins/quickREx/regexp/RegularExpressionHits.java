@@ -32,6 +32,10 @@ public class RegularExpressionHits {
 
   /**
    * (Re)Initializes this instance with data from the passed Matcher.
+   *
+   * @param regExp the regular expression
+   * @param testText the text to match against the regular expression
+   * @param flags the flags to pass to the regular expression engine
    */
   public synchronized void init(String regExp, CharSequence testText, Collection<Flag> flags) {
     this.throwable = null;
