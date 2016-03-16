@@ -48,7 +48,7 @@ public final class Messages {
    * @param params parameters for the message
    * @return the (localized) string stored under the passed key
    */
-  public static String getString(String key, Object[] params) {
+  public static String getString(String key, Object... params) {
     return MessageFormat.format(getString(key), params);
   }
 }

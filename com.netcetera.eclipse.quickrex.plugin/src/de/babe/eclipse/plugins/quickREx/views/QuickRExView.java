@@ -561,8 +561,8 @@ public class QuickRExView extends ViewPart {
 
   private void handleNextGroupButtonPressed() {
     hits.getCurrentMatch().toNextGroup();
-    groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-        fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+    groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+        fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText())));
     nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
     previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
     updateMatchView(hits.getCurrentMatch());
@@ -570,8 +570,8 @@ public class QuickRExView extends ViewPart {
 
   private void handlePreviousGroupButtonPressed() {
     hits.getCurrentMatch().toPreviousGroup();
-    groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-        fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+    groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+        fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText())));
     nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
     previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
     updateMatchView(hits.getCurrentMatch());
@@ -580,14 +580,13 @@ public class QuickRExView extends ViewPart {
   private void handleNextButtonPressed() {
     hits.toNextMatch();
     Match match = hits.getCurrentMatch();
-    matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
-        match.getStart(), match.getEnd() }));
+    matches.setText(Messages.getString("views.QuickRExView.result.match", hits.getNumberOfMatches(), match.getStart(), match.getEnd())); //$NON-NLS-1$
     updateMatchView(match);
     nextButton.setEnabled(hits.hasNextMatch());
     previousButton.setEnabled(hits.hasPreviousMatch());
     if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
-      groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-          fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+      groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+          fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText())));
     } else {
       groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
     }
@@ -598,14 +597,14 @@ public class QuickRExView extends ViewPart {
   private void handlePreviousButtonPressed() {
     hits.toPreviousMatch();
     Match match = hits.getCurrentMatch();
-    matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
-        match.getStart(), match.getEnd() }));
+    matches.setText(Messages.getString("views.QuickRExView.result.match", hits.getNumberOfMatches(), //$NON-NLS-1$
+        match.getStart(), match.getEnd()));
     updateMatchView(match);
     nextButton.setEnabled(hits.hasNextMatch());
     previousButton.setEnabled(hits.hasPreviousMatch());
     if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
-      groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-          fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+      groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+          fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText())));
     } else {
       groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
     }
@@ -705,13 +704,13 @@ public class QuickRExView extends ViewPart {
     } else if (hits.containsException()) {
       Throwable t = hits.getException();
       if (t instanceof PatternSyntaxException) {
-        matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
+        matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", StringUtils.firstLine(t.getMessage()))); //$NON-NLS-1$
       } else {
         String msg = t.getMessage();
         if (msg == null) {
           msg = t.toString();
         }
-        matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
+        matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", msg)); //$NON-NLS-1$
       }
 
       matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
@@ -722,14 +721,14 @@ public class QuickRExView extends ViewPart {
     } else if (hits.containsMatches()) {
       Match match = hits.getCurrentMatch();
       updateMatchView(match);
-      matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
-          match.getStart(), match.getEnd() }));
-      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+      matches.setText(Messages.getString("views.QuickRExView.result.match", hits.getNumberOfMatches(), //$NON-NLS-1$
+          match.getStart(), match.getEnd()));
+      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", hits.isGlobalMatch())); //$NON-NLS-1$
       nextButton.setEnabled(hits.hasNextMatch());
       previousButton.setEnabled(hits.hasPreviousMatch());
       if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
-        groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-            fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+        groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+            fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText())));
       } else {
         groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
       }
@@ -739,7 +738,7 @@ public class QuickRExView extends ViewPart {
       updateMatchView(null);
       matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
       groups.setText(""); //$NON-NLS-1$
-      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", hits.isGlobalMatch())); //$NON-NLS-1$
       nextButton.setEnabled(false);
       previousButton.setEnabled(false);
       nextGroupButton.setEnabled(false);
