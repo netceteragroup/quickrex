@@ -15,6 +15,9 @@ import de.babe.eclipse.plugins.quickREx.regexp.Flag;
 import de.babe.eclipse.plugins.quickREx.regexp.RegularExpressionHits;
 import de.babe.eclipse.plugins.quickREx.regexp.jdk.CancellableCharSequence;
 
+/**
+ * A {@link Job} that evaluates a regular expression.
+ */
 final class EvaluationJob extends Job {
 
   private final RegularExpressionHits hits;
@@ -23,7 +26,7 @@ final class EvaluationJob extends Job {
   private volatile CancellableCharSequence testText;
   private volatile String regexp;
 
-  public EvaluationJob(RegularExpressionHits hits, Runnable viewUpdateCallback) {
+  EvaluationJob(RegularExpressionHits hits, Runnable viewUpdateCallback) {
     super(Messages.getString("views.QuickRExView.evaluationJob.name"));
 
     this.hits = hits;
