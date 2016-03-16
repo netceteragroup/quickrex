@@ -113,10 +113,6 @@
     <module name="VisibilityModifier"/>
     <module name="ArrayTypeStyle"/>
     <module name="UpperEll"/>
-    <module name="RegexpSinglelineJava">
-      <property name="format" value="(.*)\/\/\$NON-NLS-(.+)\$" />
-      <property name="message" value="Netcetera: Do not use Eclipse's string externalisation" />
-    </module>
     <module name="UnusedImports"/>
     <module name="OuterTypeNumber"/>
     <module name="ParameterAssignment"/>
