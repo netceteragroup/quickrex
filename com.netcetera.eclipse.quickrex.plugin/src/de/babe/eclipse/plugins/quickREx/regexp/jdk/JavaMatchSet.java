@@ -62,7 +62,7 @@ public class JavaMatchSet implements MatchSet {
    * @param text the text to evaluate regExp against
    * @param flags a Collection of Flags to pass to the Compiler
    */
-  public JavaMatchSet(String regExp, String text, Collection<? extends Flag> flags) {
+  public JavaMatchSet(String regExp, CharSequence text, Collection<? extends Flag> flags) {
     int iFlags = 0;
     for (Flag element : flags) {
       iFlags = iFlags | element.getFlag();

@@ -62,6 +62,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import de.babe.eclipse.plugins.quickREx.Messages;
+import de.babe.eclipse.plugins.quickREx.PluginImageRegistry;
 import de.babe.eclipse.plugins.quickREx.QuickRExPlugin;
 import de.babe.eclipse.plugins.quickREx.StringUtils;
 import de.babe.eclipse.plugins.quickREx.actions.JCopyAction;
@@ -79,6 +80,8 @@ public class QuickRExView extends ViewPart {
   public static final String ID = "de.babe.eclipse.plugins.quickREx.views.QuickRExView"; //$NON-NLS-1$
 
   private Combo regExpCombo;
+
+  private Button stopButton;
 
   private StyledText testText;
 
@@ -118,10 +121,19 @@ public class QuickRExView extends ViewPart {
 
   private Point lastRESelection = new Point(0, 0);
 
+  private final EvaluationJob evaluationJob;
+
   /**
    * The constructor.
    */
   public QuickRExView() {
+    this.evaluationJob = new EvaluationJob(hits, new Runnable() {
+
+      @Override
+      public void run() {
+        updateView();
+      }
+    });
   }
 
   @Override
@@ -403,7 +415,7 @@ public class QuickRExView extends ViewPart {
     regExpCombo.setItems(new String[0]);
     regExpCombo.setFont(JFaceResources.getFont(EDITOR_FONT_KEY));
     gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
-    gd.horizontalSpan = 3;
+    gd.horizontalSpan = 2;
     gd.grabExcessHorizontalSpace = true;
     regExpCombo.setLayoutData(gd);
     regExpCombo.addModifyListener(new ModifyListener() {
@@ -452,7 +464,32 @@ public class QuickRExView extends ViewPart {
       } });
     tk.adapt(regExpCombo, true, true);
 
+    stopButton = tk.createButton(form.getBody(), "", SWT.PUSH);
+    stopButton.setEnabled(false);
+    gd = new GridData();
+    gd.horizontalAlignment = GridData.END;
+    gd.horizontalSpan = 1;
+    gd.grabExcessHorizontalSpace = false;
+    stopButton.setLayoutData(gd);
+    PluginImageRegistry imageRegistry = (PluginImageRegistry) QuickRExPlugin.getDefault().getImageRegistry();
+    stopButton.setImage(imageRegistry.getDescriptor(PluginImageRegistry.IMG_STOP).createImage());
+    stopButton.setToolTipText(Messages.getString("views.QuickRExView.stopButton.tooltip"));
+    stopButton.addSelectionListener(new SelectionListener() {
+
+      @Override
+      public void widgetSelected(SelectionEvent e) {
+        handleStopButtonPressed();
+      }
+
+      @Override
+      public void widgetDefaultSelected(SelectionEvent e) {}
+    });
+
     createRegExpContentAssist();
+  }
+
+  private void handleStopButtonPressed() {
+    this.evaluationJob.cancel();
   }
 
   private void createRegExpContentAssist() {
@@ -632,6 +669,15 @@ public class QuickRExView extends ViewPart {
 
   private void evaluate() {
     if (regExpCombo.getText() != null && testText.getText() != null) {
+
+      // Cancel a previously started evaluation.
+      this.evaluationJob.cancel();
+      try {
+        this.evaluationJob.join();
+      } catch (InterruptedException e) {
+        // NOP
+      }
+
       matches.setForeground(null);
       matches.setText(""); //$NON-NLS-1$
       groups.setText(""); //$NON-NLS-1$
@@ -639,63 +685,76 @@ public class QuickRExView extends ViewPart {
       String sRegExpCombo = regExpCombo.getText();
       String sTestText = testText.getText();
 
-      try {
-        hits.init(sRegExpCombo, sTestText, currentFlags);
-      } catch (Throwable throwable) {
-        hits.setException(throwable);
-      }
+      evaluationJob.reset(sTestText, sRegExpCombo, currentFlags);
+      stopButton.setEnabled(true);
+      evaluationJob.schedule();
 
-      if (hits.containsException()) {
-        Throwable t = hits.getException();
-        if (t instanceof PatternSyntaxException) {
-          matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
-        } else {
-          String msg = t.getMessage();
-          if (msg == null) {
-            msg = t.toString();
-          }
-          matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
-        }
-
-        matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
-        hits.reset();
-        updateMatchView(null);
-        regExpCombo.setFocus();
-        groups.setText(""); //$NON-NLS-1$
-        globalMatch.setText(""); //$NON-NLS-1$
-        nextButton.setEnabled(false);
-        previousButton.setEnabled(false);
-        nextGroupButton.setEnabled(false);
-        previousGroupButton.setEnabled(false);
-      } else if (hits.containsMatches()) {
-        Match match = hits.getCurrentMatch();
-        updateMatchView(match);
-        matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
-            match.getStart(), match.getEnd() }));
-        globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
-        nextButton.setEnabled(hits.hasNextMatch());
-        previousButton.setEnabled(hits.hasPreviousMatch());
-        if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
-          groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
-              fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
-        } else {
-          groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
-        }
-        nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
-        previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
-      } else {
-        updateMatchView(null);
-        matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
-        groups.setText(""); //$NON-NLS-1$
-        globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
-        nextButton.setEnabled(false);
-        previousButton.setEnabled(false);
-        nextGroupButton.setEnabled(false);
-        previousGroupButton.setEnabled(false);
-      }
       redrawFourthLine();
       redrawFifthLine();
     }
+  }
+
+  private void updateView() {
+    stopButton.setEnabled(false);
+    if (hits.isCanceled()) {
+      matches.setText(Messages.getString("views.QuickRExView.result.match.evaluationCanceled"));
+
+      matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
+      hits.reset();
+      updateMatchView(null);
+      resetEvaluationDetails();
+    } else if (hits.containsException()) {
+      Throwable t = hits.getException();
+      if (t instanceof PatternSyntaxException) {
+        matches.setText(Messages.getString("views.QuickRExView.result.match.illegalPattern", new Object[]{StringUtils.firstLine(t.getMessage())})); //$NON-NLS-1$
+      } else {
+        String msg = t.getMessage();
+        if (msg == null) {
+          msg = t.toString();
+        }
+        matches.setText(Messages.getString("views.QuickRExView.result.match.parserException", new Object[]{msg})); //$NON-NLS-1$
+      }
+
+      matches.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
+      hits.reset();
+      updateMatchView(null);
+      regExpCombo.setFocus();
+      resetEvaluationDetails();
+    } else if (hits.containsMatches()) {
+      Match match = hits.getCurrentMatch();
+      updateMatchView(match);
+      matches.setText(Messages.getString("views.QuickRExView.result.match", new Object[] { hits.getNumberOfMatches(), //$NON-NLS-1$
+          match.getStart(), match.getEnd() }));
+      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+      nextButton.setEnabled(hits.hasNextMatch());
+      previousButton.setEnabled(hits.hasPreviousMatch());
+      if (hits.getCurrentMatch().getNumberOfGroups() > 0) {
+        groups.setText(escapeMnemonic(Messages.getString("views.QuickRExView.result.group", new Object[] { hits.getCurrentMatch().getNumberOfGroups(), //$NON-NLS-1$
+            fetchGroupID(), hits.getCurrentMatch().getCurrentGroup().getText() })));
+      } else {
+        groups.setText(Messages.getString("views.QuickRExView.result.group.none")); //$NON-NLS-1$
+      }
+      nextGroupButton.setEnabled(hits.getCurrentMatch().hasNextGroup());
+      previousGroupButton.setEnabled(hits.getCurrentMatch().hasPreviousGroup());
+    } else {
+      updateMatchView(null);
+      matches.setText(Messages.getString("views.QuickRExView.result.match.none")); //$NON-NLS-1$
+      groups.setText(""); //$NON-NLS-1$
+      globalMatch.setText(Messages.getString("views.QuickRExView.result.globalMatch", new Object[] { hits.isGlobalMatch()})); //$NON-NLS-1$
+      nextButton.setEnabled(false);
+      previousButton.setEnabled(false);
+      nextGroupButton.setEnabled(false);
+      previousGroupButton.setEnabled(false);
+    }
+  }
+
+  private void resetEvaluationDetails() {
+    groups.setText(""); //$NON-NLS-1$
+    globalMatch.setText(""); //$NON-NLS-1$
+    nextButton.setEnabled(false);
+    previousButton.setEnabled(false);
+    nextGroupButton.setEnabled(false);
+    previousGroupButton.setEnabled(false);
   }
 
   private String escapeMnemonic(String string) {
