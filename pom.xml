@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.netcetera.eclipse.quickrex</groupId>
   <artifactId>quickrex-parent</artifactId>
-  <version>4.3.0</version>
+  <version>4.3.1-SNAPSHOT</version>
   <name>QuickREx Parent</name>
   <description>A fork of the QuickREx Plugin</description>
   <inceptionYear>2014</inceptionYear>
@@ -24,7 +24,7 @@
     <connection>scm:git:https://github.com/netceteragroup/quickrex.git</connection>
     <developerConnection>scm:git:https://github.com/netceteragroup/quickrex.git</developerConnection>
     <url>${project.url}</url>
-    <tag>4.3.0</tag>
+    <tag>HEAD</tag>
   </scm>
   
   <developers>
